@@ -154,7 +154,7 @@ publishing {
     publications {
         mavenJava(MavenPublication) {
             afterEvaluate {
-                artifact project.shadowJar
+                artifact project.jar
                 artifact project.sourceJar
             }
             setGroupId 'team-twilight'
@@ -190,6 +190,6 @@ task incrBuildNum doLast {
     }
 }
 
-build.dependsOn shadowJar
+build.dependsOn jar
 
 build.finalizedBy(incrBuildNum)
