@@ -1,0 +1,13 @@
+{
+  "type": "create:pressing",
+  "ingredients": [
+    {
+      "item": "twilightforest:fiery_ingot"
+    }
+  ],
+  "results": [
+    {
+      "item": "cogsofcarminite:fiery_sheet"
+    }
+  ]
+}

@@ -1,0 +1,16 @@
+{
+  "type": "create:item_application",
+  "ingredients": [
+    {
+      "item": "twilightforest:encased_towerwood"
+    },
+    {
+      "tag": "forge:dyes"
+    }
+  ],
+  "results": [
+    {
+      "item": "cogsofcarminite:dark_tower_casing"
+    }
+  ]
+}

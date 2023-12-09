@@ -1,0 +1,13 @@
+{
+  "type": "create:pressing",
+  "ingredients": [
+    {
+      "item": "twilightforest:firefly"
+    }
+  ],
+  "results": [
+    {
+      "item": "minecraft:glowstone_dust"
+    }
+  ]
+}

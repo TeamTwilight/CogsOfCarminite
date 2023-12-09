@@ -1,0 +1,13 @@
+{
+  "type": "create:pressing",
+  "ingredients": [
+    {
+      "item": "twilightforest:ironwood_ingot"
+    }
+  ],
+  "results": [
+    {
+      "item": "cogsofcarminite:ironwood_sheet"
+    }
+  ]
+}

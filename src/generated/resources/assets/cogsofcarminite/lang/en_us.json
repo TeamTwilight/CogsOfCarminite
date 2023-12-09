@@ -1,0 +1,11 @@
+{
+  "block.cogsofcarminite.carminite_clock": "Carminite Clock",
+  "block.cogsofcarminite.carminite_core": "Carminite Core",
+  "block.cogsofcarminite.carminite_engine": "Carminite Engine",
+  "block.cogsofcarminite.carminite_heart": "Carminite Heart",
+  "block.cogsofcarminite.dark_tower_casing": "Dark Tower Casing",
+  "item.cogsofcarminite.fiery_sheet": "Fiery Sheet",
+  "item.cogsofcarminite.ironwood_sheet": "Ironwood Sheet",
+  "item.cogsofcarminite.knightmetal_sheet": "Knightmetal Sheet",
+  "itemGroup.cogsofcarminite.main": "Cogs Of Carminite"
+}

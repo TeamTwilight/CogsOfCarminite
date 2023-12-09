@@ -1,0 +1,13 @@
+{
+  "type": "create:pressing",
+  "ingredients": [
+    {
+      "item": "twilightforest:moonworm"
+    }
+  ],
+  "results": [
+    {
+      "item": "minecraft:lime_dye"
+    }
+  ]
+}

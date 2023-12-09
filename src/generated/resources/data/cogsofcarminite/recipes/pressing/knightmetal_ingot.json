@@ -1,0 +1,13 @@
+{
+  "type": "create:pressing",
+  "ingredients": [
+    {
+      "item": "twilightforest:knightmetal_ingot"
+    }
+  ],
+  "results": [
+    {
+      "item": "cogsofcarminite:knightmetal_sheet"
+    }
+  ]
+}

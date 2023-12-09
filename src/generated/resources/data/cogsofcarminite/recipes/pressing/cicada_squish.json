@@ -1,0 +1,13 @@
+{
+  "type": "create:pressing",
+  "ingredients": [
+    {
+      "item": "twilightforest:cicada"
+    }
+  ],
+  "results": [
+    {
+      "item": "minecraft:gray_dye"
+    }
+  ]
+}

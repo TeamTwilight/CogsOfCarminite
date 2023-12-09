@@ -1,0 +1,12 @@
+{
+	"parent": "create:block/flywheel/flywheel",
+	"loader": "forge:obj",
+	"flip_v": true,
+	"model": "create:models/block/flywheel/flywheel_shaftless.obj",
+	"textures": {
+		"0": "cogsofcarminite:block/flywheel/clock_flywheel",
+		"1": "create:block/axis",
+		"2": "create:block/axis_top",
+		"particle": "cogsofcarminite:block/flywheel/clock_flywheel"
+	}
+}
