@@ -86,22 +86,7 @@ dependencies {
     implementation fg.deobf("com.tterrag.registrate:Registrate:MC1.20-1.3.3")
 }
 
-tasks.named('processResources', ProcessResources).configure {
-    var replaceProperties = [
-            minecraft_version: minecraft_version, minecraft_version_range: minecraft_version_range,
-            forge_version: forge_version, forge_version_range: forge_version_range,
-            loader_version_range: loader_version_range,
-            mod_id: mod_id, mod_name: mod_name, mod_license: mod_license, mod_version: mod_version,
-            mod_authors: mod_authors, mod_description: mod_description,
-    ]
-    inputs.properties replaceProperties
-
-    filesMatching(['META-INF/mods.toml', 'pack.mcmeta']) {
-        expand replaceProperties + [project: project]
-    }
-}
-
-tasks.named('jar', Jar).configure {
+jar {
     manifest {
         attributes([
                 'Specification-Title'     : mod_id,
@@ -112,19 +97,6 @@ tasks.named('jar', Jar).configure {
                 'Implementation-Vendor'   : mod_authors,
                 'Implementation-Timestamp': new Date().format("yyyy-MM-dd'T'HH:mm:ssZ")
         ])
-    }
-}
-
-publishing {
-    publications {
-        register('mavenJava', MavenPublication) {
-            artifact jar
-        }
-    }
-    repositories {
-        maven {
-            url "file://${project.projectDir}/mcmodsrepo"
-        }
     }
 }
 
@@ -144,6 +116,8 @@ if (secretsFile.exists()) {
             }
     }
 }
+
+jar.finalizedBy('reobfJar')
 
 def mavenUser = hasProperty("CIMUser") ? CIMUser : secrets.getProperty("maven_username")
 def mavenToken = hasProperty("CIMToken") ? CIMToken : secrets.getProperty("maven_password")
@@ -170,24 +144,11 @@ publishing {
     }
 }
 
-tasks.register('sourceJar', Jar) {
-    dependsOn 'classes'
+task sourceJar(type: Jar, dependsOn: 'classes') {
     from sourceSets.main.allSource
     archiveClassifier = 'sources'
 }
 
-jar.enabled = false
-
 tasks.withType(JavaCompile).configureEach {
-    options.encoding = 'UTF-8'
+    options.encoding = 'UTF-8' // Use the UTF-8 charset for Java compilation
 }
-
-task incrBuildNum doLast {
-    ant.propertyfile(file: "gradle.properties") {
-        entry(key: "mod_version", value: Integer.parseInt(project.mod_version) + 1)
-    }
-}
-
-build.dependsOn jar
-
-build.finalizedBy(incrBuildNum)
