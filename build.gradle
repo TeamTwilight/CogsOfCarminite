@@ -147,8 +147,6 @@ if (secretsFile.exists()) {
     }
 }
 
-jar.finalizedBy('reobfJar')
-
 def mavenUser = hasProperty("CIMUser") ? CIMUser : secrets.getProperty("maven_username")
 def mavenToken = hasProperty("CIMToken") ? CIMToken : secrets.getProperty("maven_password")
 
@@ -156,7 +154,7 @@ publishing {
     publications {
         mavenJava(MavenPublication) {
             afterEvaluate {
-                artifact project.jar
+                artifact project.shadowJar
                 artifact project.sourceJar
             }
             setGroupId 'team-twilight'
@@ -180,12 +178,18 @@ tasks.register('sourceJar', Jar) {
     archiveClassifier = 'sources'
 }
 
+jar.enabled = false
+
+tasks.withType(JavaCompile).configureEach {
+    options.encoding = 'UTF-8'
+}
+
 task incrBuildNum doLast {
     ant.propertyfile(file: "gradle.properties") {
         entry(key: "mod_version", value: Integer.parseInt(project.mod_version) + 1)
     }
 }
 
-tasks.withType(JavaCompile).configureEach {
-    options.encoding = 'UTF-8' // Use the UTF-8 charset for Java compilation
-}
+build.dependsOn shadowJar
+
+build.finalizedBy(incrBuildNum)
