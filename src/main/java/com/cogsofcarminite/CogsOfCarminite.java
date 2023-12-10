@@ -19,9 +19,7 @@ import net.minecraftforge.data.event.GatherDataEvent;
 import net.minecraftforge.eventbus.api.EventPriority;
 import net.minecraftforge.eventbus.api.IEventBus;
 import net.minecraftforge.fml.DistExecutor;
-import net.minecraftforge.fml.ModLoadingContext;
 import net.minecraftforge.fml.common.Mod;
-import net.minecraftforge.fml.config.ModConfig;
 import net.minecraftforge.fml.event.lifecycle.FMLClientSetupEvent;
 import net.minecraftforge.fml.event.lifecycle.FMLCommonSetupEvent;
 import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
@@ -29,7 +27,6 @@ import org.slf4j.Logger;
 
 import javax.annotation.ParametersAreNonnullByDefault;
 
-// The value here should match an entry in the META-INF/mods.toml file
 @Mod(CogsOfCarminite.MODID)
 @ParametersAreNonnullByDefault
 @MethodsReturnNonnullByDefault
@@ -58,8 +55,6 @@ public class CogsOfCarminite {
         CCCreativeModeTabs.register(modEventBus);
 
         MinecraftForge.EVENT_BUS.register(this);
-
-        ModLoadingContext.get().registerConfig(ModConfig.Type.COMMON, Config.SPEC);
 
         DistExecutor.unsafeRunWhenOn(Dist.CLIENT, () -> () -> CogsOfCarminite.onCtorClient(modEventBus, modEventBus));
 
