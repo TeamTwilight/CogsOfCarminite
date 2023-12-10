@@ -33,6 +33,6 @@ public class CCWorldgenDataProvider extends DatapackBuiltinEntriesProvider {
 
     @Override
     public String getName() {
-        return "CogsOfCarminite's Worldgen Data";
+        return "Cogs Of Carminite's Worldgen Data";
     }
 }
