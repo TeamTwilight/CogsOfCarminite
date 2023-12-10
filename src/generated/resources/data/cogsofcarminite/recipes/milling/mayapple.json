@@ -1,0 +1,18 @@
+{
+  "type": "create:milling",
+  "ingredients": [
+    {
+      "item": "twilightforest:mayapple"
+    }
+  ],
+  "processingTime": 50,
+  "results": [
+    {
+      "item": "minecraft:green_dye"
+    },
+    {
+      "chance": 0.1,
+      "item": "minecraft:green_dye"
+    }
+  ]
+}

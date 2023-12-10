@@ -1,0 +1,22 @@
+{
+  "type": "create:crushing",
+  "ingredients": [
+    {
+      "item": "twilightforest:deadrock"
+    }
+  ],
+  "processingTime": 250,
+  "results": [
+    {
+      "item": "twilightforest:cracked_deadrock"
+    },
+    {
+      "chance": 0.1,
+      "item": "minecraft:flint"
+    },
+    {
+      "chance": 0.05,
+      "item": "minecraft:clay_ball"
+    }
+  ]
+}

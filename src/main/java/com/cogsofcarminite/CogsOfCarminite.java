@@ -2,6 +2,7 @@ package com.cogsofcarminite;
 
 import com.cogsofcarminite.data.CCLangGenerator;
 import com.cogsofcarminite.data.CCRecipeGen;
+import com.cogsofcarminite.data.CCWorldgenDataProvider;
 import com.cogsofcarminite.reg.*;
 import com.mojang.logging.LogUtils;
 import com.simibubi.create.foundation.data.CreateRegistrate;
@@ -82,6 +83,7 @@ public class CogsOfCarminite {
 
         if (event.includeServer()) {
             CCRecipeGen.registerAll(gen, output);
+            gen.addProvider(true, CCWorldgenDataProvider.makeFactory(event.getLookupProvider()));
         }
     }
 

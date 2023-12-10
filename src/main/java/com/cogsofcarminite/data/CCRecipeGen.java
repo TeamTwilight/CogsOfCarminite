@@ -16,6 +16,7 @@ import net.minecraft.data.DataGenerator;
 import net.minecraft.data.DataProvider;
 import net.minecraft.data.PackOutput;
 import net.minecraft.world.item.Items;
+import net.minecraft.world.item.crafting.Ingredient;
 import net.minecraftforge.common.Tags;
 import twilightforest.init.TFBlocks;
 import twilightforest.init.TFItems;
@@ -38,6 +39,8 @@ public class CCRecipeGen extends CreateRecipeProvider {
     public static void registerAll(DataGenerator gen, PackOutput output) {
         CCGENERATORS.add(new ItemApplication(output));
         CCGENERATORS.add(new Pressing(output));
+        CCGENERATORS.add(new Milling(output));
+        CCGENERATORS.add(new Crushing(output));
 
         gen.addProvider(true, new DataProvider() {
 
@@ -92,6 +95,51 @@ public class CCRecipeGen extends CreateRecipeProvider {
         @Override
         protected IRecipeTypeInfo getRecipeType() {
             return AllRecipeTypes.PRESSING;
+        }
+    }
+
+    public static class Milling extends ProcessingRecipeGen {
+        GeneratedRecipe HUGE_WATER_LILLY = create(CogsOfCarminite.prefix("huge_water_lilly"), b -> b.duration(50).withItemIngredients(Ingredient.of(TFBlocks.HUGE_WATER_LILY.get()))
+                .output(Items.MAGENTA_DYE, 2)
+                .output(.1f, Items.PURPLE_DYE)
+                .output(.1f, Items.PINK_DYE, 2));
+
+        GeneratedRecipe THORN_ROSE = create(CogsOfCarminite.prefix("thorn_rose"), b -> b.duration(50).withItemIngredients(Ingredient.of(TFBlocks.THORN_ROSE.get()))
+                .output(Items.RED_DYE, 2)
+                .output(.1f, Items.RED_DYE, 1)
+                .output(.1f, Items.GREEN_DYE, 2));
+
+        GeneratedRecipe FIDDLEHEAD = create(CogsOfCarminite.prefix("fiddlehead"), b -> b.duration(50).withItemIngredients(Ingredient.of(TFBlocks.FIDDLEHEAD.get()))
+                .output(Items.GREEN_DYE)
+                .output(.1f, Items.WHEAT_SEEDS));
+
+        GeneratedRecipe MAYAPPLE = create(CogsOfCarminite.prefix("mayapple"), b -> b.duration(50).withItemIngredients(Ingredient.of(TFBlocks.MAYAPPLE.get()))
+                .output(Items.GREEN_DYE)
+                .output(.1f, Items.GREEN_DYE));
+
+        public Milling(PackOutput generator) {
+            super(generator);
+        }
+
+        @Override
+        protected IRecipeTypeInfo getRecipeType() {
+            return AllRecipeTypes.MILLING;
+        }
+    }
+
+    public static class Crushing extends ProcessingRecipeGen {
+        GeneratedRecipe DEADROCK = create(CogsOfCarminite.prefix("deadrock"), b -> b.duration(250).withItemIngredients(Ingredient.of(TFBlocks.DEADROCK.get()))
+                .output(TFBlocks.CRACKED_DEADROCK.get())
+			.output(.1f, Items.FLINT)
+			.output(.05f, Items.CLAY_BALL));
+
+        public Crushing(PackOutput generator) {
+            super(generator);
+        }
+
+        @Override
+        protected IRecipeTypeInfo getRecipeType() {
+            return AllRecipeTypes.CRUSHING;
         }
     }
 }

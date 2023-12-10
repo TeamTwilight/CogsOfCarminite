@@ -1,0 +1,6 @@
+{
+  "type": "forge:add_features",
+  "biomes": "#twilightforest:in_twilight_forest",
+  "features": "cogsofcarminite:striated_ores_twilight_forest",
+  "step": "underground_ores"
+}
