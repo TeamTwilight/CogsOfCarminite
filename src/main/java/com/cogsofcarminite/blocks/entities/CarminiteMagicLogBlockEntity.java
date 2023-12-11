@@ -29,7 +29,6 @@ import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.AABB;
 import net.minecraft.world.phys.Vec3;
 import net.minecraftforge.network.PacketDistributor;
-import twilightforest.TwilightForestMod;
 import twilightforest.network.ParticlePacket;
 import twilightforest.network.TFPacketHandler;
 
@@ -59,7 +58,6 @@ public abstract class CarminiteMagicLogBlockEntity extends KineticBlockEntity {
 
         if (this.level != null && level instanceof ServerLevel serverLevel && this.doesCoreFunction()) {
             this.nextTick -= Math.abs(this.flywheelSpeed.getValue());
-            TwilightForestMod.LOGGER.error("Next Tick is in {}, speed is {}!", this.nextTick, this.getSpeed());
             while (this.nextTick <= 0.0F) {
                 this.performTreeEffect(serverLevel, this.getBlockPos(), this.level.random);
                 this.playSound(this.level, this.getBlockPos(), this.level.random);
