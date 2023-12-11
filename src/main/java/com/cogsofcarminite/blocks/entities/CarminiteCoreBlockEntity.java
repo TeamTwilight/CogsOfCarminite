@@ -3,7 +3,10 @@ package com.cogsofcarminite.blocks.entities;
 import com.cogsofcarminite.CogsOfCarminite;
 import com.cogsofcarminite.reg.CCPartialBlockModels;
 import com.jozufozu.flywheel.core.PartialModel;
+import com.simibubi.create.content.logistics.filter.FilterItem;
+import com.simibubi.create.foundation.blockEntity.SmartBlockEntity;
 import com.simibubi.create.foundation.blockEntity.behaviour.BlockEntityBehaviour;
+import com.simibubi.create.foundation.blockEntity.behaviour.ValueBoxTransform;
 import com.simibubi.create.foundation.blockEntity.behaviour.filtering.FilteringBehaviour;
 import net.minecraft.MethodsReturnNonnullByDefault;
 import net.minecraft.client.renderer.RenderType;
@@ -13,11 +16,14 @@ import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.util.RandomSource;
+import net.minecraft.world.item.BlockItem;
+import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockState;
+import net.minecraftforge.common.Tags;
 import twilightforest.TFConfig;
 import twilightforest.data.tags.BlockTagGenerator;
 import twilightforest.init.TFSounds;
@@ -53,7 +59,7 @@ public class CarminiteCoreBlockEntity extends CarminiteMagicLogBlockEntity {
     @Override
     public void addBehaviours(List<BlockEntityBehaviour> behaviours) {
         super.addBehaviours(behaviours);
-        this.filtering = new BlockFilteringBehaviour(this, new MagicLogSlot());
+        this.filtering = new OreFilteringBehaviour(this, new MagicLogSlot());
         behaviours.add(this.filtering);
     }
 
@@ -179,5 +185,21 @@ public class CarminiteCoreBlockEntity extends CarminiteMagicLogBlockEntity {
 
     private static boolean isReplaceable(BlockState state) {
         return state.is(BlockTagGenerator.ORE_MAGNET_SAFE_REPLACE_BLOCK);
+    }
+
+    public static class OreFilteringBehaviour extends FilteringBehaviour {
+        public OreFilteringBehaviour(SmartBlockEntity be, ValueBoxTransform slot) {
+            super(be, slot);
+        }
+
+        @Override
+        public boolean setFilter(ItemStack stack) {
+            if (stack.isEmpty() || stack.getItem() instanceof FilterItem) return super.setFilter(stack);
+            if (stack.getItem() instanceof BlockItem blockItem) {
+                BlockState state = blockItem.getBlock().defaultBlockState();
+                if (state.is(Tags.Blocks.ORES) && !state.is(BlockTagGenerator.ORE_MAGNET_IGNORE)) return super.setFilter(stack);
+            }
+            return false;
+        }
     }
 }
