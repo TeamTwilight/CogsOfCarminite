@@ -62,7 +62,7 @@ public class CogsOfCarminite {
     }
 
     public void init(FMLCommonSetupEvent evt) {
-
+        CCPotatoProjectileTypes.register();
     }
 
     public static void onCtorClient(IEventBus modEventBus, IEventBus forgeEventBus) {
