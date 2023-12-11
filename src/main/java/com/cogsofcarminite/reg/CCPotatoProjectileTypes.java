@@ -136,12 +136,9 @@ public class CCPotatoProjectileTypes {
     }
 
     private static void applyEffect(LivingEntity entity, MobEffectInstance effect) {
-        if (effect.getEffect()
-                .isInstantenous())
-            effect.getEffect()
-                    .applyInstantenousEffect(null, null, entity, effect.getDuration(), 1.0);
-        else
-            entity.addEffect(effect);
+        if (effect.getEffect().isInstantenous())
+            effect.getEffect().applyInstantenousEffect(null, null, entity, effect.getDuration(), 1.0);
+        else entity.addEffect(effect);
     }
 
     public static void register() {}
