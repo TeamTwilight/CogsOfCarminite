@@ -14,7 +14,7 @@ import static com.simibubi.create.AllTags.AllItemTags.PLATES;
 @MethodsReturnNonnullByDefault
 public class CCItems {
     static {
-        TWILIGHT_REGISTRATE.useCreativeTab(CCCreativeModeTabs.MAIN_TAB);
+        TWILIGHT_REGISTRATE.setCreativeTab(CCCreativeModeTabs.MAIN_TAB);
     }
 
     public static final ItemEntry<Item> IRONWOOD_SHEET = taggedIngredient("ironwood_sheet", PLATES.tag);

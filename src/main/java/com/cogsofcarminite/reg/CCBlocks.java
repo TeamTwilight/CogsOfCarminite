@@ -37,7 +37,7 @@ import static com.simibubi.create.foundation.data.TagGen.pickaxeOnly;
 @MethodsReturnNonnullByDefault
 public class CCBlocks {
     static {
-        TWILIGHT_REGISTRATE.useCreativeTab(CCCreativeModeTabs.MAIN_TAB);
+        TWILIGHT_REGISTRATE.setCreativeTab(CCCreativeModeTabs.MAIN_TAB);
     }
 
     public static final BlockEntry<CasingBlock> DARK_TOWER_CASING =
