@@ -23,6 +23,7 @@ import javax.annotation.ParametersAreNonnullByDefault;
 public class CCBiomeModifiers {
     public static final ResourceKey<BiomeModifier> ZINC_ORE = key("zinc_ore");
     public static final ResourceKey<BiomeModifier> STRIATED_ORES_TWILIGHT_FOREST = key("striated_ores_twilight_forest");
+    public static final ResourceKey<BiomeModifier> STRIATED_ANDESITE_TWILIGHT_FOREST = key("striated_andesite_twilight_forest");
 
     private static ResourceKey<BiomeModifier> key(String name) {
         return ResourceKey.create(ForgeRegistries.Keys.BIOME_MODIFIERS, CogsOfCarminite.prefix(name));
@@ -35,9 +36,11 @@ public class CCBiomeModifiers {
         HolderGetter<PlacedFeature> featureLookup = ctx.lookup(Registries.PLACED_FEATURE);
         Holder<PlacedFeature> zincOre = featureLookup.getOrThrow(CCPlacedFeatures.ZINC_ORE);
         Holder<PlacedFeature> striatedOresTwilightForest = featureLookup.getOrThrow(CCPlacedFeatures.STRIATED_ORES_TWILIGHT_FOREST);
+        Holder<PlacedFeature> striatedAndesiteTwilightForest = featureLookup.getOrThrow(CCPlacedFeatures.STRIATED_ANDESITE_TWILIGHT_FOREST);
 
         ctx.register(ZINC_ORE, addOre(isTwilightForest, zincOre));
         ctx.register(STRIATED_ORES_TWILIGHT_FOREST, addOre(isTwilightForest, striatedOresTwilightForest));
+        ctx.register(STRIATED_ANDESITE_TWILIGHT_FOREST, addOre(isTwilightForest, striatedAndesiteTwilightForest));
     }
 
     private static ForgeBiomeModifiers.AddFeaturesBiomeModifier addOre(HolderSet<Biome> biomes, Holder<PlacedFeature> feature) {
