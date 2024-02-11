@@ -12,7 +12,6 @@ public class CarminiteCoreBlock extends CarminiteMagicLogBlock implements IBE<Ca
 
     @Override
     public Class<CarminiteCoreBlockEntity> getBlockEntityClass() {
-        System.out.println();
         return CarminiteCoreBlockEntity.class;
     }
 

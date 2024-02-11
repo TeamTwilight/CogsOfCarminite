@@ -40,7 +40,7 @@ public abstract class CarminiteMagicLogBlockEntity extends KineticBlockEntity {
     public static final float TICK_INTERVAL = 1000.0F;
     protected float nextTick = TICK_INTERVAL;
 
-    public LerpedFloat flywheelSpeed = LerpedFloat.linear().chase(this.getGeneratedSpeed(), 1.0F / 64.0F, LerpedFloat.Chaser.EXP);;
+    public LerpedFloat flywheelSpeed = LerpedFloat.linear().chase(this.getGeneratedSpeed(), 1.0F / 64.0F, LerpedFloat.Chaser.EXP);
     public float flywheelAngle;
 
     public CarminiteMagicLogBlockEntity(BlockEntityType<?> typeIn, BlockPos pos, BlockState state) {

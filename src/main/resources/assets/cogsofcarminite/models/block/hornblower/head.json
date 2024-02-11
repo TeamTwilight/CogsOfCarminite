@@ -1,0 +1,71 @@
+{
+	"credit": "Made with Blockbench",
+	"textures": {
+		"1": "cogsofcarminite:block/hornblower_head"
+	},
+	"elements": [
+		{
+			"name": "Top",
+			"from": [4.5, 7, 7.5],
+			"to": [11.5, 14, 14.5],
+			"faces": {
+				"north": {"uv": [3, 3, 6, 6.5], "texture": "#1"},
+				"east": {"uv": [0, 3, 3, 6.5], "texture": "#1"},
+				"south": {"uv": [9, 3, 12, 6.5], "texture": "#1"},
+				"west": {"uv": [6, 3, 9, 6.5], "texture": "#1"},
+				"up": {"uv": [3, 0, 6, 3], "texture": "#1"},
+				"down": {"uv": [6, 0, 9, 3], "texture": "#1"}
+			}
+		},
+		{
+			"name": "Centre",
+			"from": [6.8333, 8, 7.5],
+			"to": [9.1666, 13, 8.5],
+			"faces": {
+				"down": {"uv": [4.5, 11.5, 5, 12], "texture": "#1"}
+			}
+		},
+		{
+			"name": "Back",
+			"from": [6.8333, 7, 8.5],
+			"to": [9.16663, 13, 14.5],
+			"faces": {
+				"north": {"uv": [4, 10.5, 4.5, 11], "texture": "#1"},
+				"down": {"uv": [5, 11, 5.5, 11.5], "texture": "#1"}
+			}
+		},
+		{
+			"name": "Left",
+			"from": [4.5, 7, 7.5],
+			"to": [6.83333, 13, 14.5],
+			"faces": {
+				"east": {"uv": [4, 10.5, 4.5, 11], "texture": "#1"},
+				"down": {"uv": [5, 11, 5.5, 11.5], "texture": "#1"}
+			}
+		},
+		{
+			"name": "Right",
+			"from": [9.1666, 7, 7.5],
+			"to": [11.49993, 13, 14.5],
+			"faces": {
+				"west": {"uv": [4.5, 10.5, 4, 11], "texture": "#1"},
+				"down": {"uv": [5, 10.5, 5.5, 11], "texture": "#1"}
+			}
+		}
+	],
+	"groups": [
+		{
+			"name": "Whistle Small",
+			"origin": [8, 8, 8],
+			"color": 0,
+			"children": [
+				{
+					"name": "Whistle Small Mouth",
+					"origin": [8, 8, 8],
+					"color": 0,
+					"children": [0, 1, 2, 3, 4]
+				}
+			]
+		}
+	]
+}

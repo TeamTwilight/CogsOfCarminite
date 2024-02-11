@@ -1,0 +1,133 @@
+package com.cogsofcarminite.blocks.entities;
+
+import com.cogsofcarminite.blocks.HornblowerBlock;
+import com.simibubi.create.content.kinetics.base.KineticBlockEntity;
+import com.simibubi.create.foundation.utility.animation.LerpedFloat;
+import net.minecraft.MethodsReturnNonnullByDefault;
+import net.minecraft.core.BlockPos;
+import net.minecraft.nbt.CompoundTag;
+import net.minecraft.server.level.ServerLevel;
+import net.minecraft.sounds.SoundEvent;
+import net.minecraft.sounds.SoundSource;
+import net.minecraft.world.item.InstrumentItem;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.Blocks;
+import net.minecraft.world.level.block.entity.BlockEntityType;
+import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.gameevent.GameEvent;
+import net.minecraft.world.phys.AABB;
+import net.minecraft.world.phys.Vec3;
+import twilightforest.init.TFItems;
+import twilightforest.init.TFRecipes;
+import twilightforest.init.TFSounds;
+import twilightforest.util.WorldUtil;
+
+import javax.annotation.Nullable;
+import javax.annotation.ParametersAreNonnullByDefault;
+import java.util.concurrent.atomic.AtomicBoolean;
+
+@ParametersAreNonnullByDefault
+@MethodsReturnNonnullByDefault
+public class HornblowerBlockEntity extends KineticBlockEntity {
+    private static final int CHANCE_HARVEST = 20;
+    private static final int CHANCE_CRUMBLE = 5;
+
+    private static final int OFFSET = 3;
+    private static final int RADIUS = 2;
+
+    private static final float BREATH_CAPACITY = 128.0F;
+    private static final int CRUMBLE_COOLDOWN = 20;
+
+    public LerpedFloat animation = LerpedFloat.linear();
+    public ItemStack horn = ItemStack.EMPTY;
+    public float breath = 0.0F;
+    public int cooldown = 0;
+
+    public HornblowerBlockEntity(BlockEntityType<?> typeIn, BlockPos pos, BlockState state) {
+        super(typeIn, pos, state);
+    }
+
+    @Override
+    public void tick() {
+        super.tick();
+
+        if (this.cooldown-- <= 0 && !this.horn.isEmpty() && this.level != null) {
+            this.breath += Math.abs(this.getSpeed()) * 0.1F;
+            if (this.breath >= BREATH_CAPACITY) {
+                this.breath = -0.1F;
+                if (this.horn.is(TFItems.CRUMBLE_HORN.get())) {
+                    this.cooldown = CRUMBLE_COOLDOWN;
+                    Vec3 vec3 = Vec3.atCenterOf(this.getBlockPos().west().relative(this.getBlockState().getValue(HornblowerBlock.FACING), OFFSET));
+                    AABB crumbleBox = new AABB(vec3.x() - RADIUS, vec3.y() - RADIUS, vec3.z() - RADIUS, vec3.x() + RADIUS, vec3.y() + RADIUS, vec3.z() + RADIUS);
+                    for (BlockPos pos : WorldUtil.getAllInBB(crumbleBox)) {
+                        BlockState state = this.level.getBlockState(pos);
+                        Block block = state.getBlock();
+                        AtomicBoolean flag = new AtomicBoolean(false);
+
+                        if (state.isAir()) continue;
+
+                        if (this.level instanceof ServerLevel level) {
+                            level.getRecipeManager().getAllRecipesFor(TFRecipes.CRUMBLE_RECIPE.get()).forEach(recipe -> {
+                                if (flag.get()) return;
+                                if (recipe.result().is(Blocks.AIR)) {
+                                    if (recipe.input().is(block) && level.getRandom().nextInt(CHANCE_HARVEST) == 0 && !flag.get()) {
+                                        level.destroyBlock(pos, true);
+                                        flag.set(true);
+                                    }
+                                } else {
+                                    if (recipe.input().is(block) && level.getRandom().nextInt(CHANCE_CRUMBLE) == 0 && !flag.get()) {
+                                        level.setBlock(pos, recipe.result().getBlock().withPropertiesOf(state), 3);
+                                        level.levelEvent(2001, pos, Block.getId(state));
+                                        flag.set(true);
+                                    }
+                                }
+                            });
+                        }
+                    }
+                    this.level.playSound(null, this.getBlockPos(), TFSounds.QUEST_RAM_AMBIENT.get(), SoundSource.RECORDS, 1.0F, 0.8F);
+                } else if (this.horn.getItem() instanceof InstrumentItem item) {
+                    item.getInstrument(this.horn).ifPresent(instrument -> {
+                        SoundEvent soundEvent = instrument.value().soundEvent().value();
+                        float f = instrument.value().range() / 16.0F;
+                        this.level.playSound(null, this.getBlockPos(), soundEvent, SoundSource.RECORDS, f, 1.0F);
+                        this.level.gameEvent(GameEvent.INSTRUMENT_PLAY, this.getBlockPos(), GameEvent.Context.of(this.getBlockState()));
+                        this.cooldown = instrument.value().useDuration();
+                    });
+                }
+            }
+        }
+
+        boolean powered = this.cooldown > 0 && !this.horn.isEmpty();
+        this.animation.chase(powered ? 1.0D : 0.0D, powered ? 0.5D : 0.4D, powered ? LerpedFloat.Chaser.EXP : LerpedFloat.Chaser.LINEAR);
+        this.animation.tickChaser();
+    }
+
+    public @Nullable ItemStack setHorn(ItemStack stack) {
+        this.breath = 0.0F;
+        if (this.horn.isEmpty() && !stack.isEmpty()) {
+            this.horn = stack.copy();
+            stack.shrink(1);
+            return stack;
+        } else if (!this.horn.isEmpty() && stack.isEmpty()) {
+            stack = this.horn.copy();
+            this.horn.shrink(1);
+            return stack;
+        }
+        return null;
+    }
+
+    @Override
+    public void write(CompoundTag compound, boolean clientPacket) {
+        super.write(compound, clientPacket);
+        if (!this.horn.isEmpty()) compound.put("HornStack", this.horn.serializeNBT());
+        compound.putFloat("Breath", this.breath);
+    }
+
+    @Override
+    protected void read(CompoundTag compound, boolean clientPacket) {
+        super.read(compound, clientPacket);
+        this.horn = compound.contains("HornStack") ? ItemStack.of(compound.getCompound("HornStack")) : ItemStack.EMPTY;
+        this.breath = compound.getFloat("Breath");
+    }
+}

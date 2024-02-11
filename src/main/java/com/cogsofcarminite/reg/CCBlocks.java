@@ -1,14 +1,15 @@
 package com.cogsofcarminite.reg;
 
-import com.cogsofcarminite.blocks.CarminiteClockBlock;
-import com.cogsofcarminite.blocks.CarminiteCoreBlock;
-import com.cogsofcarminite.blocks.CarminiteEngineBlock;
-import com.cogsofcarminite.blocks.CarminiteHeartBlock;
+import com.cogsofcarminite.blocks.*;
 import com.cogsofcarminite.client.CCSpriteShifts;
-import com.cogsofcarminite.items.*;
+import com.cogsofcarminite.items.CarminiteClockItem;
+import com.cogsofcarminite.items.CarminiteCoreItem;
+import com.cogsofcarminite.items.CarminiteEngineItem;
+import com.cogsofcarminite.items.CarminiteHeartItem;
 import com.simibubi.create.content.decoration.encasing.CasingBlock;
 import com.simibubi.create.content.kinetics.BlockStressDefaults;
 import com.simibubi.create.foundation.data.AssetLookup;
+import com.simibubi.create.foundation.data.BlockStateGen;
 import com.simibubi.create.foundation.data.BuilderTransformers;
 import com.simibubi.create.foundation.data.SharedProperties;
 import com.tterrag.registrate.providers.DataGenContext;
@@ -30,7 +31,7 @@ import java.util.function.Function;
 
 import static com.cogsofcarminite.CogsOfCarminite.TWILIGHT_REGISTRATE;
 import static com.simibubi.create.foundation.data.ModelGen.customItemModel;
-import static com.simibubi.create.foundation.data.TagGen.pickaxeOnly;
+import static com.simibubi.create.foundation.data.TagGen.axeOrPickaxe;
 
 @SuppressWarnings("removal")
 @ParametersAreNonnullByDefault
@@ -51,7 +52,7 @@ public class CCBlocks {
                     .initialProperties(SharedProperties::copperMetal)
                     .properties(p -> p.mapColor(MapColor.STONE)
                             .noOcclusion())
-                    .transform(pickaxeOnly())
+                    .transform(axeOrPickaxe())
                     .blockstate(directionalBlockProviderIgnoresWaterlogged())
                     .addLayer(() -> RenderType::cutoutMipped)
                     .transform(BlockStressDefaults.setImpact(4.0))
@@ -64,7 +65,7 @@ public class CCBlocks {
                     .initialProperties(SharedProperties::copperMetal)
                     .properties(p -> p.mapColor(MapColor.STONE)
                             .noOcclusion())
-                    .transform(pickaxeOnly())
+                    .transform(axeOrPickaxe())
                     .blockstate(directionalBlockProviderIgnoresWaterlogged())
                     .addLayer(() -> RenderType::cutoutMipped)
                     .transform(BlockStressDefaults.setImpact(4.0))
@@ -77,7 +78,7 @@ public class CCBlocks {
                     .initialProperties(SharedProperties::copperMetal)
                     .properties(p -> p.mapColor(MapColor.STONE)
                             .noOcclusion())
-                    .transform(pickaxeOnly())
+                    .transform(axeOrPickaxe())
                     .blockstate(directionalBlockProviderIgnoresWaterlogged())
                     .addLayer(() -> RenderType::cutoutMipped)
                     .transform(BlockStressDefaults.setImpact(4.0))
@@ -90,11 +91,22 @@ public class CCBlocks {
                     .initialProperties(SharedProperties::copperMetal)
                     .properties(p -> p.mapColor(MapColor.STONE)
                             .noOcclusion())
-                    .transform(pickaxeOnly())
+                    .transform(axeOrPickaxe())
                     .blockstate(directionalBlockProviderIgnoresWaterlogged())
                     .addLayer(() -> RenderType::cutoutMipped)
                     .transform(BlockStressDefaults.setImpact(4.0))
                     .item(CarminiteClockItem::new)
+                    .transform(customItemModel())
+                    .register();
+
+    public static final BlockEntry<HornblowerBlock> HORNBLOWER =
+            TWILIGHT_REGISTRATE.block("hornblower", HornblowerBlock::new)
+                    .initialProperties(SharedProperties::copperMetal)
+                    .properties(p -> p.mapColor(MapColor.PODZOL).noOcclusion())
+                    .transform(axeOrPickaxe())
+                    .blockstate(BlockStateGen.horizontalBlockProvider(true))
+                    .addLayer(() -> RenderType::cutoutMipped)
+                    .item()
                     .transform(customItemModel())
                     .register();
 

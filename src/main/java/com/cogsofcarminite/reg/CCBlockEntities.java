@@ -1,11 +1,10 @@
 package com.cogsofcarminite.reg;
 
-import com.cogsofcarminite.blocks.entities.CarminiteClockBlockEntity;
-import com.cogsofcarminite.blocks.entities.CarminiteCoreBlockEntity;
-import com.cogsofcarminite.blocks.entities.CarminiteEngineBlockEntity;
-import com.cogsofcarminite.blocks.entities.CarminiteHeartBlockEntity;
+import com.cogsofcarminite.blocks.entities.*;
 import com.cogsofcarminite.client.instances.CarminiteMagicLogInstance;
+import com.cogsofcarminite.client.instances.HornblowerInstance;
 import com.cogsofcarminite.client.renderers.CarminiteMagicLogRenderer;
+import com.cogsofcarminite.client.renderers.HornblowerRenderer;
 import com.tterrag.registrate.util.entry.BlockEntityEntry;
 
 import static com.cogsofcarminite.CogsOfCarminite.TWILIGHT_REGISTRATE;
@@ -37,6 +36,13 @@ public class CCBlockEntities {
             .instance(() -> CarminiteMagicLogInstance::new)
             .renderer(() -> CarminiteMagicLogRenderer::new)
             .validBlocks(CCBlocks.CARMINITE_CLOCK)
+            .register();
+
+    public static final BlockEntityEntry<HornblowerBlockEntity> HORNBLOWER = TWILIGHT_REGISTRATE
+            .blockEntity("hornblower", HornblowerBlockEntity::new)
+            .instance(() -> HornblowerInstance::new)
+            .renderer(() -> HornblowerRenderer::new)
+            .validBlocks(CCBlocks.HORNBLOWER)
             .register();
 
     public static void register() {}

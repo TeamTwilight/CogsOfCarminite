@@ -1,0 +1,19 @@
+{
+  "variants": {
+    "facing=east": {
+      "model": "cogsofcarminite:block/hornblower/block",
+      "y": 90
+    },
+    "facing=north": {
+      "model": "cogsofcarminite:block/hornblower/block"
+    },
+    "facing=south": {
+      "model": "cogsofcarminite:block/hornblower/block",
+      "y": 180
+    },
+    "facing=west": {
+      "model": "cogsofcarminite:block/hornblower/block",
+      "y": 270
+    }
+  }
+}

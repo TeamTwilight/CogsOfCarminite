@@ -39,13 +39,13 @@ public class CarminiteMagicLogRenderer extends KineticBlockEntityRenderer<Carmin
     }
 
     @Override
-    protected void renderSafe(CarminiteMagicLogBlockEntity be, float partialTicks, PoseStack ms, MultiBufferSource buffer, int light, int overlay) {
-        BlockState blockState = be.getBlockState();
+    protected void renderSafe(CarminiteMagicLogBlockEntity magicLog, float partialTicks, PoseStack ms, MultiBufferSource buffer, int light, int overlay) {
+        BlockState blockState = magicLog.getBlockState();
         Block block = blockState.getBlock();
 
-        if (block instanceof CarminiteMagicLogBlock logBlock && be.getLevel() != null) {
-            BlockPos pos = be.getBlockPos();
-            Direction.Axis axis = getRotationAxisOf(be);
+        if (block instanceof CarminiteMagicLogBlock logBlock && magicLog.getLevel() != null) {
+            BlockPos pos = magicLog.getBlockPos();
+            Direction.Axis axis = getRotationAxisOf(magicLog);
             Direction dir = Direction.fromAxisAndDirection(axis, logBlock.getAxisDirection(blockState));
 
             ms.pushPose();
@@ -63,7 +63,7 @@ public class CarminiteMagicLogRenderer extends KineticBlockEntityRenderer<Carmin
             PoseStack.Pose posestack$pose = ms.last();
             Matrix4f matrix4f = posestack$pose.pose();
             Matrix3f matrix3f = posestack$pose.normal();
-            VertexConsumer vertexconsumer = buffer.getBuffer(be.getRenderType());
+            VertexConsumer vertexconsumer = buffer.getBuffer(magicLog.getRenderType());
 
             vertex(vertexconsumer, matrix4f, matrix3f, 0.0F, 0, 0, 1);
             vertex(vertexconsumer, matrix4f, matrix3f, 1.0F, 0, 1, 1);
@@ -73,29 +73,29 @@ public class CarminiteMagicLogRenderer extends KineticBlockEntityRenderer<Carmin
             ms.popPose();
             ms.popPose();
 
-            super.renderSafe(be, partialTicks, ms, buffer, light, overlay);
-            FilteringRenderer.renderOnBlockEntity(be, partialTicks, ms, buffer, light, overlay);
-            if (Backend.canUseInstancing(be.getLevel())) return;
+            super.renderSafe(magicLog, partialTicks, ms, buffer, light, overlay);
+            FilteringRenderer.renderOnBlockEntity(magicLog, partialTicks, ms, buffer, light, overlay);
+            if (Backend.canUseInstancing(magicLog.getLevel())) return;
 
 
-            float angle = getAngleForTe(be, pos, axis);
+            float angle = getAngleForTe(magicLog, pos, axis);
 
-            for (Direction d : Iterate.directionsInAxis(getRotationAxisOf(be))) {
-                if (!logBlock.hasShaftTowards(be.getLevel(), be.getBlockPos(), blockState, d)) {
+            for (Direction d : Iterate.directionsInAxis(getRotationAxisOf(magicLog))) {
+                if (!logBlock.hasShaftTowards(magicLog.getLevel(), magicLog.getBlockPos(), blockState, d)) {
                     continue;
                 }
-                SuperByteBuffer shaft = CachedBufferer.partialFacing(AllPartialModels.SHAFT_HALF, be.getBlockState(), d);
-                kineticRotationTransform(shaft, be, axis, angle, light);
+                SuperByteBuffer shaft = CachedBufferer.partialFacing(AllPartialModels.SHAFT_HALF, magicLog.getBlockState(), d);
+                kineticRotationTransform(shaft, magicLog, axis, angle, light);
                 shaft.renderInto(ms, buffer.getBuffer(RenderType.solid()));
             }
 
-            float speed = be.flywheelSpeed.getValue(partialTicks) * 3 / 10f;
-            float angl = be.flywheelAngle + speed * partialTicks;
+            float speed = magicLog.flywheelSpeed.getValue(partialTicks) * 3 / 10f;
+            float angl = magicLog.flywheelAngle + speed * partialTicks;
 
             VertexConsumer vb = buffer.getBuffer(RenderType.solid());
 
             BlockState state = AllBlocks.FLYWHEEL.getDefaultState().setValue(FlywheelBlock.AXIS, blockState.getValue(CarminiteMagicLogBlock.AXIS));
-            renderFlywheel(be, ms, light, state, angl, vb);
+            renderFlywheel(magicLog, ms, light, state, angl, vb);
         }
     }
 

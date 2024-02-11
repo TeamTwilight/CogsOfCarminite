@@ -17,7 +17,6 @@ import net.minecraft.world.level.block.state.StateDefinition;
 import net.minecraft.world.level.block.state.properties.BlockStateProperties;
 import net.minecraft.world.level.block.state.properties.BooleanProperty;
 import net.minecraft.world.level.block.state.properties.EnumProperty;
-import twilightforest.TwilightForestMod;
 
 import javax.annotation.ParametersAreNonnullByDefault;
 
@@ -55,7 +54,6 @@ public abstract class CarminiteMagicLogBlock extends KineticBlock implements IRo
     public void onPlace(BlockState state, Level level, BlockPos pos, BlockState oldState, boolean isMoving) {
         if (level.getBlockEntity(pos) instanceof CarminiteCoreBlockEntity entity) {
             entity.removeSource();
-            TwilightForestMod.LOGGER.error("REMOVED SOURCE");
         }
         super.onPlace(state, level, pos, oldState, isMoving);
     }
