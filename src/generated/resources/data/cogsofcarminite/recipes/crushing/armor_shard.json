@@ -1,0 +1,23 @@
+{
+  "type": "create:crushing",
+  "ingredients": [
+    {
+      "item": "twilightforest:knightmetal_ingot"
+    }
+  ],
+  "processingTime": 200,
+  "results": [
+    {
+      "count": 7,
+      "item": "twilightforest:armor_shard"
+    },
+    {
+      "chance": 0.5,
+      "item": "twilightforest:armor_shard"
+    },
+    {
+      "chance": 0.25,
+      "item": "twilightforest:armor_shard"
+    }
+  ]
+}

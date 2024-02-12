@@ -3,6 +3,7 @@ package com.cogsofcarminite.data;
 import com.cogsofcarminite.CogsOfCarminite;
 import com.cogsofcarminite.reg.CCBlocks;
 import com.cogsofcarminite.reg.CCItems;
+import com.simibubi.create.AllItems;
 import com.simibubi.create.AllRecipeTypes;
 import com.simibubi.create.Create;
 import com.simibubi.create.content.processing.recipe.ProcessingRecipe;
@@ -19,6 +20,7 @@ import net.minecraft.data.PackOutput;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.item.crafting.Ingredient;
 import net.minecraft.world.level.ItemLike;
+import net.minecraft.world.level.block.Blocks;
 import net.minecraftforge.common.Tags;
 import twilightforest.init.TFBlocks;
 import twilightforest.init.TFItems;
@@ -32,10 +34,10 @@ import java.util.function.UnaryOperator;
 
 @MethodsReturnNonnullByDefault
 @ParametersAreNonnullByDefault
-public class CCRecipeGen extends CreateRecipeProvider {
+public class CCProcessingRecipeGen extends CreateRecipeProvider {
     protected static final List<ProcessingRecipeGen> CCGENERATORS = new ArrayList<>();
 
-    public CCRecipeGen(PackOutput output) {
+    public CCProcessingRecipeGen(PackOutput output) {
         super(output);
     }
 
@@ -44,13 +46,13 @@ public class CCRecipeGen extends CreateRecipeProvider {
         CCGENERATORS.add(new Pressing(output));
         CCGENERATORS.add(new Milling(output));
         CCGENERATORS.add(new Crushing(output));
+        CCGENERATORS.add(new Mixing(output));
         CCGENERATORS.add(new Haunting(output));
 
         gen.addProvider(true, new DataProvider() {
-
             @Override
             public String getName() {
-                return "Cogs Of Carminite's Recipes";
+                return "Cogs Of Carminite's Processing Recipes";
             }
 
             @Override
@@ -121,6 +123,9 @@ public class CCRecipeGen extends CreateRecipeProvider {
                 .output(Items.GREEN_DYE)
                 .output(.1f, Items.GREEN_DYE));
 
+        GeneratedRecipe ARMOR_SHARD = create(CogsOfCarminite.prefix("armor_shard"), b -> b.duration(200).withItemIngredients(Ingredient.of(TFItems.ARMOR_SHARD_CLUSTER.get()))
+                .output(TFItems.ARMOR_SHARD.get(), 9));
+
         public Milling(PackOutput generator) {
             super(generator);
         }
@@ -137,6 +142,11 @@ public class CCRecipeGen extends CreateRecipeProvider {
 			.output(.1f, Items.FLINT)
 			.output(.05f, Items.CLAY_BALL));
 
+        GeneratedRecipe ARMOR_SHARD = create(CogsOfCarminite.prefix("armor_shard"), b -> b.duration(200).withItemIngredients(Ingredient.of(TFItems.KNIGHTMETAL_INGOT.get()))
+                .output(TFItems.ARMOR_SHARD.get(), 7)
+                .output(.5f, TFItems.ARMOR_SHARD.get())
+                .output(.25f, TFItems.ARMOR_SHARD.get()));
+
         public Crushing(PackOutput generator) {
             super(generator);
         }
@@ -144,6 +154,21 @@ public class CCRecipeGen extends CreateRecipeProvider {
         @Override
         protected IRecipeTypeInfo getRecipeType() {
             return AllRecipeTypes.CRUSHING;
+        }
+    }
+
+    public static class Mixing extends ProcessingRecipeGen {
+        GeneratedRecipe ANDESITE_ALLOY = create(CogsOfCarminite.prefix("andesite_alloy_from_knightmetal"), b -> b.require(Blocks.ANDESITE)
+                .require(TFItems.ARMOR_SHARD.get())
+                .output(AllItems.ANDESITE_ALLOY.get(), 1));
+
+        public Mixing(PackOutput generator) {
+            super(generator);
+        }
+
+        @Override
+        protected IRecipeTypeInfo getRecipeType() {
+            return AllRecipeTypes.MIXING;
         }
     }
 

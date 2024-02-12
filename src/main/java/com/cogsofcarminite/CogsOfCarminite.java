@@ -1,9 +1,6 @@
 package com.cogsofcarminite;
 
-import com.cogsofcarminite.data.CCLangGenerator;
-import com.cogsofcarminite.data.CCRecipeGen;
-import com.cogsofcarminite.data.CCTags;
-import com.cogsofcarminite.data.CCWorldgenDataProvider;
+import com.cogsofcarminite.data.*;
 import com.cogsofcarminite.reg.*;
 import com.mojang.logging.LogUtils;
 import com.simibubi.create.foundation.data.CreateRegistrate;
@@ -90,7 +87,8 @@ public class CogsOfCarminite {
             CompletableFuture<HolderLookup.Provider> provider = event.getLookupProvider();
             ExistingFileHelper helper = event.getExistingFileHelper();
 
-            CCRecipeGen.registerAll(gen, output);
+            CCProcessingRecipeGen.registerAll(gen, output);
+            gen.addProvider(true, new CCStandardRecipeGen(output));
             BlockTagsProvider blockTagsProvider = new CCTags.Blocks(output, provider, helper);
             gen.addProvider(true, blockTagsProvider);
             gen.addProvider(true, new CCTags.Items(output, provider, blockTagsProvider.contentsGetter(), helper));
