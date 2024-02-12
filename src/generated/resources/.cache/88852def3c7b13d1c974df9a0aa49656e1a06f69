@@ -1,4 +1,4 @@
-// 1.20.1	2023-12-10T18:10:13.1943195	Cogs Of Carminite's Recipes
+// 1.20.1	2024-02-12T02:54:36.6413493	Cogs Of Carminite's Recipes
 83265d58a338280a3072612941f8fdb8abbe6898 data/cogsofcarminite/recipes/crushing/deadrock.json
 6b8072e02752a944adae337325d3d9e3683bea80 data/cogsofcarminite/recipes/item_application/dark_tower_casing.json
 429796bde2e893af4035b73d9c0dd9b28f1d249c data/cogsofcarminite/recipes/milling/fiddlehead.json
@@ -11,3 +11,4 @@ ed2a7ec74ec203ae28e21042c958340221dc9782 data/cogsofcarminite/recipes/pressing/f
 68fee956344444740af19bd8165016beab6872e5 data/cogsofcarminite/recipes/pressing/ironwood_ingot.json
 a55500aacdbbcfe44dd55bdbb2d700b0c1732d17 data/cogsofcarminite/recipes/pressing/knightmetal_ingot.json
 6b03c577d1817de4b4e762392ac4fa557150ee58 data/cogsofcarminite/recipes/pressing/moonworm_squish.json
+58f80ed82798111105c82208e75d01574ac861a2 data/create/recipes/haunting/infested_towerwood.json

@@ -2,6 +2,7 @@ package com.cogsofcarminite;
 
 import com.cogsofcarminite.data.CCLangGenerator;
 import com.cogsofcarminite.data.CCRecipeGen;
+import com.cogsofcarminite.data.CCTags;
 import com.cogsofcarminite.data.CCWorldgenDataProvider;
 import com.cogsofcarminite.reg.*;
 import com.mojang.logging.LogUtils;
@@ -11,11 +12,14 @@ import com.simibubi.create.foundation.item.KineticStats;
 import com.simibubi.create.foundation.item.TooltipHelper;
 import com.simibubi.create.foundation.item.TooltipModifier;
 import net.minecraft.MethodsReturnNonnullByDefault;
+import net.minecraft.core.HolderLookup;
 import net.minecraft.data.DataGenerator;
 import net.minecraft.data.PackOutput;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.common.MinecraftForge;
+import net.minecraftforge.common.data.BlockTagsProvider;
+import net.minecraftforge.common.data.ExistingFileHelper;
 import net.minecraftforge.data.event.GatherDataEvent;
 import net.minecraftforge.eventbus.api.EventPriority;
 import net.minecraftforge.eventbus.api.IEventBus;
@@ -27,6 +31,7 @@ import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
 import org.slf4j.Logger;
 
 import javax.annotation.ParametersAreNonnullByDefault;
+import java.util.concurrent.CompletableFuture;
 
 @Mod(CogsOfCarminite.MODID)
 @ParametersAreNonnullByDefault
@@ -82,7 +87,13 @@ public class CogsOfCarminite {
         }
 
         if (event.includeServer()) {
+            CompletableFuture<HolderLookup.Provider> provider = event.getLookupProvider();
+            ExistingFileHelper helper = event.getExistingFileHelper();
+
             CCRecipeGen.registerAll(gen, output);
+            BlockTagsProvider blockTagsProvider = new CCTags.Blocks(output, provider, helper);
+            gen.addProvider(true, blockTagsProvider);
+            gen.addProvider(true, new CCTags.Items(output, provider, blockTagsProvider.contentsGetter(), helper));
             gen.addProvider(true, CCWorldgenDataProvider.makeFactory(event.getLookupProvider()));
         }
     }

@@ -10,6 +10,7 @@ import com.simibubi.create.content.processing.recipe.ProcessingRecipeBuilder;
 import com.simibubi.create.foundation.data.recipe.CreateRecipeProvider;
 import com.simibubi.create.foundation.data.recipe.ProcessingRecipeGen;
 import com.simibubi.create.foundation.recipe.IRecipeTypeInfo;
+import com.simibubi.create.foundation.utility.RegisteredObjects;
 import net.minecraft.MethodsReturnNonnullByDefault;
 import net.minecraft.data.CachedOutput;
 import net.minecraft.data.DataGenerator;
@@ -17,6 +18,7 @@ import net.minecraft.data.DataProvider;
 import net.minecraft.data.PackOutput;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.item.crafting.Ingredient;
+import net.minecraft.world.level.ItemLike;
 import net.minecraftforge.common.Tags;
 import twilightforest.init.TFBlocks;
 import twilightforest.init.TFItems;
@@ -25,6 +27,7 @@ import javax.annotation.ParametersAreNonnullByDefault;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.CompletableFuture;
+import java.util.function.Supplier;
 import java.util.function.UnaryOperator;
 
 @MethodsReturnNonnullByDefault
@@ -41,6 +44,7 @@ public class CCRecipeGen extends CreateRecipeProvider {
         CCGENERATORS.add(new Pressing(output));
         CCGENERATORS.add(new Milling(output));
         CCGENERATORS.add(new Crushing(output));
+        CCGENERATORS.add(new Haunting(output));
 
         gen.addProvider(true, new DataProvider() {
 
@@ -140,6 +144,30 @@ public class CCRecipeGen extends CreateRecipeProvider {
         @Override
         protected IRecipeTypeInfo getRecipeType() {
             return AllRecipeTypes.CRUSHING;
+        }
+    }
+
+    public static class Haunting extends ProcessingRecipeGen {
+        GeneratedRecipe HAUNT_TOWERWOOD_PLANKS = convert(TFBlocks.TOWERWOOD.get(), TFBlocks.INFESTED_TOWERWOOD.get());
+
+        public Haunting(PackOutput generator) {
+            super(generator);
+        }
+
+        public GeneratedRecipe convert(ItemLike input, ItemLike result) {
+            return convert(() -> Ingredient.of(input), () -> result);
+        }
+
+        public GeneratedRecipe convert(Supplier<Ingredient> input, Supplier<ItemLike> result) {
+            return create(Create.asResource(RegisteredObjects.getKeyOrThrow(result.get()
+                                    .asItem())
+                            .getPath()),
+                    p -> p.withItemIngredients(input.get())
+                            .output(result.get()));
+        }
+        @Override
+        protected IRecipeTypeInfo getRecipeType() {
+            return AllRecipeTypes.HAUNTING;
         }
     }
 }
