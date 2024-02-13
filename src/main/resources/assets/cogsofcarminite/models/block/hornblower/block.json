@@ -6,7 +6,7 @@
 		"6": "cogsofcarminite:block/hornblower_side",
 		"7": "cogsofcarminite:block/hornblower_bottom",
 		"8": "cogsofcarminite:block/hornblower_head",
-		"particle": "create:block/whistle_particle"
+		"particle": "cogsofcarminite:block/hornblower_head"
 	},
 	"elements": [
 		{
