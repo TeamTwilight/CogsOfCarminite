@@ -9,6 +9,7 @@
   "cogsofcarminite.tooltip.hornblower.contains": "Item: %1$s",
   "cogsofcarminite.tooltip.hornblower.empty": "Use a Horn Item to Insert",
   "cogsofcarminite.tooltip.hornblower.header": "Hornblower Information",
+  "cogsofcarminite.tooltip.hornblower.instrument": "%1$s",
   "item.cogsofcarminite.fiery_sheet": "Fiery Sheet",
   "item.cogsofcarminite.ironwood_sheet": "Ironwood Sheet",
   "item.cogsofcarminite.knightmetal_sheet": "Knightmetal Sheet"

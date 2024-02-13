@@ -15,6 +15,7 @@ public class CCLangGenerator {
         addLang("item_group", "main", "Cogs Of Carminite");
         addLang("tooltip", "hornblower.header", "Hornblower Information");
         addLang("tooltip", "hornblower.contains", "Item: %1$s");
+        addLang("tooltip", "hornblower.instrument", "%1$s");
         addLang("tooltip", "hornblower.empty", "Use a Horn Item to Insert");
     }
 

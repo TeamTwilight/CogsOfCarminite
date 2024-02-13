@@ -8,13 +8,17 @@ import com.simibubi.create.foundation.utility.Components;
 import com.simibubi.create.foundation.utility.animation.LerpedFloat;
 import net.minecraft.ChatFormatting;
 import net.minecraft.MethodsReturnNonnullByDefault;
+import net.minecraft.Util;
 import net.minecraft.core.BlockPos;
+import net.minecraft.core.Holder;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
+import net.minecraft.resources.ResourceKey;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.sounds.SoundEvent;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.util.Mth;
+import net.minecraft.world.item.Instrument;
 import net.minecraft.world.item.InstrumentItem;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.block.Block;
@@ -32,6 +36,7 @@ import twilightforest.util.WorldUtil;
 import javax.annotation.Nullable;
 import javax.annotation.ParametersAreNonnullByDefault;
 import java.util.List;
+import java.util.Optional;
 import java.util.concurrent.atomic.AtomicBoolean;
 
 @ParametersAreNonnullByDefault
@@ -147,11 +152,19 @@ public class HornblowerBlockEntity extends KineticBlockEntity {
         CCLangGenerator.translate("tooltip.hornblower.header")
                 .forGoggles(tooltip);
 
-        if (!this.horn.isEmpty())
+        if (!this.horn.isEmpty()) {
             CCLangGenerator.translate("tooltip.hornblower.contains", Components.translatable(this.horn.getDescriptionId()).getString())
                     .style(ChatFormatting.GREEN)
                     .forGoggles(tooltip);
-        else
+            if (this.horn.getItem() instanceof InstrumentItem instrumentItem) {
+                Optional<ResourceKey<Instrument>> optional = instrumentItem.getInstrument(this.horn).flatMap(Holder::unwrapKey);
+                optional.ifPresent(instrumentResourceKey ->
+                        CCLangGenerator.translate("tooltip.hornblower.instrument", Component.translatable(Util.makeDescriptionId("instrument", instrumentResourceKey.location())).getString())
+                        .style(ChatFormatting.GRAY)
+                        .forGoggles(tooltip));
+
+            }
+        } else
             CCLangGenerator.translate("tooltip.hornblower.empty")
                 .style(ChatFormatting.YELLOW)
                 .forGoggles(tooltip);

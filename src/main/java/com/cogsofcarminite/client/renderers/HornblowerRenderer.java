@@ -43,7 +43,7 @@ public class HornblowerRenderer extends SafeBlockEntityRenderer<HornblowerBlockE
         float offset = hornblower.animation.getValue(partialTicks);
         if (hornblower.animation.getChaseTarget() > 0.0F && hornblower.animation.getValue() > 0.5F) {
             float wiggleProgress = (AnimationTickHolder.getTicks(hornblower.getLevel()) + partialTicks) / 8.0F;
-            offset -= Math.sin(wiggleProgress * (2.0F * Mth.PI) * 2.0F) / 16.0F;
+            offset -= (float) (Math.sin(wiggleProgress * (2.0F * Mth.PI) * 2.0F) / 16.0F);
         }
 
         CachedBufferer.partial(mouth, blockState)
