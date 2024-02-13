@@ -1,14 +1,20 @@
 package com.cogsofcarminite.blocks.entities;
 
 import com.cogsofcarminite.blocks.HornblowerBlock;
+import com.cogsofcarminite.data.CCLangGenerator;
+import com.simibubi.create.content.kinetics.base.IRotate;
 import com.simibubi.create.content.kinetics.base.KineticBlockEntity;
+import com.simibubi.create.foundation.utility.Components;
 import com.simibubi.create.foundation.utility.animation.LerpedFloat;
+import net.minecraft.ChatFormatting;
 import net.minecraft.MethodsReturnNonnullByDefault;
 import net.minecraft.core.BlockPos;
 import net.minecraft.nbt.CompoundTag;
+import net.minecraft.network.chat.Component;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.sounds.SoundEvent;
 import net.minecraft.sounds.SoundSource;
+import net.minecraft.util.Mth;
 import net.minecraft.world.item.InstrumentItem;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.block.Block;
@@ -25,6 +31,7 @@ import twilightforest.util.WorldUtil;
 
 import javax.annotation.Nullable;
 import javax.annotation.ParametersAreNonnullByDefault;
+import java.util.List;
 import java.util.concurrent.atomic.AtomicBoolean;
 
 @ParametersAreNonnullByDefault
@@ -67,18 +74,18 @@ public class HornblowerBlockEntity extends KineticBlockEntity {
 
                         if (state.isAir()) continue;
 
-                        if (this.level instanceof ServerLevel level) {
-                            level.getRecipeManager().getAllRecipesFor(TFRecipes.CRUMBLE_RECIPE.get()).forEach(recipe -> {
+                        if (this.level instanceof ServerLevel serverLevel) {
+                            serverLevel.getRecipeManager().getAllRecipesFor(TFRecipes.CRUMBLE_RECIPE.get()).forEach(recipe -> {
                                 if (flag.get()) return;
                                 if (recipe.result().is(Blocks.AIR)) {
-                                    if (recipe.input().is(block) && level.getRandom().nextInt(CHANCE_HARVEST) == 0 && !flag.get()) {
-                                        level.destroyBlock(pos, true);
+                                    if (recipe.input().is(block) && serverLevel.getRandom().nextInt(CHANCE_HARVEST) == 0 && !flag.get()) {
+                                        serverLevel.destroyBlock(pos, true);
                                         flag.set(true);
                                     }
                                 } else {
-                                    if (recipe.input().is(block) && level.getRandom().nextInt(CHANCE_CRUMBLE) == 0 && !flag.get()) {
-                                        level.setBlock(pos, recipe.result().getBlock().withPropertiesOf(state), 3);
-                                        level.levelEvent(2001, pos, Block.getId(state));
+                                    if (recipe.input().is(block) && serverLevel.getRandom().nextInt(CHANCE_CRUMBLE) == 0 && !flag.get()) {
+                                        serverLevel.setBlock(pos, recipe.result().getBlock().withPropertiesOf(state), 3);
+                                        serverLevel.levelEvent(2001, pos, Block.getId(state));
                                         flag.set(true);
                                     }
                                 }
@@ -108,10 +115,14 @@ public class HornblowerBlockEntity extends KineticBlockEntity {
         if (this.horn.isEmpty() && !stack.isEmpty()) {
             this.horn = stack.copy();
             stack.shrink(1);
+            sendData();
+            setChanged();
             return stack;
         } else if (!this.horn.isEmpty() && stack.isEmpty()) {
             stack = this.horn.copy();
             this.horn.shrink(1);
+            sendData();
+            setChanged();
             return stack;
         }
         return null;
@@ -130,4 +141,28 @@ public class HornblowerBlockEntity extends KineticBlockEntity {
         this.horn = compound.contains("HornStack") ? ItemStack.of(compound.getCompound("HornStack")) : ItemStack.EMPTY;
         this.breath = compound.getFloat("Breath");
     }
+
+    @Override
+    public boolean addToGoggleTooltip(List<Component> tooltip, boolean isPlayerSneaking) {
+        CCLangGenerator.translate("tooltip.hornblower.header")
+                .forGoggles(tooltip);
+
+        if (!this.horn.isEmpty())
+            CCLangGenerator.translate("tooltip.hornblower.contains", Components.translatable(this.horn.getDescriptionId()).getString())
+                    .style(ChatFormatting.GREEN)
+                    .forGoggles(tooltip);
+        else
+            CCLangGenerator.translate("tooltip.hornblower.empty")
+                .style(ChatFormatting.YELLOW)
+                .forGoggles(tooltip);
+
+        float stressAtBase = calculateStressApplied();
+        if (IRotate.StressImpact.isEnabled() && !Mth.equal(stressAtBase, 0)) {
+            tooltip.add(Components.immutableEmpty());
+            addStressImpactStats(tooltip, stressAtBase);
+        }
+
+        return true;
+    }
+
 }

@@ -1,7 +1,8 @@
 package com.cogsofcarminite.data;
 
-import com.cogsofcarminite.CogsOfCarminite;
-import com.simibubi.create.AllItems;
+import com.cogsofcarminite.reg.CCBlocks;
+import com.cogsofcarminite.reg.CCItems;
+import com.simibubi.create.AllBlocks;
 import net.minecraft.MethodsReturnNonnullByDefault;
 import net.minecraft.data.PackOutput;
 import net.minecraft.data.recipes.FinishedRecipe;
@@ -9,8 +10,6 @@ import net.minecraft.data.recipes.RecipeCategory;
 import net.minecraft.data.recipes.RecipeProvider;
 import net.minecraft.data.recipes.ShapedRecipeBuilder;
 import net.minecraft.world.item.crafting.Ingredient;
-import net.minecraft.world.level.block.Blocks;
-import twilightforest.init.TFItems;
 
 import javax.annotation.ParametersAreNonnullByDefault;
 import java.util.function.Consumer;
@@ -24,12 +23,12 @@ public class CCStandardRecipeGen extends RecipeProvider {
 
     @Override
     protected void buildRecipes(Consumer<FinishedRecipe> consumer) {
-        ShapedRecipeBuilder.shaped(RecipeCategory.MISC, AllItems.ANDESITE_ALLOY)
-                .pattern("BA")
-                .pattern("AB")
-                .define('A', Ingredient.of(Blocks.ANDESITE))
-                .define('B', Ingredient.of(TFItems.ARMOR_SHARD.get()))
-                .unlockedBy("has_item", has(TFItems.ARMOR_SHARD.get()))
-                .save(consumer, CogsOfCarminite.prefix("andesite_alloy_from_knightmetal"));
+        ShapedRecipeBuilder.shaped(RecipeCategory.MISC, CCBlocks.HORNBLOWER)
+                .pattern("S")
+                .pattern("C")
+                .define('S', Ingredient.of(CCItems.IRONWOOD_SHEET))
+                .define('C', Ingredient.of(AllBlocks.ANDESITE_CASING))
+                .unlockedBy("has_item", has(CCItems.IRONWOOD_SHEET))
+                .save(consumer, CCBlocks.HORNBLOWER.getId());
     }
 }

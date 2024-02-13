@@ -1,6 +1,7 @@
 package com.cogsofcarminite.reg;
 
 import com.cogsofcarminite.CogsOfCarminite;
+import com.simibubi.create.foundation.data.CreateRegistrate;
 import com.tterrag.registrate.util.entry.RegistryEntry;
 import net.minecraft.MethodsReturnNonnullByDefault;
 import net.minecraft.core.registries.Registries;
@@ -23,10 +24,10 @@ public class CCCreativeModeTabs {
 
     static {
         MAIN_TAB = TAB_REGISTER.register("main", () ->
-                CreativeModeTab.builder().title(Component.translatable("itemGroup.cogsofcarminite.main")).icon(() ->
+                CreativeModeTab.builder().title(Component.translatable("cogsofcarminite.item_group.main")).icon(() ->
                         new ItemStack(CCItems.FIERY_SHEET.get())).displayItems((parameters, output) -> {
                             for (RegistryEntry<Item> entry : CogsOfCarminite.TWILIGHT_REGISTRATE.getAll(Registries.ITEM)) {
-                                if (CogsOfCarminite.TWILIGHT_REGISTRATE.isInCreativeTab(entry, MAIN_TAB)) output.accept(entry.get());
+                                if (CreateRegistrate.isInCreativeTab(entry, MAIN_TAB)) output.accept(entry.get());
                             }
                         }).build());
     }

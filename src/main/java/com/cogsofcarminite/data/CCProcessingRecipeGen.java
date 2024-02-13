@@ -6,6 +6,7 @@ import com.cogsofcarminite.reg.CCItems;
 import com.simibubi.create.AllItems;
 import com.simibubi.create.AllRecipeTypes;
 import com.simibubi.create.Create;
+import com.simibubi.create.content.processing.recipe.HeatCondition;
 import com.simibubi.create.content.processing.recipe.ProcessingRecipe;
 import com.simibubi.create.content.processing.recipe.ProcessingRecipeBuilder;
 import com.simibubi.create.foundation.data.recipe.CreateRecipeProvider;
@@ -160,6 +161,7 @@ public class CCProcessingRecipeGen extends CreateRecipeProvider {
     public static class Mixing extends ProcessingRecipeGen {
         GeneratedRecipe ANDESITE_ALLOY = create(CogsOfCarminite.prefix("andesite_alloy_from_knightmetal"), b -> b.require(Blocks.ANDESITE)
                 .require(TFItems.ARMOR_SHARD.get())
+                .requiresHeat(HeatCondition.HEATED)
                 .output(AllItems.ANDESITE_ALLOY.get(), 1));
 
         public Mixing(PackOutput generator) {

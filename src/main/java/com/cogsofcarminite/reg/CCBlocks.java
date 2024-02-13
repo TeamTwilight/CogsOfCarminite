@@ -106,6 +106,7 @@ public class CCBlocks {
                     .transform(axeOrPickaxe())
                     .blockstate(BlockStateGen.horizontalBlockProvider(true))
                     .addLayer(() -> RenderType::cutoutMipped)
+                    .transform(BlockStressDefaults.setImpact(1.0))
                     .item()
                     .transform(customItemModel())
                     .register();

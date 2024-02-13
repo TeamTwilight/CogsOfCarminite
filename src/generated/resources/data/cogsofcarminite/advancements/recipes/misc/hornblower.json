@@ -6,7 +6,7 @@
         "items": [
           {
             "items": [
-              "twilightforest:armor_shard"
+              "cogsofcarminite:ironwood_sheet"
             ]
           }
         ]
@@ -15,7 +15,7 @@
     },
     "has_the_recipe": {
       "conditions": {
-        "recipe": "cogsofcarminite:andesite_alloy_from_knightmetal"
+        "recipe": "cogsofcarminite:hornblower"
       },
       "trigger": "minecraft:recipe_unlocked"
     }
@@ -28,7 +28,7 @@
   ],
   "rewards": {
     "recipes": [
-      "cogsofcarminite:andesite_alloy_from_knightmetal"
+      "cogsofcarminite:hornblower"
     ]
   },
   "sends_telemetry_event": false
