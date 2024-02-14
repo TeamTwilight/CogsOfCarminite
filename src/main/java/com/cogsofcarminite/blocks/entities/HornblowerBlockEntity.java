@@ -28,6 +28,7 @@ import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.gameevent.GameEvent;
 import net.minecraft.world.phys.AABB;
 import net.minecraft.world.phys.Vec3;
+import twilightforest.TwilightForestMod;
 import twilightforest.init.TFItems;
 import twilightforest.init.TFRecipes;
 import twilightforest.init.TFSounds;
@@ -42,14 +43,14 @@ import java.util.concurrent.atomic.AtomicBoolean;
 @ParametersAreNonnullByDefault
 @MethodsReturnNonnullByDefault
 public class HornblowerBlockEntity extends KineticBlockEntity {
-    private static final int CHANCE_HARVEST = 20;
-    private static final int CHANCE_CRUMBLE = 5;
+    public static final int CHANCE_HARVEST = 20;
+    public static final int CHANCE_CRUMBLE = 5;
 
-    private static final int OFFSET = 3;
-    private static final int RADIUS = 2;
+    public static final int OFFSET = 3;
+    public static final int RADIUS = 2;
 
-    private static final float BREATH_CAPACITY = 128.0F;
-    private static final int CRUMBLE_COOLDOWN = 20;
+    public static final float BREATH_CAPACITY = 128.0F;
+    public static final int CRUMBLE_COOLDOWN = 20;
 
     public LerpedFloat animation = LerpedFloat.linear();
     public ItemStack horn = ItemStack.EMPTY;
@@ -64,6 +65,7 @@ public class HornblowerBlockEntity extends KineticBlockEntity {
     public void tick() {
         super.tick();
 
+        TwilightForestMod.LOGGER.error("Speed wassa {}!", this.getSpeed());
         if (this.cooldown-- <= 0 && !this.horn.isEmpty() && this.level != null) {
             this.breath += Math.abs(this.getSpeed()) * 0.1F;
             if (this.breath >= BREATH_CAPACITY) {
@@ -138,6 +140,7 @@ public class HornblowerBlockEntity extends KineticBlockEntity {
         super.write(compound, clientPacket);
         if (!this.horn.isEmpty()) compound.put("HornStack", this.horn.serializeNBT());
         compound.putFloat("Breath", this.breath);
+        compound.putInt("Cooldown", this.cooldown);
     }
 
     @Override
@@ -145,6 +148,7 @@ public class HornblowerBlockEntity extends KineticBlockEntity {
         super.read(compound, clientPacket);
         this.horn = compound.contains("HornStack") ? ItemStack.of(compound.getCompound("HornStack")) : ItemStack.EMPTY;
         this.breath = compound.getFloat("Breath");
+        this.cooldown = compound.getInt("Cooldown");
     }
 
     @Override

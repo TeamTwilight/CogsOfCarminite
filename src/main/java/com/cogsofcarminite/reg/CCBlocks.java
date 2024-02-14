@@ -1,11 +1,13 @@
 package com.cogsofcarminite.reg;
 
+import com.cogsofcarminite.behaviour.HornblowerMovementBehaviour;
 import com.cogsofcarminite.blocks.*;
 import com.cogsofcarminite.client.CCSpriteShifts;
 import com.cogsofcarminite.items.CarminiteClockItem;
 import com.cogsofcarminite.items.CarminiteCoreItem;
 import com.cogsofcarminite.items.CarminiteEngineItem;
 import com.cogsofcarminite.items.CarminiteHeartItem;
+import com.simibubi.create.AllMovementBehaviours;
 import com.simibubi.create.content.decoration.encasing.CasingBlock;
 import com.simibubi.create.content.kinetics.BlockStressDefaults;
 import com.simibubi.create.foundation.data.AssetLookup;
@@ -107,6 +109,7 @@ public class CCBlocks {
                     .blockstate(BlockStateGen.horizontalBlockProvider(true))
                     .addLayer(() -> RenderType::cutoutMipped)
                     .transform(BlockStressDefaults.setImpact(1.0))
+                    .onRegister(AllMovementBehaviours.movementBehaviour(new HornblowerMovementBehaviour()))
                     .item()
                     .transform(customItemModel())
                     .register();
