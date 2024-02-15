@@ -13,7 +13,6 @@ import com.simibubi.create.content.contraptions.render.ContraptionRenderDispatch
 import com.simibubi.create.foundation.blockEntity.renderer.SafeBlockEntityRenderer;
 import com.simibubi.create.foundation.render.BlockEntityRenderHelper;
 import com.simibubi.create.foundation.render.CachedBufferer;
-import com.simibubi.create.foundation.render.SuperByteBuffer;
 import com.simibubi.create.foundation.utility.AngleHelper;
 import com.simibubi.create.foundation.utility.AnimationTickHolder;
 import com.simibubi.create.foundation.utility.animation.LerpedFloat;
@@ -90,7 +89,6 @@ public class HornblowerRenderer extends SafeBlockEntityRenderer<HornblowerBlockE
         BlockState state = context.state;
         Direction facing = state.getValue(HornblowerBlock.FACING).getOpposite();
 
-        SuperByteBuffer superBuffer = CachedBufferer.partial(CCPartialBlockModels.HORNBLOWER, state);
         float partialTicks = Minecraft.getInstance().getPartialTick();
 
         float offset = animation.getValue(partialTicks);
@@ -117,14 +115,12 @@ public class HornblowerRenderer extends SafeBlockEntityRenderer<HornblowerBlockE
             Minecraft mc = Minecraft.getInstance();
             Level level = mc.level != null ? mc.level : renderWorld;
             int light = BlockEntityRenderHelper.getCombinedLight(level, getLightPos(matrices.getLight(), context.localPos), renderWorld, context.localPos);
-            Minecraft.getInstance()
-                    .getItemRenderer()
-                    .renderStatic(horn, ItemDisplayContext.FIXED, light, OverlayTexture.NO_OVERLAY, ms, buffer, renderWorld, 0);
+            mc.getItemRenderer().renderStatic(horn, ItemDisplayContext.FIXED, light, OverlayTexture.NO_OVERLAY, ms, buffer, renderWorld, 0);
 
             ms.popPose();
         }
 
-        superBuffer.transform(matrices.getModel())
+        CachedBufferer.partial(CCPartialBlockModels.HORNBLOWER, state).transform(matrices.getModel())
                 .centre()
                 .rotateY(AngleHelper.horizontalAngle(facing))
                 .rotateX(AngleHelper.verticalAngle(facing))

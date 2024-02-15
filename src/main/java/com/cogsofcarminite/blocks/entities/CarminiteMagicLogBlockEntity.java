@@ -1,7 +1,6 @@
 package com.cogsofcarminite.blocks.entities;
 
 import com.cogsofcarminite.blocks.CarminiteMagicLogBlock;
-import com.jozufozu.flywheel.core.PartialModel;
 import com.jozufozu.flywheel.util.transform.TransformStack;
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.simibubi.create.content.kinetics.base.KineticBlockEntity;
@@ -13,24 +12,16 @@ import com.simibubi.create.foundation.utility.AngleHelper;
 import com.simibubi.create.foundation.utility.VecHelper;
 import com.simibubi.create.foundation.utility.animation.LerpedFloat;
 import net.minecraft.MethodsReturnNonnullByDefault;
-import net.minecraft.client.renderer.RenderType;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
-import net.minecraft.core.particles.DustParticleOptions;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.server.level.ServerLevel;
-import net.minecraft.server.level.ServerPlayer;
-import net.minecraft.util.RandomSource;
 import net.minecraft.world.item.BlockItem;
 import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.AABB;
 import net.minecraft.world.phys.Vec3;
-import net.minecraftforge.network.PacketDistributor;
-import twilightforest.network.ParticlePacket;
-import twilightforest.network.TFPacketHandler;
 
 import javax.annotation.ParametersAreNonnullByDefault;
 
@@ -56,39 +47,16 @@ public abstract class CarminiteMagicLogBlockEntity extends KineticBlockEntity {
         this.flywheelAngle += this.flywheelSpeed.getValue() * 3 / 10f;
         this.flywheelAngle %= 360;
 
-        if (this.level != null && level instanceof ServerLevel serverLevel && this.doesCoreFunction()) {
+        if (this.level instanceof ServerLevel serverLevel && this.getBlockState().getBlock() instanceof CarminiteMagicLogBlock log && log.doesCoreFunction()) {
             this.nextTick -= Math.abs(this.flywheelSpeed.getValue());
             while (this.nextTick <= 0.0F) {
-                this.performTreeEffect(serverLevel, this.getBlockPos(), this.level.random);
-                this.playSound(this.level, this.getBlockPos(), this.level.random);
+                log.performTreeEffect(serverLevel, this.getBlockPos(), serverLevel.random, log.getFilter(this));
+                log.playSound(serverLevel, this.getBlockPos(), serverLevel.random);
                 this.nextTick += TICK_INTERVAL;
-                spawnParticles(serverLevel, this.getBlockPos());
+                CarminiteMagicLogBlock.spawnParticles(serverLevel, this.getBlockPos());
             }
         }
     }
-
-    protected static void spawnParticles(ServerLevel level, BlockPos pos) {
-        Vec3 xyz = Vec3.atCenterOf(pos);
-
-        for (ServerPlayer serverplayer : level.players()) {
-            if (serverplayer.distanceToSqr(xyz) < 4096.0D) {
-                ParticlePacket particlePacket = new ParticlePacket();
-
-                for(Direction direction : Direction.values()) {
-                    BlockPos blockpos = pos.relative(direction);
-                    if (!level.getBlockState(blockpos).isSolidRender(level, blockpos)) {
-                        Direction.Axis axis = direction.getAxis();
-                        double x = axis == Direction.Axis.X ? 0.5D + 0.5625D * (double)direction.getStepX() : (double)level.random.nextFloat();
-                        double y = axis == Direction.Axis.Y ? 0.5D + 0.5625D * (double)direction.getStepY() : (double)level.random.nextFloat();
-                        double z = axis == Direction.Axis.Z ? 0.5D + 0.5625D * (double)direction.getStepZ() : (double)level.random.nextFloat();
-                        particlePacket.queueParticle(DustParticleOptions.REDSTONE, false, (double)pos.getX() + x, (double)pos.getY() + y, (double)pos.getZ() + z, 0.0D, 0.0D, 0.0D);
-                    }
-                }
-                TFPacketHandler.CHANNEL.send(PacketDistributor.PLAYER.with(() -> serverplayer), particlePacket);
-            }
-        }
-    }
-
 
     @Override
     protected AABB createRenderBoundingBox() {
@@ -99,24 +67,17 @@ public abstract class CarminiteMagicLogBlockEntity extends KineticBlockEntity {
     public void write(CompoundTag compound, boolean clientPacket) {
         super.write(compound, clientPacket);
         compound.putFloat("core_next_tick", this.nextTick);
+        compound.putFloat("flywheel_angle", this.flywheelAngle);
+        compound.put("flywheel_speed", this.flywheelSpeed.writeNBT());
     }
 
     @Override
     protected void read(CompoundTag compound, boolean clientPacket) {
         super.read(compound, clientPacket);
         this.nextTick = compound.getFloat("core_next_tick");
-    }
-
-    public abstract PartialModel getFlywheelModel();
-
-    public abstract RenderType getRenderType();
-
-    public abstract boolean doesCoreFunction();
-
-    protected abstract void performTreeEffect(ServerLevel level, BlockPos pos, RandomSource rand);
-
-    protected void playSound(Level level, BlockPos pos, RandomSource rand) {
-
+        this.flywheelAngle = compound.getFloat("flywheel_angle");
+        this.flywheelSpeed.readNBT(compound.getCompound("flywheel_speed"), clientPacket);
+        this.flywheelSpeed.chase(0, 1.0F / 64.0F, LerpedFloat.Chaser.EXP);
     }
 
     public static class BlockFilteringBehaviour extends FilteringBehaviour {

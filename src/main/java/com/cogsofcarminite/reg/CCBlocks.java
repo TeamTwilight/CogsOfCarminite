@@ -1,5 +1,6 @@
 package com.cogsofcarminite.reg;
 
+import com.cogsofcarminite.behaviour.CarminiteLogMovementBehaviour;
 import com.cogsofcarminite.behaviour.HornblowerMovementBehaviour;
 import com.cogsofcarminite.blocks.*;
 import com.cogsofcarminite.client.CCSpriteShifts;
@@ -58,6 +59,7 @@ public class CCBlocks {
                     .blockstate(directionalBlockProviderIgnoresWaterlogged())
                     .addLayer(() -> RenderType::cutoutMipped)
                     .transform(BlockStressDefaults.setImpact(4.0))
+                    .onRegister(AllMovementBehaviours.movementBehaviour(new CarminiteLogMovementBehaviour()))
                     .item(CarminiteCoreItem::new)
                     .transform(customItemModel())
                     .register();
@@ -71,6 +73,7 @@ public class CCBlocks {
                     .blockstate(directionalBlockProviderIgnoresWaterlogged())
                     .addLayer(() -> RenderType::cutoutMipped)
                     .transform(BlockStressDefaults.setImpact(4.0))
+                    .onRegister(AllMovementBehaviours.movementBehaviour(new CarminiteLogMovementBehaviour()))
                     .item(CarminiteHeartItem::new)
                     .transform(customItemModel())
                     .register();
@@ -84,6 +87,7 @@ public class CCBlocks {
                     .blockstate(directionalBlockProviderIgnoresWaterlogged())
                     .addLayer(() -> RenderType::cutoutMipped)
                     .transform(BlockStressDefaults.setImpact(4.0))
+                    .onRegister(AllMovementBehaviours.movementBehaviour(new CarminiteLogMovementBehaviour()))
                     .item(CarminiteEngineItem::new)
                     .transform(customItemModel())
                     .register();
@@ -97,6 +101,7 @@ public class CCBlocks {
                     .blockstate(directionalBlockProviderIgnoresWaterlogged())
                     .addLayer(() -> RenderType::cutoutMipped)
                     .transform(BlockStressDefaults.setImpact(4.0))
+                    .onRegister(AllMovementBehaviours.movementBehaviour(new CarminiteLogMovementBehaviour()))
                     .item(CarminiteClockItem::new)
                     .transform(customItemModel())
                     .register();

@@ -28,7 +28,6 @@ import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.gameevent.GameEvent;
 import net.minecraft.world.phys.AABB;
 import net.minecraft.world.phys.Vec3;
-import twilightforest.TwilightForestMod;
 import twilightforest.init.TFItems;
 import twilightforest.init.TFRecipes;
 import twilightforest.init.TFSounds;
@@ -65,7 +64,6 @@ public class HornblowerBlockEntity extends KineticBlockEntity {
     public void tick() {
         super.tick();
 
-        TwilightForestMod.LOGGER.error("Speed wassa {}!", this.getSpeed());
         if (this.cooldown-- <= 0 && !this.horn.isEmpty() && this.level != null) {
             this.breath += Math.abs(this.getSpeed()) * 0.1F;
             if (this.breath >= BREATH_CAPACITY) {

@@ -113,5 +113,4 @@ public class HornblowerMovementBehaviour implements MovementBehaviour {
     public void renderInContraption(MovementContext context, VirtualRenderWorld renderWorld, ContraptionMatrices matrices, MultiBufferSource buffer) {
         HornblowerRenderer.renderInContraption(context, renderWorld, matrices, buffer, this.getAnimation(context));
     }
-
 }
