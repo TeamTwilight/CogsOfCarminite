@@ -9,7 +9,6 @@ import com.simibubi.create.content.contraptions.behaviour.MovementContext;
 import com.simibubi.create.content.contraptions.render.ContraptionMatrices;
 import com.simibubi.create.foundation.utility.animation.LerpedFloat;
 import net.minecraft.MethodsReturnNonnullByDefault;
-import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.core.BlockPos;
 import net.minecraft.nbt.CompoundTag;
@@ -17,7 +16,6 @@ import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.level.Level;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
-import twilightforest.TwilightForestMod;
 
 import javax.annotation.ParametersAreNonnullByDefault;
 
@@ -54,9 +52,6 @@ public class CarminiteLogMovementBehaviour implements MovementBehaviour {
         blockData.putFloat("core_next_tick", nextTick);
         blockData.putFloat("flywheel_angle", flywheelAngle);
         blockData.put("flywheel_speed", flywheelSpeed.writeNBT());
-
-        float angl = flywheelAngle + (flywheelSpeed.getValue(Minecraft.getInstance().getPartialTick()) * 3 / 10f) * Minecraft.getInstance().getPartialTick();
-        TwilightForestMod.LOGGER.error("ANGL AT CODE WAS {}!", angl);
     }
 
     @Override
