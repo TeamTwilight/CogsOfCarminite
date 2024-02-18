@@ -1,5 +1,6 @@
 package com.cogsofcarminite;
 
+import com.cogsofcarminite.client.ponder.CCPonderIndex;
 import com.cogsofcarminite.data.*;
 import com.cogsofcarminite.reg.*;
 import com.mojang.logging.LogUtils;
@@ -8,6 +9,8 @@ import com.simibubi.create.foundation.item.ItemDescription;
 import com.simibubi.create.foundation.item.KineticStats;
 import com.simibubi.create.foundation.item.TooltipHelper;
 import com.simibubi.create.foundation.item.TooltipModifier;
+import com.simibubi.create.foundation.ponder.PonderLocalization;
+import com.tterrag.registrate.providers.ProviderType;
 import net.minecraft.MethodsReturnNonnullByDefault;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.data.DataGenerator;
@@ -29,6 +32,7 @@ import org.slf4j.Logger;
 
 import javax.annotation.ParametersAreNonnullByDefault;
 import java.util.concurrent.CompletableFuture;
+import java.util.function.BiConsumer;
 
 @Mod(CogsOfCarminite.MODID)
 @ParametersAreNonnullByDefault
@@ -73,9 +77,18 @@ public class CogsOfCarminite {
 
     public static void clientInit(final FMLClientSetupEvent event) {
         CCPartialBlockModels.init();
+        CCPonderIndex.register();
     }
 
     public static void gatherData(GatherDataEvent event) {
+        TWILIGHT_REGISTRATE.addDataGenerator(ProviderType.LANG, provider -> {
+            BiConsumer<String, String> langConsumer = provider::add;
+
+            CCPonderIndex.register();
+            PonderLocalization.provideLang(CogsOfCarminite.MODID, langConsumer);
+            PonderLocalization.provideRegistrateLang(TWILIGHT_REGISTRATE);
+        });
+
         DataGenerator gen = event.getGenerator();
         PackOutput output = gen.getPackOutput();
 
