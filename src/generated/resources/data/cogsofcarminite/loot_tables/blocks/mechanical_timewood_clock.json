@@ -11,11 +11,11 @@
       "entries": [
         {
           "type": "minecraft:item",
-          "name": "cogsofcarminite:carminite_engine"
+          "name": "cogsofcarminite:mechanical_timewood_clock"
         }
       ],
       "rolls": 1.0
     }
   ],
-  "random_sequence": "cogsofcarminite:blocks/carminite_engine"
+  "random_sequence": "cogsofcarminite:blocks/mechanical_timewood_clock"
 }

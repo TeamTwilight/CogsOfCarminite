@@ -11,11 +11,11 @@
       "entries": [
         {
           "type": "minecraft:item",
-          "name": "cogsofcarminite:carminite_heart"
+          "name": "cogsofcarminite:mechanical_heart_of_transformation"
         }
       ],
       "rolls": 1.0
     }
   ],
-  "random_sequence": "cogsofcarminite:blocks/carminite_heart"
+  "random_sequence": "cogsofcarminite:blocks/mechanical_heart_of_transformation"
 }

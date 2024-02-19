@@ -48,8 +48,8 @@ public class CCBlocks {
                     .properties(p -> p.mapColor(MapColor.PODZOL))
                     .register();
 
-    public static final BlockEntry<CarminiteCoreBlock> CARMINITE_CORE =
-            TWILIGHT_REGISTRATE.block("carminite_core", CarminiteCoreBlock::new)
+    public static final BlockEntry<MechanicalMinewoodCoreBlock> MECHANICAL_MINEWOOD_CORE =
+            TWILIGHT_REGISTRATE.block("mechanical_minewood_core", MechanicalMinewoodCoreBlock::new)
                     .initialProperties(SharedProperties::copperMetal)
                     .properties(p -> p.mapColor(MapColor.STONE)
                             .noOcclusion())
@@ -58,7 +58,7 @@ public class CCBlocks {
                     .addLayer(() -> RenderType::cutoutMipped)
                     .transform(BlockStressDefaults.setImpact(4.0))
                     .onRegister(AllMovementBehaviours.movementBehaviour(new CarminiteLogMovementBehaviour()))
-                    .item((carminiteCoreBlock, properties) -> new CarminiteMagicLogBlockItem(carminiteCoreBlock, properties) {
+                    .item((mechanicalMinewoodCoreBlock, properties) -> new CarminiteMagicLogBlockItem(mechanicalMinewoodCoreBlock, properties) {
                         @Override
                         public PartialModel getPartialModel() {
                             return CCPartialBlockModels.CORE_FLYWHEEL_OFF;
@@ -67,8 +67,8 @@ public class CCBlocks {
                     .transform(customItemModel())
                     .register();
 
-    public static final BlockEntry<CarminiteHeartBlock> CARMINITE_HEART =
-            TWILIGHT_REGISTRATE.block("carminite_heart", CarminiteHeartBlock::new)
+    public static final BlockEntry<MechanicalHeartOfTransformation> MECHANICAL_HEART_OF_TRANSFORMATION =
+            TWILIGHT_REGISTRATE.block("mechanical_heart_of_transformation", MechanicalHeartOfTransformation::new)
                     .initialProperties(SharedProperties::copperMetal)
                     .properties(p -> p.mapColor(MapColor.STONE)
                             .noOcclusion())
@@ -77,7 +77,7 @@ public class CCBlocks {
                     .addLayer(() -> RenderType::cutoutMipped)
                     .transform(BlockStressDefaults.setImpact(4.0))
                     .onRegister(AllMovementBehaviours.movementBehaviour(new CarminiteLogMovementBehaviour()))
-                    .item((carminiteCoreBlock, properties) -> new CarminiteMagicLogBlockItem(carminiteCoreBlock, properties) {
+                    .item((mechanicalHeartOfTransformation, properties) -> new CarminiteMagicLogBlockItem(mechanicalHeartOfTransformation, properties) {
                         @Override
                         public PartialModel getPartialModel() {
                             return CCPartialBlockModels.HEART_FLYWHEEL_OFF;
@@ -86,8 +86,8 @@ public class CCBlocks {
                     .transform(customItemModel())
                     .register();
 
-    public static final BlockEntry<CarminiteEngineBlock> CARMINITE_ENGINE =
-            TWILIGHT_REGISTRATE.block("carminite_engine", CarminiteEngineBlock::new)
+    public static final BlockEntry<MechanicalSortingwoodEngine> MECHANICAL_SORTINGWOOD_ENGINE =
+            TWILIGHT_REGISTRATE.block("mechanical_sortingwood_engine", MechanicalSortingwoodEngine::new)
                     .initialProperties(SharedProperties::copperMetal)
                     .properties(p -> p.mapColor(MapColor.STONE)
                             .noOcclusion())
@@ -96,7 +96,7 @@ public class CCBlocks {
                     .addLayer(() -> RenderType::cutoutMipped)
                     .transform(BlockStressDefaults.setImpact(4.0))
                     .onRegister(AllMovementBehaviours.movementBehaviour(new CarminiteLogMovementBehaviour()))
-                    .item((carminiteCoreBlock, properties) -> new CarminiteMagicLogBlockItem(carminiteCoreBlock, properties) {
+                    .item((mechanicalSortingwoodEngine, properties) -> new CarminiteMagicLogBlockItem(mechanicalSortingwoodEngine, properties) {
                         @Override
                         public PartialModel getPartialModel() {
                             return CCPartialBlockModels.ENGINE_FLYWHEEL_OFF;
@@ -105,8 +105,8 @@ public class CCBlocks {
                     .transform(customItemModel())
                     .register();
 
-    public static final BlockEntry<CarminiteClockBlock> CARMINITE_CLOCK =
-            TWILIGHT_REGISTRATE.block("carminite_clock", CarminiteClockBlock::new)
+    public static final BlockEntry<MechanicalTimewoodClock> MECHANICAL_TIMEWOOD_CLOCK =
+            TWILIGHT_REGISTRATE.block("mechanical_timewood_clock", MechanicalTimewoodClock::new)
                     .initialProperties(SharedProperties::copperMetal)
                     .properties(p -> p.mapColor(MapColor.STONE)
                             .noOcclusion())
@@ -115,7 +115,7 @@ public class CCBlocks {
                     .addLayer(() -> RenderType::cutoutMipped)
                     .transform(BlockStressDefaults.setImpact(4.0))
                     .onRegister(AllMovementBehaviours.movementBehaviour(new CarminiteLogMovementBehaviour()))
-                    .item((carminiteCoreBlock, properties) -> new CarminiteMagicLogBlockItem(carminiteCoreBlock, properties) {
+                    .item((mechanicalTimewoodClock, properties) -> new CarminiteMagicLogBlockItem(mechanicalTimewoodClock, properties) {
                         @Override
                         public PartialModel getPartialModel() {
                             return CCPartialBlockModels.CLOCK_FLYWHEEL_OFF;
@@ -146,8 +146,8 @@ public class CCBlocks {
     public static <T extends Block> void directionalBlockIgnoresWaterlogged(DataGenContext<Block, T> ctx, RegistrateBlockstateProvider prov, Function<BlockState, ModelFile> modelFunc) {
         prov.getVariantBuilder(ctx.getEntry())
                 .forAllStatesExcept(state -> {
-                    Direction.Axis axis = state.getValue(CarminiteEngineBlock.AXIS);
-                    Direction.AxisDirection axisDirection = state.getValue(CarminiteEngineBlock.AXIS_POSITIVE) ? Direction.AxisDirection.POSITIVE : Direction.AxisDirection.NEGATIVE;
+                    Direction.Axis axis = state.getValue(MechanicalSortingwoodEngine.AXIS);
+                    Direction.AxisDirection axisDirection = state.getValue(MechanicalSortingwoodEngine.AXIS_POSITIVE) ? Direction.AxisDirection.POSITIVE : Direction.AxisDirection.NEGATIVE;
                     Direction dir = Direction.fromAxisAndDirection(axis, axisDirection);
                     return ConfiguredModel.builder()
                             .modelFile(modelFunc.apply(state))

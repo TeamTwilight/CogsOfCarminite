@@ -40,14 +40,14 @@ import java.util.Set;
 
 @ParametersAreNonnullByDefault
 @MethodsReturnNonnullByDefault
-public class CarminiteCoreBlock extends CarminiteMagicLogBlock implements IBE<CarminiteCoreBlockEntity> {
+public class MechanicalMinewoodCoreBlock extends CarminiteMagicLogBlock implements IBE<CarminiteCoreBlockEntity> {
     private static final ResourceLocation TEXTURE_LOCATION = CogsOfCarminite.prefix("textures/block/mining_log_core_on.png");
     private static final RenderType RENDER_TYPE = RenderType.armorCutoutNoCull(TEXTURE_LOCATION);
 
     public static Field REFLECTED_ORE_TO_BLOCK_REPLACEMENTS = null;
     private static boolean REFLECTED_CACHE_NEEDS_BUILD = true;
 
-    public CarminiteCoreBlock(Properties properties) {
+    public MechanicalMinewoodCoreBlock(Properties properties) {
         super(properties);
     }
 

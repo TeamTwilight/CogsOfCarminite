@@ -14,28 +14,28 @@ public class CCBlockEntities {
             .blockEntity("carminite_core", CarminiteCoreBlockEntity::new)
             .instance(() -> CarminiteMagicLogInstance::new)
             .renderer(() -> CarminiteMagicLogRenderer::new)
-            .validBlocks(CCBlocks.CARMINITE_CORE)
+            .validBlocks(CCBlocks.MECHANICAL_MINEWOOD_CORE)
             .register();
 
     public static final BlockEntityEntry<CarminiteHeartBlockEntity> CARMINITE_HEART = TWILIGHT_REGISTRATE
             .blockEntity("carminite_heart", CarminiteHeartBlockEntity::new)
             .instance(() -> CarminiteMagicLogInstance::new)
             .renderer(() -> CarminiteMagicLogRenderer::new)
-            .validBlocks(CCBlocks.CARMINITE_HEART)
+            .validBlocks(CCBlocks.MECHANICAL_HEART_OF_TRANSFORMATION)
             .register();
 
     public static final BlockEntityEntry<CarminiteEngineBlockEntity> CARMINITE_ENGINE = TWILIGHT_REGISTRATE
             .blockEntity("carminite_engine", CarminiteEngineBlockEntity::new)
             .instance(() -> CarminiteMagicLogInstance::new)
             .renderer(() -> CarminiteMagicLogRenderer::new)
-            .validBlocks(CCBlocks.CARMINITE_ENGINE)
+            .validBlocks(CCBlocks.MECHANICAL_SORTINGWOOD_ENGINE)
             .register();
 
     public static final BlockEntityEntry<CarminiteClockBlockEntity> CARMINITE_CLOCK = TWILIGHT_REGISTRATE
             .blockEntity("carminite_clock", CarminiteClockBlockEntity::new)
             .instance(() -> CarminiteMagicLogInstance::new)
             .renderer(() -> CarminiteMagicLogRenderer::new)
-            .validBlocks(CCBlocks.CARMINITE_CLOCK)
+            .validBlocks(CCBlocks.MECHANICAL_TIMEWOOD_CLOCK)
             .register();
 
     public static final BlockEntityEntry<HornblowerBlockEntity> HORNBLOWER = TWILIGHT_REGISTRATE

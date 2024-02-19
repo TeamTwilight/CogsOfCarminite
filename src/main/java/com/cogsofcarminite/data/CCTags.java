@@ -68,10 +68,10 @@ public class CCTags {
             this.tag(ItemTagGenerator.NYI).add(
                     CCItems.INCOMPLETE_GEAR_GADGET.get(),
                     CCItems.CARMINITE_GEAR_GADGET.get(),
-                    CCBlocks.CARMINITE_CLOCK.asItem(),
-                    CCBlocks.CARMINITE_CORE.asItem(),
-                    CCBlocks.CARMINITE_ENGINE.asItem(),
-                    CCBlocks.CARMINITE_HEART.asItem(),
+                    CCBlocks.MECHANICAL_TIMEWOOD_CLOCK.asItem(),
+                    CCBlocks.MECHANICAL_MINEWOOD_CORE.asItem(),
+                    CCBlocks.MECHANICAL_SORTINGWOOD_ENGINE.asItem(),
+                    CCBlocks.MECHANICAL_HEART_OF_TRANSFORMATION.asItem(),
                     CCItems.FIERY_SHEET.get(),
                     CCItems.KNIGHTMETAL_SHEET.get()
             );

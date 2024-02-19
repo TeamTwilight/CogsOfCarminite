@@ -1,10 +1,10 @@
 {
   "values": [
     "cogsofcarminite:dark_tower_casing",
-    "cogsofcarminite:carminite_core",
-    "cogsofcarminite:carminite_heart",
-    "cogsofcarminite:carminite_engine",
-    "cogsofcarminite:carminite_clock",
+    "cogsofcarminite:mechanical_minewood_core",
+    "cogsofcarminite:mechanical_heart_of_transformation",
+    "cogsofcarminite:mechanical_sortingwood_engine",
+    "cogsofcarminite:mechanical_timewood_clock",
     "cogsofcarminite:hornblower"
   ]
 }

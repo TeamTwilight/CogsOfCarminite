@@ -2,10 +2,10 @@
   "values": [
     "cogsofcarminite:incomplete_gear_gadget",
     "cogsofcarminite:carminite_gear_gadget",
-    "cogsofcarminite:carminite_clock",
-    "cogsofcarminite:carminite_core",
-    "cogsofcarminite:carminite_engine",
-    "cogsofcarminite:carminite_heart",
+    "cogsofcarminite:mechanical_timewood_clock",
+    "cogsofcarminite:mechanical_minewood_core",
+    "cogsofcarminite:mechanical_sortingwood_engine",
+    "cogsofcarminite:mechanical_heart_of_transformation",
     "cogsofcarminite:fiery_sheet",
     "cogsofcarminite:knightmetal_sheet"
   ]

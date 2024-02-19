@@ -35,11 +35,11 @@ import java.util.List;
 
 @ParametersAreNonnullByDefault
 @MethodsReturnNonnullByDefault
-public class CarminiteHeartBlock extends CarminiteMagicLogBlock implements IBE<CarminiteHeartBlockEntity> {
+public class MechanicalHeartOfTransformation extends CarminiteMagicLogBlock implements IBE<CarminiteHeartBlockEntity> {
     private static final ResourceLocation TEXTURE_LOCATION = CogsOfCarminite.prefix("textures/block/transformation_log_core_on.png");
     private static final RenderType RENDER_TYPE = RenderType.armorCutoutNoCull(TEXTURE_LOCATION);
 
-    public CarminiteHeartBlock(Properties properties) {
+    public MechanicalHeartOfTransformation(Properties properties) {
         super(properties);
     }
 

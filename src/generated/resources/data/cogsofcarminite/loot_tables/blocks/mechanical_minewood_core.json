@@ -11,11 +11,11 @@
       "entries": [
         {
           "type": "minecraft:item",
-          "name": "cogsofcarminite:carminite_clock"
+          "name": "cogsofcarminite:mechanical_minewood_core"
         }
       ],
       "rolls": 1.0
     }
   ],
-  "random_sequence": "cogsofcarminite:blocks/carminite_clock"
+  "random_sequence": "cogsofcarminite:blocks/mechanical_minewood_core"
 }

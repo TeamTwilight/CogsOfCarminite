@@ -80,22 +80,22 @@ public class CCProcessingRecipeGen extends CreateRecipeProvider {
         GeneratedRecipe CARMINITE_CLOCK = create(CogsOfCarminite.prefix("carminite_clock"), b -> b
                 .require(TFBlocks.TIME_LOG_CORE.get())
                 .require(CCItems.CARMINITE_GEAR_GADGET)
-                .output(CCBlocks.CARMINITE_CLOCK.get()));
+                .output(CCBlocks.MECHANICAL_TIMEWOOD_CLOCK.get()));
 
         GeneratedRecipe CARMINITE_CORE = create(CogsOfCarminite.prefix("carminite_core"), b -> b
                 .require(TFBlocks.MINING_LOG_CORE.get())
                 .require(CCItems.CARMINITE_GEAR_GADGET)
-                .output(CCBlocks.CARMINITE_CORE.get()));
+                .output(CCBlocks.MECHANICAL_MINEWOOD_CORE.get()));
 
         GeneratedRecipe CARMINITE_ENGINE = create(CogsOfCarminite.prefix("carminite_engine"), b -> b
                 .require(TFBlocks.SORTING_LOG_CORE.get())
                 .require(CCItems.CARMINITE_GEAR_GADGET)
-                .output(CCBlocks.CARMINITE_ENGINE.get()));
+                .output(CCBlocks.MECHANICAL_SORTINGWOOD_ENGINE.get()));
 
         GeneratedRecipe CARMINITE_HEART = create(CogsOfCarminite.prefix("carminite_heart"), b -> b
                 .require(TFBlocks.TRANSFORMATION_LOG_CORE.get())
                 .require(CCItems.CARMINITE_GEAR_GADGET)
-                .output(CCBlocks.CARMINITE_HEART.get()));
+                .output(CCBlocks.MECHANICAL_HEART_OF_TRANSFORMATION.get()));
 
         protected <T extends ProcessingRecipe<?>> GeneratedRecipe create(String name, UnaryOperator<ProcessingRecipeBuilder<T>> transform) {
             return create(Create.asResource(name), transform);

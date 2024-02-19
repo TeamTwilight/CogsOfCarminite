@@ -38,11 +38,11 @@ import java.util.*;
 
 @MethodsReturnNonnullByDefault
 @ParametersAreNonnullByDefault
-public class CarminiteEngineBlock extends CarminiteMagicLogBlock implements IBE<CarminiteEngineBlockEntity> {
+public class MechanicalSortingwoodEngine extends CarminiteMagicLogBlock implements IBE<CarminiteEngineBlockEntity> {
     private static final ResourceLocation TEXTURE_LOCATION = CogsOfCarminite.prefix("textures/block/sorting_log_core_on.png");
     private static final RenderType RENDER_TYPE = RenderType.armorCutoutNoCull(TEXTURE_LOCATION);
 
-    public CarminiteEngineBlock(Properties properties) {
+    public MechanicalSortingwoodEngine(Properties properties) {
         super(properties);
     }
 

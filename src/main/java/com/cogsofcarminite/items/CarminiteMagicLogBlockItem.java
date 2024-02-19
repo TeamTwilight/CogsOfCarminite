@@ -16,7 +16,6 @@ import java.util.function.Consumer;
 @ParametersAreNonnullByDefault
 @MethodsReturnNonnullByDefault
 public abstract class CarminiteMagicLogBlockItem extends BlockItem {
-
     public CarminiteMagicLogBlockItem(Block block, Properties properties) {
         super(block, properties);
     }

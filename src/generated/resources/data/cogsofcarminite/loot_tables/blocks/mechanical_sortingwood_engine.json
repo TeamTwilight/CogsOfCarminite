@@ -11,11 +11,11 @@
       "entries": [
         {
           "type": "minecraft:item",
-          "name": "cogsofcarminite:carminite_core"
+          "name": "cogsofcarminite:mechanical_sortingwood_engine"
         }
       ],
       "rolls": 1.0
     }
   ],
-  "random_sequence": "cogsofcarminite:blocks/carminite_core"
+  "random_sequence": "cogsofcarminite:blocks/mechanical_sortingwood_engine"
 }

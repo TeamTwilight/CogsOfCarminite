@@ -1,0 +1,30 @@
+{
+  "variants": {
+    "axis=x,axis_positive=false": {
+      "model": "cogsofcarminite:block/mechanical_timewood_clock/block",
+      "x": 90,
+      "y": 270
+    },
+    "axis=x,axis_positive=true": {
+      "model": "cogsofcarminite:block/mechanical_timewood_clock/block",
+      "x": 90,
+      "y": 90
+    },
+    "axis=y,axis_positive=false": {
+      "model": "cogsofcarminite:block/mechanical_timewood_clock/block",
+      "x": 180
+    },
+    "axis=y,axis_positive=true": {
+      "model": "cogsofcarminite:block/mechanical_timewood_clock/block"
+    },
+    "axis=z,axis_positive=false": {
+      "model": "cogsofcarminite:block/mechanical_timewood_clock/block",
+      "x": 90
+    },
+    "axis=z,axis_positive=true": {
+      "model": "cogsofcarminite:block/mechanical_timewood_clock/block",
+      "x": 90,
+      "y": 180
+    }
+  }
+}

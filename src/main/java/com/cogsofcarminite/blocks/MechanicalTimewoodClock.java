@@ -30,11 +30,11 @@ import javax.annotation.ParametersAreNonnullByDefault;
 
 @ParametersAreNonnullByDefault
 @MethodsReturnNonnullByDefault
-public class CarminiteClockBlock extends CarminiteMagicLogBlock implements IBE<CarminiteClockBlockEntity> {
+public class MechanicalTimewoodClock extends CarminiteMagicLogBlock implements IBE<CarminiteClockBlockEntity> {
     private static final ResourceLocation TEXTURE_LOCATION = CogsOfCarminite.prefix("textures/block/time_log_core_on.png");
     private static final RenderType RENDER_TYPE = RenderType.armorCutoutNoCull(TEXTURE_LOCATION);
 
-    public CarminiteClockBlock(Properties properties) {
+    public MechanicalTimewoodClock(Properties properties) {
         super(properties);
     }
 
