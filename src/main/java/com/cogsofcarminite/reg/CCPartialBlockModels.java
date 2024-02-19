@@ -11,6 +11,8 @@ import javax.annotation.ParametersAreNonnullByDefault;
 public class CCPartialBlockModels {
     public static final PartialModel SHAFT_QUARTER = block("shaft_quarter");
 
+    public static final PartialModel CARMINITE_FLYWHEEL = block("flywheel/carminite_flywheel");
+    public static final PartialModel INCOMPLETE_FLYWHEEL = block("flywheel/incomplete_flywheel");
     public static final PartialModel CLOCK_FLYWHEEL = block("flywheel/clock_flywheel");
     public static final PartialModel CLOCK_FLYWHEEL_OFF = block("flywheel/clock_flywheel_off");
     public static final PartialModel ENGINE_FLYWHEEL = block("flywheel/engine_flywheel");

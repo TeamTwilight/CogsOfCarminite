@@ -1,6 +1,8 @@
 package com.cogsofcarminite.data;
 
 import com.cogsofcarminite.CogsOfCarminite;
+import com.cogsofcarminite.reg.CCBlocks;
+import com.cogsofcarminite.reg.CCItems;
 import com.simibubi.create.AllTags;
 import net.minecraft.MethodsReturnNonnullByDefault;
 import net.minecraft.core.HolderLookup;
@@ -11,6 +13,7 @@ import net.minecraftforge.common.data.BlockTagsProvider;
 import net.minecraftforge.common.data.ExistingFileHelper;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
+import twilightforest.data.tags.ItemTagGenerator;
 import twilightforest.init.TFBlocks;
 import twilightforest.init.TFItems;
 
@@ -60,6 +63,17 @@ public class CCTags {
                     TFItems.FIERY_BLOOD.get(),
                     TFItems.FIERY_TEARS.get(),
                     TFItems.EXPERIMENT_115.get()
+            );
+
+            this.tag(ItemTagGenerator.NYI).add(
+                    CCItems.INCOMPLETE_GEAR_GADGET.get(),
+                    CCItems.CARMINITE_GEAR_GADGET.get(),
+                    CCBlocks.CARMINITE_CLOCK.asItem(),
+                    CCBlocks.CARMINITE_CORE.asItem(),
+                    CCBlocks.CARMINITE_ENGINE.asItem(),
+                    CCBlocks.CARMINITE_HEART.asItem(),
+                    CCItems.FIERY_SHEET.get(),
+                    CCItems.KNIGHTMETAL_SHEET.get()
             );
         }
     }

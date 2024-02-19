@@ -1,0 +1,16 @@
+{
+  "type": "create:item_application",
+  "ingredients": [
+    {
+      "item": "twilightforest:transformation_log_core"
+    },
+    {
+      "item": "cogsofcarminite:carminite_gear_gadget"
+    }
+  ],
+  "results": [
+    {
+      "item": "cogsofcarminite:carminite_heart"
+    }
+  ]
+}

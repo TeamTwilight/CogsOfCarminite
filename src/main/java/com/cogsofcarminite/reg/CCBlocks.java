@@ -4,10 +4,8 @@ import com.cogsofcarminite.behaviour.CarminiteLogMovementBehaviour;
 import com.cogsofcarminite.behaviour.HornblowerMovementBehaviour;
 import com.cogsofcarminite.blocks.*;
 import com.cogsofcarminite.client.CCSpriteShifts;
-import com.cogsofcarminite.items.CarminiteClockItem;
-import com.cogsofcarminite.items.CarminiteCoreItem;
-import com.cogsofcarminite.items.CarminiteEngineItem;
-import com.cogsofcarminite.items.CarminiteHeartItem;
+import com.cogsofcarminite.items.*;
+import com.jozufozu.flywheel.core.PartialModel;
 import com.simibubi.create.AllMovementBehaviours;
 import com.simibubi.create.content.decoration.encasing.CasingBlock;
 import com.simibubi.create.content.kinetics.BlockStressDefaults;
@@ -60,7 +58,12 @@ public class CCBlocks {
                     .addLayer(() -> RenderType::cutoutMipped)
                     .transform(BlockStressDefaults.setImpact(4.0))
                     .onRegister(AllMovementBehaviours.movementBehaviour(new CarminiteLogMovementBehaviour()))
-                    .item(CarminiteCoreItem::new)
+                    .item((carminiteCoreBlock, properties) -> new CarminiteMagicLogBlockItem(carminiteCoreBlock, properties) {
+                        @Override
+                        public PartialModel getPartialModel() {
+                            return CCPartialBlockModels.CORE_FLYWHEEL_OFF;
+                        }
+                    })
                     .transform(customItemModel())
                     .register();
 
@@ -74,7 +77,12 @@ public class CCBlocks {
                     .addLayer(() -> RenderType::cutoutMipped)
                     .transform(BlockStressDefaults.setImpact(4.0))
                     .onRegister(AllMovementBehaviours.movementBehaviour(new CarminiteLogMovementBehaviour()))
-                    .item(CarminiteHeartItem::new)
+                    .item((carminiteCoreBlock, properties) -> new CarminiteMagicLogBlockItem(carminiteCoreBlock, properties) {
+                        @Override
+                        public PartialModel getPartialModel() {
+                            return CCPartialBlockModels.HEART_FLYWHEEL_OFF;
+                        }
+                    })
                     .transform(customItemModel())
                     .register();
 
@@ -88,7 +96,12 @@ public class CCBlocks {
                     .addLayer(() -> RenderType::cutoutMipped)
                     .transform(BlockStressDefaults.setImpact(4.0))
                     .onRegister(AllMovementBehaviours.movementBehaviour(new CarminiteLogMovementBehaviour()))
-                    .item(CarminiteEngineItem::new)
+                    .item((carminiteCoreBlock, properties) -> new CarminiteMagicLogBlockItem(carminiteCoreBlock, properties) {
+                        @Override
+                        public PartialModel getPartialModel() {
+                            return CCPartialBlockModels.ENGINE_FLYWHEEL_OFF;
+                        }
+                    })
                     .transform(customItemModel())
                     .register();
 
@@ -102,7 +115,12 @@ public class CCBlocks {
                     .addLayer(() -> RenderType::cutoutMipped)
                     .transform(BlockStressDefaults.setImpact(4.0))
                     .onRegister(AllMovementBehaviours.movementBehaviour(new CarminiteLogMovementBehaviour()))
-                    .item(CarminiteClockItem::new)
+                    .item((carminiteCoreBlock, properties) -> new CarminiteMagicLogBlockItem(carminiteCoreBlock, properties) {
+                        @Override
+                        public PartialModel getPartialModel() {
+                            return CCPartialBlockModels.CLOCK_FLYWHEEL_OFF;
+                        }
+                    })
                     .transform(customItemModel())
                     .register();
 

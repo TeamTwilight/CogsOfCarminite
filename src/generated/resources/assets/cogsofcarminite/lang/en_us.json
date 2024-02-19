@@ -18,7 +18,9 @@
   "cogsofcarminite.tooltip.hornblower.empty": "Use a Horn Item to Insert",
   "cogsofcarminite.tooltip.hornblower.header": "Hornblower Information",
   "cogsofcarminite.tooltip.hornblower.instrument": "%1$s",
+  "item.cogsofcarminite.carminite_gear_gadget": "Carminite Gear Gadget",
   "item.cogsofcarminite.fiery_sheet": "Fiery Sheet",
+  "item.cogsofcarminite.incomplete_gear_gadget": "Incomplete Gear Gadget",
   "item.cogsofcarminite.ironwood_sheet": "Ironwood Sheet",
   "item.cogsofcarminite.knightmetal_sheet": "Knightmetal Sheet"
 }

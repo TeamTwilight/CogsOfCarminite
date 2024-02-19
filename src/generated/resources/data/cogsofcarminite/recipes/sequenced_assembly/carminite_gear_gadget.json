@@ -1,0 +1,133 @@
+{
+  "type": "create:sequenced_assembly",
+  "ingredient": {
+    "item": "create:flywheel"
+  },
+  "loops": 4,
+  "results": [
+    {
+      "chance": 120.0,
+      "item": "cogsofcarminite:carminite_gear_gadget"
+    },
+    {
+      "chance": 12.0,
+      "item": "create:precision_mechanism"
+    },
+    {
+      "chance": 10.0,
+      "item": "create:flywheel"
+    },
+    {
+      "chance": 3.0,
+      "item": "create:brass_ingot"
+    },
+    {
+      "chance": 2.0,
+      "item": "twilightforest:carminite"
+    },
+    {
+      "item": "create:shaft"
+    },
+    {
+      "item": "minecraft:redstone"
+    },
+    {
+      "item": "twilightforest:encased_towerwood"
+    }
+  ],
+  "sequence": [
+    {
+      "type": "create:deploying",
+      "ingredients": [
+        {
+          "item": "cogsofcarminite:incomplete_gear_gadget"
+        },
+        {
+          "item": "twilightforest:carminite"
+        }
+      ],
+      "results": [
+        {
+          "item": "cogsofcarminite:incomplete_gear_gadget"
+        }
+      ]
+    },
+    {
+      "type": "create:deploying",
+      "ingredients": [
+        {
+          "item": "cogsofcarminite:incomplete_gear_gadget"
+        },
+        {
+          "item": "minecraft:redstone"
+        }
+      ],
+      "results": [
+        {
+          "item": "cogsofcarminite:incomplete_gear_gadget"
+        }
+      ]
+    },
+    {
+      "type": "create:pressing",
+      "ingredients": [
+        {
+          "item": "cogsofcarminite:incomplete_gear_gadget"
+        }
+      ],
+      "results": [
+        {
+          "item": "cogsofcarminite:incomplete_gear_gadget"
+        }
+      ]
+    },
+    {
+      "type": "create:deploying",
+      "ingredients": [
+        {
+          "item": "cogsofcarminite:incomplete_gear_gadget"
+        },
+        {
+          "item": "create:precision_mechanism"
+        }
+      ],
+      "results": [
+        {
+          "item": "cogsofcarminite:incomplete_gear_gadget"
+        }
+      ]
+    },
+    {
+      "type": "create:deploying",
+      "ingredients": [
+        {
+          "item": "cogsofcarminite:incomplete_gear_gadget"
+        },
+        {
+          "item": "twilightforest:encased_towerwood"
+        }
+      ],
+      "results": [
+        {
+          "item": "cogsofcarminite:incomplete_gear_gadget"
+        }
+      ]
+    },
+    {
+      "type": "create:cutting",
+      "ingredients": [
+        {
+          "item": "cogsofcarminite:incomplete_gear_gadget"
+        }
+      ],
+      "results": [
+        {
+          "item": "cogsofcarminite:incomplete_gear_gadget"
+        }
+      ]
+    }
+  ],
+  "transitionalItem": {
+    "item": "cogsofcarminite:incomplete_gear_gadget"
+  }
+}

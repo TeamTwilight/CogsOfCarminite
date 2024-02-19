@@ -64,7 +64,6 @@ public class CogsOfCarminite {
         MinecraftForge.EVENT_BUS.register(this);
 
         DistExecutor.unsafeRunWhenOn(Dist.CLIENT, () -> () -> CogsOfCarminite.onCtorClient(modEventBus, modEventBus));
-
     }
 
     public void init(FMLCommonSetupEvent evt) {

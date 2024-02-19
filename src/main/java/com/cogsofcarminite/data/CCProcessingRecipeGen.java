@@ -3,12 +3,17 @@ package com.cogsofcarminite.data;
 import com.cogsofcarminite.CogsOfCarminite;
 import com.cogsofcarminite.reg.CCBlocks;
 import com.cogsofcarminite.reg.CCItems;
+import com.simibubi.create.AllBlocks;
 import com.simibubi.create.AllItems;
 import com.simibubi.create.AllRecipeTypes;
 import com.simibubi.create.Create;
+import com.simibubi.create.content.kinetics.deployer.DeployerApplicationRecipe;
+import com.simibubi.create.content.kinetics.press.PressingRecipe;
+import com.simibubi.create.content.kinetics.saw.CuttingRecipe;
 import com.simibubi.create.content.processing.recipe.HeatCondition;
 import com.simibubi.create.content.processing.recipe.ProcessingRecipe;
 import com.simibubi.create.content.processing.recipe.ProcessingRecipeBuilder;
+import com.simibubi.create.content.processing.sequenced.SequencedAssemblyRecipeBuilder;
 import com.simibubi.create.foundation.data.recipe.CreateRecipeProvider;
 import com.simibubi.create.foundation.data.recipe.ProcessingRecipeGen;
 import com.simibubi.create.foundation.recipe.IRecipeTypeInfo;
@@ -21,7 +26,6 @@ import net.minecraft.data.PackOutput;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.item.crafting.Ingredient;
 import net.minecraft.world.level.ItemLike;
-import net.minecraft.world.level.block.Blocks;
 import net.minecraftforge.common.Tags;
 import twilightforest.init.TFBlocks;
 import twilightforest.init.TFItems;
@@ -35,6 +39,7 @@ import java.util.function.UnaryOperator;
 
 @MethodsReturnNonnullByDefault
 @ParametersAreNonnullByDefault
+@SuppressWarnings("SameParameterValue")
 public class CCProcessingRecipeGen extends CreateRecipeProvider {
     protected static final List<ProcessingRecipeGen> CCGENERATORS = new ArrayList<>();
 
@@ -49,6 +54,7 @@ public class CCProcessingRecipeGen extends CreateRecipeProvider {
         CCGENERATORS.add(new Crushing(output));
         CCGENERATORS.add(new Mixing(output));
         CCGENERATORS.add(new Haunting(output));
+        CCGENERATORS.add(new SequencedAssembly(output));
 
         gen.addProvider(true, new DataProvider() {
             @Override
@@ -70,6 +76,26 @@ public class CCProcessingRecipeGen extends CreateRecipeProvider {
                 .require(TFBlocks.ENCASED_TOWERWOOD.get())
                 .require(Tags.Items.DYES)
                 .output(CCBlocks.DARK_TOWER_CASING.get()));
+
+        GeneratedRecipe CARMINITE_CLOCK = create(CogsOfCarminite.prefix("carminite_clock"), b -> b
+                .require(TFBlocks.TIME_LOG_CORE.get())
+                .require(CCItems.CARMINITE_GEAR_GADGET)
+                .output(CCBlocks.CARMINITE_CLOCK.get()));
+
+        GeneratedRecipe CARMINITE_CORE = create(CogsOfCarminite.prefix("carminite_core"), b -> b
+                .require(TFBlocks.MINING_LOG_CORE.get())
+                .require(CCItems.CARMINITE_GEAR_GADGET)
+                .output(CCBlocks.CARMINITE_CORE.get()));
+
+        GeneratedRecipe CARMINITE_ENGINE = create(CogsOfCarminite.prefix("carminite_engine"), b -> b
+                .require(TFBlocks.SORTING_LOG_CORE.get())
+                .require(CCItems.CARMINITE_GEAR_GADGET)
+                .output(CCBlocks.CARMINITE_ENGINE.get()));
+
+        GeneratedRecipe CARMINITE_HEART = create(CogsOfCarminite.prefix("carminite_heart"), b -> b
+                .require(TFBlocks.TRANSFORMATION_LOG_CORE.get())
+                .require(CCItems.CARMINITE_GEAR_GADGET)
+                .output(CCBlocks.CARMINITE_HEART.get()));
 
         protected <T extends ProcessingRecipe<?>> GeneratedRecipe create(String name, UnaryOperator<ProcessingRecipeBuilder<T>> transform) {
             return create(Create.asResource(name), transform);
@@ -159,10 +185,15 @@ public class CCProcessingRecipeGen extends CreateRecipeProvider {
     }
 
     public static class Mixing extends ProcessingRecipeGen {
-        GeneratedRecipe ANDESITE_ALLOY = create(CogsOfCarminite.prefix("andesite_alloy_from_knightmetal"), b -> b.require(Blocks.ANDESITE)
-                .require(TFItems.ARMOR_SHARD.get())
+        GeneratedRecipe CARMINITE = create(CogsOfCarminite.prefix("carminite"), b -> b.require(TFItems.BORER_ESSENCE.get())
+                .require(TFItems.BORER_ESSENCE.get())
+                .require(TFItems.BORER_ESSENCE.get())
+                .require(Items.REDSTONE)
+                .require(Items.REDSTONE)
+                .require(Items.REDSTONE)
+                .require(Items.GHAST_TEAR)
                 .requiresHeat(HeatCondition.HEATED)
-                .output(AllItems.ANDESITE_ALLOY.get(), 1));
+                .output(TFItems.CARMINITE.get(), 1));
 
         public Mixing(PackOutput generator) {
             super(generator);
@@ -195,6 +226,43 @@ public class CCProcessingRecipeGen extends CreateRecipeProvider {
         @Override
         protected IRecipeTypeInfo getRecipeType() {
             return AllRecipeTypes.HAUNTING;
+        }
+    }
+
+    public static class SequencedAssembly extends ProcessingRecipeGen {
+        GeneratedRecipe CARMINITE_GEAR_GADGET = assemble("carminite_gear_gadget", b -> b.require(AllBlocks.FLYWHEEL)
+                .transitionTo(CCItems.INCOMPLETE_GEAR_GADGET)
+                .addOutput(CCItems.CARMINITE_GEAR_GADGET, 120)
+                .addOutput(AllItems.PRECISION_MECHANISM, 12)
+                .addOutput(AllBlocks.FLYWHEEL, 10)
+                .addOutput(AllItems.BRASS_INGOT, 3)
+                .addOutput(TFItems.CARMINITE.get(), 2)
+                .addOutput(AllBlocks.SHAFT, 1)
+                .addOutput(Items.REDSTONE, 1)
+                .addOutput(TFBlocks.ENCASED_TOWERWOOD.get(), 1)
+                .loops(4)
+                .addStep(DeployerApplicationRecipe::new, rb -> rb.require(TFItems.CARMINITE.get()))
+                .addStep(DeployerApplicationRecipe::new, rb -> rb.require(Items.REDSTONE))
+                .addStep(PressingRecipe::new, rb -> rb)
+                .addStep(DeployerApplicationRecipe::new, rb -> rb.require(AllItems.PRECISION_MECHANISM))
+                .addStep(DeployerApplicationRecipe::new, rb -> rb.require(TFBlocks.ENCASED_TOWERWOOD.get()))
+                .addStep(CuttingRecipe::new, rb -> rb));
+
+        public SequencedAssembly(PackOutput generator) {
+            super(generator);
+        }
+
+        protected GeneratedRecipe assemble(String name, UnaryOperator<SequencedAssemblyRecipeBuilder> transform) {
+            GeneratedRecipe generatedRecipe =
+                    c -> transform.apply(new SequencedAssemblyRecipeBuilder(CogsOfCarminite.prefix(name)))
+                            .build(c);
+            all.add(generatedRecipe);
+            return generatedRecipe;
+        }
+
+        @Override
+        protected IRecipeTypeInfo getRecipeType() {
+            return AllRecipeTypes.SEQUENCED_ASSEMBLY;
         }
     }
 }
