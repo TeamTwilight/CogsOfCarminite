@@ -30,5 +30,15 @@ public class CCStandardRecipeGen extends RecipeProvider {
                 .define('C', Ingredient.of(AllBlocks.ANDESITE_CASING))
                 .unlockedBy("has_item", has(CCItems.IRONWOOD_SHEET))
                 .save(consumer, CCBlocks.HORNBLOWER.getId());
+
+        ShapedRecipeBuilder.shaped(RecipeCategory.MISC, CCBlocks.MECHANICAL_ROOT_PULLER)
+                .pattern(" P ")
+                .pattern("PCP")
+                .pattern(" A ")
+                .define('P', Ingredient.of(CCItems.IRONWOOD_SHEET))
+                .define('C', Ingredient.of(AllBlocks.COGWHEEL))
+                .define('A', Ingredient.of(AllBlocks.ANDESITE_CASING))
+                .unlockedBy("has_item", has(CCItems.IRONWOOD_SHEET))
+                .save(consumer, CCBlocks.MECHANICAL_ROOT_PULLER.getId());
     }
 }

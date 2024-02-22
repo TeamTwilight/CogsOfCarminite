@@ -8,6 +8,8 @@ import net.minecraft.MethodsReturnNonnullByDefault;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.data.PackOutput;
 import net.minecraft.data.tags.ItemTagsProvider;
+import net.minecraft.tags.BlockTags;
+import net.minecraft.tags.TagKey;
 import net.minecraft.world.level.block.Block;
 import net.minecraftforge.common.data.BlockTagsProvider;
 import net.minecraftforge.common.data.ExistingFileHelper;
@@ -24,6 +26,8 @@ import java.util.concurrent.CompletableFuture;
 @MethodsReturnNonnullByDefault
 public class CCTags {
     public static class Blocks extends BlockTagsProvider {
+        public static final TagKey<Block> ROOTS = BlockTags.create(CogsOfCarminite.prefix("roots"));
+
         public Blocks(PackOutput output, CompletableFuture<HolderLookup.Provider> future, @Nullable ExistingFileHelper existingFileHelper) {
             super(output, future, CogsOfCarminite.MODID, existingFileHelper);
         }
@@ -43,6 +47,13 @@ public class CCTags {
                     TFBlocks.FIERY_BLOCK.get(),
                     TFBlocks.FIRE_JET.get(),
                     TFBlocks.ENCASED_FIRE_JET.get()
+            );
+
+            this.tag(ROOTS).add(
+                    net.minecraft.world.level.block.Blocks.MANGROVE_ROOTS,
+                    TFBlocks.ROOT_BLOCK.get(),
+                    TFBlocks.LIVEROOT_BLOCK.get(),
+                    TFBlocks.MANGROVE_ROOT.get()
             );
         }
     }

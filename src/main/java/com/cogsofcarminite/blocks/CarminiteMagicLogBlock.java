@@ -45,7 +45,9 @@ public abstract class CarminiteMagicLogBlock extends KineticBlock implements IRo
 
     @Override
     public BlockState getStateForPlacement(BlockPlaceContext context) {
-        return pointedTo(this.defaultBlockState(), context.getClickedFace());
+        Direction facing = context.getNearestLookingDirection().getOpposite();
+        if (context.getPlayer() != null && context.getPlayer().isShiftKeyDown()) facing = facing.getOpposite();
+        return pointedTo(this.defaultBlockState(), facing);
     }
 
     @Override

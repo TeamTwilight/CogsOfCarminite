@@ -86,7 +86,14 @@ public class HornblowerBlock extends KineticBlock implements IRotate, IBE<Hornbl
     @Nullable
     @Override
     public BlockState getStateForPlacement(BlockPlaceContext context) {
-        return this.defaultBlockState().setValue(FACING, context.getHorizontalDirection().getOpposite());
+        for (Direction dir : context.getNearestLookingDirections()) {
+            if (dir.getAxis().isHorizontal()) {
+                Direction facing = dir.getOpposite();
+                if (context.getPlayer() != null && context.getPlayer().isShiftKeyDown()) facing = facing.getOpposite();
+                return this.defaultBlockState().setValue(FACING, facing);
+            }
+        }
+        return this.defaultBlockState();
     }
 
     @Override

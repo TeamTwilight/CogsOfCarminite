@@ -7,6 +7,7 @@ import com.cogsofcarminite.client.CCSpriteShifts;
 import com.cogsofcarminite.items.*;
 import com.jozufozu.flywheel.core.PartialModel;
 import com.simibubi.create.AllMovementBehaviours;
+import com.simibubi.create.AllTags;
 import com.simibubi.create.content.decoration.encasing.CasingBlock;
 import com.simibubi.create.content.kinetics.BlockStressDefaults;
 import com.simibubi.create.foundation.data.AssetLookup;
@@ -64,6 +65,7 @@ public class CCBlocks {
                             return CCPartialBlockModels.CORE_FLYWHEEL_OFF;
                         }
                     })
+                    .tag(AllTags.AllItemTags.CONTRAPTION_CONTROLLED.tag)
                     .transform(customItemModel())
                     .register();
 
@@ -83,6 +85,7 @@ public class CCBlocks {
                             return CCPartialBlockModels.HEART_FLYWHEEL_OFF;
                         }
                     })
+                    .tag(AllTags.AllItemTags.CONTRAPTION_CONTROLLED.tag)
                     .transform(customItemModel())
                     .register();
 
@@ -102,6 +105,7 @@ public class CCBlocks {
                             return CCPartialBlockModels.ENGINE_FLYWHEEL_OFF;
                         }
                     })
+                    .tag(AllTags.AllItemTags.CONTRAPTION_CONTROLLED.tag)
                     .transform(customItemModel())
                     .register();
 
@@ -121,6 +125,7 @@ public class CCBlocks {
                             return CCPartialBlockModels.CLOCK_FLYWHEEL_OFF;
                         }
                     })
+                    .tag(AllTags.AllItemTags.CONTRAPTION_CONTROLLED.tag)
                     .transform(customItemModel())
                     .register();
 
@@ -133,6 +138,20 @@ public class CCBlocks {
                     .addLayer(() -> RenderType::cutoutMipped)
                     .transform(BlockStressDefaults.setImpact(1.0))
                     .onRegister(AllMovementBehaviours.movementBehaviour(new HornblowerMovementBehaviour()))
+                    .item()
+                    .tag(AllTags.AllItemTags.CONTRAPTION_CONTROLLED.tag)
+                    .transform(customItemModel())
+                    .register();
+
+    public static final BlockEntry<MechanicalRootPullerBlock> MECHANICAL_ROOT_PULLER =
+            TWILIGHT_REGISTRATE.block("mechanical_root_puller", MechanicalRootPullerBlock::new)
+                    .initialProperties(SharedProperties::stone)
+                    .properties(p -> p.mapColor(MapColor.PODZOL).noOcclusion())
+                    .transform(axeOrPickaxe())
+                    .blockstate(BlockStateGen.horizontalBlockProvider(true))
+                    .addLayer(() -> RenderType::cutoutMipped)
+                    .transform(BlockStressDefaults.setImpact(4.0))
+                    .onRegister(AllMovementBehaviours.movementBehaviour(new HornblowerMovementBehaviour()))//FIXME
                     .item()
                     .transform(customItemModel())
                     .register();

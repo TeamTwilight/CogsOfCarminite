@@ -1,0 +1,19 @@
+{
+  "variants": {
+    "facing=east": {
+      "model": "cogsofcarminite:block/mechanical_root_puller/block",
+      "y": 90
+    },
+    "facing=north": {
+      "model": "cogsofcarminite:block/mechanical_root_puller/block"
+    },
+    "facing=south": {
+      "model": "cogsofcarminite:block/mechanical_root_puller/block",
+      "y": 180
+    },
+    "facing=west": {
+      "model": "cogsofcarminite:block/mechanical_root_puller/block",
+      "y": 270
+    }
+  }
+}

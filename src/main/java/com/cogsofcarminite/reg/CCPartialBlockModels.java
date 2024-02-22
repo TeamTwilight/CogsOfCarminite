@@ -23,6 +23,7 @@ public class CCPartialBlockModels {
     public static final PartialModel HEART_FLYWHEEL_OFF = block("flywheel/heart_flywheel_off");
 
     public static final PartialModel HORNBLOWER = block("hornblower/head");
+    public static final PartialModel ROOT_PULLER_GEARS = block("mechanical_root_puller/gears");
 
     private static PartialModel block(String path) {
         return new PartialModel(CogsOfCarminite.prefix("block/" + path));
