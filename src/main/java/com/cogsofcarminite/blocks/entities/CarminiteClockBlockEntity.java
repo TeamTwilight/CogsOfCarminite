@@ -1,5 +1,6 @@
 package com.cogsofcarminite.blocks.entities;
 
+import com.cogsofcarminite.behaviour.BlockFilteringBehaviour;
 import com.simibubi.create.foundation.blockEntity.behaviour.BlockEntityBehaviour;
 import com.simibubi.create.foundation.blockEntity.behaviour.filtering.FilteringBehaviour;
 import net.minecraft.MethodsReturnNonnullByDefault;

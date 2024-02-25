@@ -1,11 +1,17 @@
 package com.cogsofcarminite.blocks.entities;
 
+import com.cogsofcarminite.behaviour.BlockFilteringBehaviour;
 import com.cogsofcarminite.blocks.MechanicalRootPullerBlock;
 import com.cogsofcarminite.data.CCTags;
+import com.jozufozu.flywheel.util.transform.TransformStack;
+import com.mojang.blaze3d.vertex.PoseStack;
 import com.simibubi.create.content.kinetics.base.BlockBreakingKineticBlockEntity;
 import com.simibubi.create.content.kinetics.belt.behaviour.DirectBeltInputBehaviour;
 import com.simibubi.create.foundation.blockEntity.behaviour.BlockEntityBehaviour;
+import com.simibubi.create.foundation.blockEntity.behaviour.ValueBoxTransform;
+import com.simibubi.create.foundation.blockEntity.behaviour.filtering.FilteringBehaviour;
 import com.simibubi.create.foundation.item.ItemHelper;
+import com.simibubi.create.foundation.utility.AngleHelper;
 import com.simibubi.create.foundation.utility.BlockHelper;
 import com.simibubi.create.foundation.utility.VecHelper;
 import net.minecraft.MethodsReturnNonnullByDefault;
@@ -35,17 +41,13 @@ import java.util.List;
 @MethodsReturnNonnullByDefault
 public class MechanicalRootPullerBlockEntity extends BlockBreakingKineticBlockEntity {
 
+    public FilteringBehaviour filtering;
     public ItemStackHandler inventory;
     private final LazyOptional<IItemHandler> invProvider;
 
     public MechanicalRootPullerBlockEntity(BlockEntityType<?> typeIn, BlockPos pos, BlockState state) {
         super(typeIn, pos, state);
-        this.inventory = new ItemStackHandler(1) {
-            @Override
-            public boolean isItemValid(int slot, @NotNull ItemStack stack) {
-                return stack.getItem() instanceof BlockItem blockItem && !blockItem.getBlock().defaultBlockState().is(CCTags.Blocks.ROOTS);
-            }
-        };
+        this.inventory = new ReferencedItemStackHandler(this);
         this.invProvider = LazyOptional.of(() -> this.inventory);
     }
 
@@ -53,6 +55,8 @@ public class MechanicalRootPullerBlockEntity extends BlockBreakingKineticBlockEn
     public void addBehaviours(List<BlockEntityBehaviour> behaviours) {
         super.addBehaviours(behaviours);
         behaviours.add(new DirectBeltInputBehaviour(this).allowingBeltFunnels());
+        this.filtering = new BlockFilteringBehaviour(this, new MechanicalRootPullerFilterSlot());
+        behaviours.add(this.filtering);
     }
 
     @Override
@@ -106,6 +110,7 @@ public class MechanicalRootPullerBlockEntity extends BlockBreakingKineticBlockEn
     }
 
     @Override
+    @SuppressWarnings("deprecation")
     public void onBlockBroken(BlockState stateToBreak) {
         if (this.level != null) {
             BlockPos.MutableBlockPos ps = this.breakingPos.mutable();
@@ -133,7 +138,7 @@ public class MechanicalRootPullerBlockEntity extends BlockBreakingKineticBlockEn
                 });
 
                 ItemStack blockStack = this.inventory.extractItem(0, 1, false);
-                if (!blockStack.isEmpty() && blockStack.getItem() instanceof BlockItem blockItem) {
+                if (!blockStack.isEmpty() && blockStack.getItem() instanceof BlockItem blockItem && blockItem.getBlock().canSurvive(blockItem.getBlock().defaultBlockState(), this.level, ps)) {
                     this.level.setBlock(ps, blockItem.getBlock().defaultBlockState(), 3);
                 }
                 return;
@@ -144,5 +149,46 @@ public class MechanicalRootPullerBlockEntity extends BlockBreakingKineticBlockEn
     @Override
     public boolean canBreak(BlockState stateToBreak, float blockHardness) {
         return super.canBreak(stateToBreak, blockHardness) && stateToBreak.is(CCTags.Blocks.ROOTS);
+    }
+
+    public static class MechanicalRootPullerFilterSlot extends ValueBoxTransform {
+
+        @Override
+        public Vec3 getLocalOffset(BlockState state) {
+            return getOffset(state);
+        }
+
+        public static Vec3 getOffset(BlockState state) {
+            Direction facing = state.getValue(MechanicalRootPullerBlock.FACING);
+            Vec3 vec = VecHelper.voxelSpace(8f, 8f, 15.5f);
+
+            vec = VecHelper.rotateCentered(vec, AngleHelper.horizontalAngle(Direction.UP), Direction.Axis.Y);
+            vec = VecHelper.rotateCentered(vec, AngleHelper.verticalAngle(Direction.UP), Direction.Axis.X);
+            vec = vec.subtract(Vec3.atLowerCornerOf(facing.getNormal()).scale(2 / 16f));
+
+            return vec;
+        }
+
+        @Override
+        public void rotate(BlockState state, PoseStack ms) {
+            TransformStack.cast(ms)
+                    .rotateY(AngleHelper.horizontalAngle(state.getValue(MechanicalRootPullerBlock.FACING)) + 180.0F)
+                    .rotateX(90.0F);
+        }
+    }
+
+    private static class ReferencedItemStackHandler extends ItemStackHandler {
+        private final MechanicalRootPullerBlockEntity be;
+
+        public ReferencedItemStackHandler(MechanicalRootPullerBlockEntity be) {
+            super(1);
+            this.be = be;
+        }
+
+        @Override
+        public boolean isItemValid(int slot, @NotNull ItemStack stack) {
+            if (BlockFilteringBehaviour.unfiltered(stack).isPresent()) return this.be.filtering.test(stack);
+            return false;
+        }
     }
 }

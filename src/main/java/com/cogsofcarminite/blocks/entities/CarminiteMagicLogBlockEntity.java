@@ -80,18 +80,6 @@ public abstract class CarminiteMagicLogBlockEntity extends KineticBlockEntity {
         this.flywheelSpeed.chase(0, 1.0F / 64.0F, LerpedFloat.Chaser.EXP);
     }
 
-    public static class BlockFilteringBehaviour extends FilteringBehaviour {
-        public BlockFilteringBehaviour(SmartBlockEntity be, ValueBoxTransform slot) {
-            super(be, slot);
-        }
-
-        @Override
-        public boolean setFilter(ItemStack stack) {
-            if (stack.isEmpty() || stack.getItem() instanceof BlockItem || stack.getItem() instanceof FilterItem) return super.setFilter(stack);
-            return false;
-        }
-    }
-
     public static class MagicLogSlot extends ValueBoxTransform {
 
         @Override

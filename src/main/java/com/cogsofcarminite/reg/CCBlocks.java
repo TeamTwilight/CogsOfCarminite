@@ -2,9 +2,10 @@ package com.cogsofcarminite.reg;
 
 import com.cogsofcarminite.behaviour.CarminiteLogMovementBehaviour;
 import com.cogsofcarminite.behaviour.HornblowerMovementBehaviour;
+import com.cogsofcarminite.behaviour.MechanicalRootPullerMovementBehaviour;
 import com.cogsofcarminite.blocks.*;
 import com.cogsofcarminite.client.CCSpriteShifts;
-import com.cogsofcarminite.items.*;
+import com.cogsofcarminite.items.CarminiteMagicLogBlockItem;
 import com.jozufozu.flywheel.core.PartialModel;
 import com.simibubi.create.AllMovementBehaviours;
 import com.simibubi.create.AllTags;
@@ -151,7 +152,7 @@ public class CCBlocks {
                     .blockstate(BlockStateGen.horizontalBlockProvider(true))
                     .addLayer(() -> RenderType::cutoutMipped)
                     .transform(BlockStressDefaults.setImpact(4.0))
-                    .onRegister(AllMovementBehaviours.movementBehaviour(new HornblowerMovementBehaviour()))//FIXME
+                    .onRegister(AllMovementBehaviours.movementBehaviour(new MechanicalRootPullerMovementBehaviour()))
                     .item()
                     .transform(customItemModel())
                     .register();

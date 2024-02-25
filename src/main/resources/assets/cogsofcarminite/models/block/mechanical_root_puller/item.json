@@ -5,6 +5,7 @@
 		"3": "create:block/axis_top",
 		"4": "cogsofcarminite:block/mechanical_root_puller_top",
 		"5": "cogsofcarminite:block/mechanical_root_puller_cog",
+		"10": "create:block/andesite_casing_piston",
 		"particle": "cogsofcarminite:block/mechanical_root_puller_top",
 		"gearbox_top": "create:block/gearbox_top",
 		"gearbox": "create:block/gearbox",
@@ -31,7 +32,7 @@
 				"north": {"uv": [0, 14, 16, 16], "rotation": 180, "texture": "#gearbox_top"},
 				"east": {"uv": [0, 4, 2, 14], "rotation": 90, "texture": "#andesite_casing_short"},
 				"west": {"uv": [14, 4, 16, 14], "rotation": 270, "texture": "#andesite_casing_short"},
-				"up": {"uv": [0, 4, 16, 14], "texture": "#andesite_casing_short"},
+				"up": {"uv": [0, 4, 16, 14], "texture": "#10"},
 				"down": {"uv": [0, 0, 16, 10], "rotation": 180, "texture": "#gearbox_top"}
 			}
 		},

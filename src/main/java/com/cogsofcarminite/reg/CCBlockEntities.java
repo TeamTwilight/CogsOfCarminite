@@ -6,6 +6,7 @@ import com.cogsofcarminite.client.instances.HornblowerInstance;
 import com.cogsofcarminite.client.instances.MechanicalRootPullerInstance;
 import com.cogsofcarminite.client.renderers.CarminiteMagicLogRenderer;
 import com.cogsofcarminite.client.renderers.HornblowerRenderer;
+import com.cogsofcarminite.client.renderers.MechanicalRootPullerRenderer;
 import com.tterrag.registrate.util.entry.BlockEntityEntry;
 
 import static com.cogsofcarminite.CogsOfCarminite.TWILIGHT_REGISTRATE;
@@ -49,6 +50,7 @@ public class CCBlockEntities {
     public static final BlockEntityEntry<MechanicalRootPullerBlockEntity> MECHANICAL_ROOT_PULLER = TWILIGHT_REGISTRATE
             .blockEntity("mechanical_root_puller", MechanicalRootPullerBlockEntity::new)
             .instance(() -> MechanicalRootPullerInstance::new)
+            .renderer(() -> MechanicalRootPullerRenderer::new)
             .validBlocks(CCBlocks.MECHANICAL_ROOT_PULLER)
             .register();
 
