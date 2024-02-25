@@ -7,6 +7,8 @@
   "block.cogsofcarminite.mechanical_sortingwood_engine": "Mechanical Sortingwood Engine",
   "block.cogsofcarminite.mechanical_timewood_clock": "Mechanical Timewood Clock",
   "cogsofcarminite.item_group.main": "Cogs Of Carminite",
+  "cogsofcarminite.logistics.block_filter": "Block Filter",
+  "cogsofcarminite.logistics.ore_filter": "Ore Filter",
   "cogsofcarminite.ponder.hornblower.header": "Using the Hornblower",
   "cogsofcarminite.ponder.hornblower.text_1": "Hornblowers use kinetic energy to blow on horn items",
   "cogsofcarminite.ponder.hornblower.text_2": "They can be powered from below using shafts or cogwheels",

@@ -1,4 +1,4 @@
-// 1.20.1	2024-02-25T02:38:10.3003133	Registrate Provider for cogsofcarminite [Recipes, Advancements, Loot Tables, Tags (blocks), Tags (items), Tags (fluids), Tags (entity_types), Blockstates, Item models, Lang (en_us/en_ud)]
+// 1.20.1	2024-02-25T02:48:29.4103089	Registrate Provider for cogsofcarminite [Recipes, Advancements, Loot Tables, Tags (blocks), Tags (items), Tags (fluids), Tags (entity_types), Blockstates, Item models, Lang (en_us/en_ud)]
 2895bd08b707c88bb8be7bc7d4dcda9a887689c9 assets/cogsofcarminite/blockstates/dark_tower_casing.json
 8f13084d6ff82de568a962bbdb18b8ee9e9f04b3 assets/cogsofcarminite/blockstates/hornblower.json
 360450da1de3d12d11d3abf84ba77ed33688eba5 assets/cogsofcarminite/blockstates/mechanical_heart_of_transformation.json
@@ -6,8 +6,8 @@
 0e69fa1be38239ee83fd90c446f0da805cd4fa30 assets/cogsofcarminite/blockstates/mechanical_root_puller.json
 bc707b53c5c0a56484a243a5faa052199b642478 assets/cogsofcarminite/blockstates/mechanical_sortingwood_engine.json
 baa8911355c5b0604cdacbaeb8137e4e84572402 assets/cogsofcarminite/blockstates/mechanical_timewood_clock.json
-1299b2f9f524849ee265f775bb5e76af9119d563 assets/cogsofcarminite/lang/en_ud.json
-51b6332f568bcba0aa940c03a26d847241ab2cb6 assets/cogsofcarminite/lang/en_us.json
+fe031f11438eb32d0e91cf61505ed1bc54495c0c assets/cogsofcarminite/lang/en_ud.json
+511f1c0c32ddea6eef64a1ec512d6b828045a612 assets/cogsofcarminite/lang/en_us.json
 4af2ec487756155d8fad49e3d164afc6dc2ad1a7 assets/cogsofcarminite/models/block/dark_tower_casing.json
 6a8b15db949c1b6fec15baed1afebdbdabfd06dc assets/cogsofcarminite/models/item/carminite_gear_gadget.json
 61f491d66321293b8100f7483fadf32644e83294 assets/cogsofcarminite/models/item/dark_tower_casing.json

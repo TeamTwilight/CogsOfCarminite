@@ -17,6 +17,8 @@ public class CCLangGenerator {
         addLang("tooltip", "hornblower.contains", "Item: %1$s");
         addLang("tooltip", "hornblower.instrument", "%1$s");
         addLang("tooltip", "hornblower.empty", "Use a Horn Item to Insert");
+        addLang("logistics", "block_filter", "Block Filter");
+        addLang("logistics", "ore_filter", "Ore Filter");
     }
 
     public static void addLang(String type, String key, String translation) {
