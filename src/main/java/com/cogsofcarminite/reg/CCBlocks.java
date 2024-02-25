@@ -50,26 +50,6 @@ public class CCBlocks {
                     .properties(p -> p.mapColor(MapColor.PODZOL))
                     .register();
 
-    public static final BlockEntry<MechanicalMinewoodCoreBlock> MECHANICAL_MINEWOOD_CORE =
-            TWILIGHT_REGISTRATE.block("mechanical_minewood_core", MechanicalMinewoodCoreBlock::new)
-                    .initialProperties(SharedProperties::copperMetal)
-                    .properties(p -> p.mapColor(MapColor.STONE)
-                            .noOcclusion())
-                    .transform(axeOrPickaxe())
-                    .blockstate(directionalBlockProviderIgnoresWaterlogged())
-                    .addLayer(() -> RenderType::cutoutMipped)
-                    .transform(BlockStressDefaults.setImpact(4.0))
-                    .onRegister(AllMovementBehaviours.movementBehaviour(new CarminiteLogMovementBehaviour()))
-                    .item((mechanicalMinewoodCoreBlock, properties) -> new CarminiteMagicLogBlockItem(mechanicalMinewoodCoreBlock, properties) {
-                        @Override
-                        public PartialModel getPartialModel() {
-                            return CCPartialBlockModels.CORE_FLYWHEEL_OFF;
-                        }
-                    })
-                    .tag(AllTags.AllItemTags.CONTRAPTION_CONTROLLED.tag)
-                    .transform(customItemModel())
-                    .register();
-
     public static final BlockEntry<MechanicalHeartOfTransformation> MECHANICAL_HEART_OF_TRANSFORMATION =
             TWILIGHT_REGISTRATE.block("mechanical_heart_of_transformation", MechanicalHeartOfTransformation::new)
                     .initialProperties(SharedProperties::copperMetal)
@@ -90,6 +70,27 @@ public class CCBlocks {
                     .transform(customItemModel())
                     .register();
 
+
+    public static final BlockEntry<MechanicalMinewoodCoreBlock> MECHANICAL_MINEWOOD_CORE =
+            TWILIGHT_REGISTRATE.block("mechanical_minewood_core", MechanicalMinewoodCoreBlock::new)
+                    .initialProperties(SharedProperties::copperMetal)
+                    .properties(p -> p.mapColor(MapColor.STONE)
+                            .noOcclusion())
+                    .transform(axeOrPickaxe())
+                    .blockstate(directionalBlockProviderIgnoresWaterlogged())
+                    .addLayer(() -> RenderType::cutoutMipped)
+                    .transform(BlockStressDefaults.setImpact(4.0))
+                    .onRegister(AllMovementBehaviours.movementBehaviour(new CarminiteLogMovementBehaviour()))
+                    .item((mechanicalMinewoodCoreBlock, properties) -> new CarminiteMagicLogBlockItem(mechanicalMinewoodCoreBlock, properties) {
+                        @Override
+                        public PartialModel getPartialModel() {
+                            return CCPartialBlockModels.CORE_FLYWHEEL_OFF;
+                        }
+                    })
+                    .tag(AllTags.AllItemTags.CONTRAPTION_CONTROLLED.tag)
+                    .transform(customItemModel())
+                    .register();
+    
     public static final BlockEntry<MechanicalSortingwoodEngine> MECHANICAL_SORTINGWOOD_ENGINE =
             TWILIGHT_REGISTRATE.block("mechanical_sortingwood_engine", MechanicalSortingwoodEngine::new)
                     .initialProperties(SharedProperties::copperMetal)
