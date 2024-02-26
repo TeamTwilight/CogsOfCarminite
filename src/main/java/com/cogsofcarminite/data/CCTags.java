@@ -6,10 +6,13 @@ import com.cogsofcarminite.reg.CCItems;
 import com.simibubi.create.AllTags;
 import net.minecraft.MethodsReturnNonnullByDefault;
 import net.minecraft.core.HolderLookup;
+import net.minecraft.core.registries.Registries;
 import net.minecraft.data.PackOutput;
+import net.minecraft.data.tags.BiomeTagsProvider;
 import net.minecraft.data.tags.ItemTagsProvider;
 import net.minecraft.tags.BlockTags;
 import net.minecraft.tags.TagKey;
+import net.minecraft.world.level.biome.Biome;
 import net.minecraft.world.level.block.Block;
 import net.minecraftforge.common.data.BlockTagsProvider;
 import net.minecraftforge.common.data.ExistingFileHelper;
@@ -86,6 +89,24 @@ public class CCTags {
                     CCItems.FIERY_SHEET.get(),
                     CCItems.KNIGHTMETAL_SHEET.get()
             );
+        }
+    }
+
+    public static class Biomes extends BiomeTagsProvider {
+        public static final TagKey<Biome> TWILIGHT_FOREST_KELP_WATER = TagKey.create(Registries.BIOME, CogsOfCarminite.prefix("twilight_forest_kelp_water"));
+
+        public Biomes(PackOutput packOutput, CompletableFuture<HolderLookup.Provider> provider, @Nullable ExistingFileHelper existingFileHelper) {
+            super(packOutput, provider, CogsOfCarminite.MODID, existingFileHelper);
+        }
+
+        @Override
+        public @NotNull String getName() {
+            return "Cogs Of Carminite Biome Tags";
+        }
+
+        @Override
+        protected void addTags(HolderLookup.Provider provider) {
+
         }
     }
 }

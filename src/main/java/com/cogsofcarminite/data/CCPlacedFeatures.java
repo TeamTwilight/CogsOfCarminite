@@ -11,6 +11,8 @@ import net.minecraft.resources.ResourceKey;
 import net.minecraft.world.level.levelgen.VerticalAnchor;
 import net.minecraft.world.level.levelgen.feature.ConfiguredFeature;
 import net.minecraft.world.level.levelgen.placement.*;
+import org.jetbrains.annotations.Contract;
+import org.jetbrains.annotations.Unmodifiable;
 
 import javax.annotation.ParametersAreNonnullByDefault;
 import java.util.List;
@@ -39,7 +41,8 @@ public class CCPlacedFeatures {
         register(ctx, STRIATED_ANDESITE_TWILIGHT_FOREST, striatedAndesiteTwilightForest, placement(RarityFilter.onAverageOnceEvery(6), -30, 100));
     }
 
-    private static List<PlacementModifier> placement(PlacementModifier frequency, int minHeight, int maxHeight) {
+    @Contract("_, _, _ -> new")
+    private static @Unmodifiable List<PlacementModifier> placement(PlacementModifier frequency, int minHeight, int maxHeight) {
         return List.of(
                 frequency,
                 InSquarePlacement.spread(),

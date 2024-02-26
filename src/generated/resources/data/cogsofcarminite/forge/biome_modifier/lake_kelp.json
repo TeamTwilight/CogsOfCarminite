@@ -1,0 +1,6 @@
+{
+  "type": "forge:add_features",
+  "biomes": "#cogsofcarminite:twilight_forest_kelp_water",
+  "features": "minecraft:kelp_cold",
+  "step": "vegetal_decoration"
+}

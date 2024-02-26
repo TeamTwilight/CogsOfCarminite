@@ -104,6 +104,7 @@ public class CogsOfCarminite {
             BlockTagsProvider blockTagsProvider = new CCTags.Blocks(output, provider, helper);
             gen.addProvider(true, blockTagsProvider);
             gen.addProvider(true, new CCTags.Items(output, provider, blockTagsProvider.contentsGetter(), helper));
+            gen.addProvider(true, new CCTags.Biomes(output, provider, helper));
             gen.addProvider(true, CCWorldgenDataProvider.makeFactory(event.getLookupProvider()));
         }
     }

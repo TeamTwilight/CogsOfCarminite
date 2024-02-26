@@ -7,6 +7,7 @@ import net.minecraft.core.HolderGetter;
 import net.minecraft.core.HolderSet;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.data.worldgen.BootstapContext;
+import net.minecraft.data.worldgen.placement.AquaticPlacements;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.world.level.biome.Biome;
 import net.minecraft.world.level.levelgen.GenerationStep;
@@ -24,6 +25,7 @@ public class CCBiomeModifiers {
     public static final ResourceKey<BiomeModifier> ZINC_ORE = key("zinc_ore");
     public static final ResourceKey<BiomeModifier> STRIATED_ORES_TWILIGHT_FOREST = key("striated_ores_twilight_forest");
     public static final ResourceKey<BiomeModifier> STRIATED_ANDESITE_TWILIGHT_FOREST = key("striated_andesite_twilight_forest");
+    public static final ResourceKey<BiomeModifier> LAKE_KELP = key("lake_kelp");
 
     private static ResourceKey<BiomeModifier> key(String name) {
         return ResourceKey.create(ForgeRegistries.Keys.BIOME_MODIFIERS, CogsOfCarminite.prefix(name));
@@ -32,15 +34,18 @@ public class CCBiomeModifiers {
     public static void bootstrap(BootstapContext<BiomeModifier> ctx) {
         HolderGetter<Biome> biomeLookup = ctx.lookup(Registries.BIOME);
         HolderSet<Biome> isTwilightForest = biomeLookup.getOrThrow(BiomeTagGenerator.IS_TWILIGHT);
+        HolderSet<Biome> isTwilightForestLake = biomeLookup.getOrThrow(CCTags.Biomes.TWILIGHT_FOREST_KELP_WATER);
 
         HolderGetter<PlacedFeature> featureLookup = ctx.lookup(Registries.PLACED_FEATURE);
         Holder<PlacedFeature> zincOre = featureLookup.getOrThrow(CCPlacedFeatures.ZINC_ORE);
         Holder<PlacedFeature> striatedOresTwilightForest = featureLookup.getOrThrow(CCPlacedFeatures.STRIATED_ORES_TWILIGHT_FOREST);
         Holder<PlacedFeature> striatedAndesiteTwilightForest = featureLookup.getOrThrow(CCPlacedFeatures.STRIATED_ANDESITE_TWILIGHT_FOREST);
+        Holder<PlacedFeature> kelp = featureLookup.getOrThrow(AquaticPlacements.KELP_COLD);
 
         ctx.register(ZINC_ORE, addOre(isTwilightForest, zincOre));
         ctx.register(STRIATED_ORES_TWILIGHT_FOREST, addOre(isTwilightForest, striatedOresTwilightForest));
         ctx.register(STRIATED_ANDESITE_TWILIGHT_FOREST, addOre(isTwilightForest, striatedAndesiteTwilightForest));
+        ctx.register(LAKE_KELP, new ForgeBiomeModifiers.AddFeaturesBiomeModifier(isTwilightForestLake, HolderSet.direct(kelp), GenerationStep.Decoration.VEGETAL_DECORATION));
     }
 
     private static ForgeBiomeModifiers.AddFeaturesBiomeModifier addOre(HolderSet<Biome> biomes, Holder<PlacedFeature> feature) {

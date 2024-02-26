@@ -47,6 +47,27 @@ public class CCBlocks {
                     .properties(p -> p.mapColor(MapColor.PODZOL))
                     .register();
 
+
+    public static final BlockEntry<MechanicalTimewoodClock> MECHANICAL_TIMEWOOD_CLOCK =
+            TWILIGHT_REGISTRATE.block("mechanical_timewood_clock", MechanicalTimewoodClock::new)
+                    .initialProperties(SharedProperties::copperMetal)
+                    .properties(p -> p.mapColor(MapColor.STONE)
+                            .noOcclusion())
+                    .transform(axeOrPickaxe())
+                    .blockstate(directionalBlockProviderIgnoresWaterlogged())
+                    .addLayer(() -> RenderType::cutoutMipped)
+                    .transform(BlockStressDefaults.setImpact(4.0))
+                    .onRegister(AllMovementBehaviours.movementBehaviour(new CarminiteLogMovementBehaviour()))
+                    .item((mechanicalTimewoodClock, properties) -> new CarminiteMagicLogBlockItem(mechanicalTimewoodClock, properties) {
+                        @Override
+                        public PartialModel getPartialModel() {
+                            return CCPartialBlockModels.CLOCK_FLYWHEEL_OFF;
+                        }
+                    })
+                    .tag(AllTags.AllItemTags.CONTRAPTION_CONTROLLED.tag)
+                    .transform(customItemModel())
+                    .register();
+    
     public static final BlockEntry<MechanicalHeartOfTransformation> MECHANICAL_HEART_OF_TRANSFORMATION =
             TWILIGHT_REGISTRATE.block("mechanical_heart_of_transformation", MechanicalHeartOfTransformation::new)
                     .initialProperties(SharedProperties::copperMetal)
@@ -102,26 +123,6 @@ public class CCBlocks {
                         @Override
                         public PartialModel getPartialModel() {
                             return CCPartialBlockModels.ENGINE_FLYWHEEL_OFF;
-                        }
-                    })
-                    .tag(AllTags.AllItemTags.CONTRAPTION_CONTROLLED.tag)
-                    .transform(customItemModel())
-                    .register();
-
-    public static final BlockEntry<MechanicalTimewoodClock> MECHANICAL_TIMEWOOD_CLOCK =
-            TWILIGHT_REGISTRATE.block("mechanical_timewood_clock", MechanicalTimewoodClock::new)
-                    .initialProperties(SharedProperties::copperMetal)
-                    .properties(p -> p.mapColor(MapColor.STONE)
-                            .noOcclusion())
-                    .transform(axeOrPickaxe())
-                    .blockstate(directionalBlockProviderIgnoresWaterlogged())
-                    .addLayer(() -> RenderType::cutoutMipped)
-                    .transform(BlockStressDefaults.setImpact(4.0))
-                    .onRegister(AllMovementBehaviours.movementBehaviour(new CarminiteLogMovementBehaviour()))
-                    .item((mechanicalTimewoodClock, properties) -> new CarminiteMagicLogBlockItem(mechanicalTimewoodClock, properties) {
-                        @Override
-                        public PartialModel getPartialModel() {
-                            return CCPartialBlockModels.CLOCK_FLYWHEEL_OFF;
                         }
                     })
                     .tag(AllTags.AllItemTags.CONTRAPTION_CONTROLLED.tag)
