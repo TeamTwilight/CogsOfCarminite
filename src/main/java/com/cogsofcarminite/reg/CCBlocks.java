@@ -56,7 +56,7 @@ public class CCBlocks {
                     .transform(axeOrPickaxe())
                     .blockstate(directionalBlockProviderIgnoresWaterlogged())
                     .addLayer(() -> RenderType::cutoutMipped)
-                    .transform(BlockStressDefaults.setImpact(4.0))
+                    .transform(BlockStressDefaults.setImpact(8.0))
                     .onRegister(AllMovementBehaviours.movementBehaviour(new CarminiteLogMovementBehaviour()))
                     .item((mechanicalTimewoodClock, properties) -> new CarminiteMagicLogBlockItem(mechanicalTimewoodClock, properties) {
                         @Override
@@ -67,7 +67,7 @@ public class CCBlocks {
                     .tag(AllTags.AllItemTags.CONTRAPTION_CONTROLLED.tag)
                     .transform(customItemModel())
                     .register();
-    
+
     public static final BlockEntry<MechanicalHeartOfTransformation> MECHANICAL_HEART_OF_TRANSFORMATION =
             TWILIGHT_REGISTRATE.block("mechanical_heart_of_transformation", MechanicalHeartOfTransformation::new)
                     .initialProperties(SharedProperties::copperMetal)
@@ -76,7 +76,7 @@ public class CCBlocks {
                     .transform(axeOrPickaxe())
                     .blockstate(directionalBlockProviderIgnoresWaterlogged())
                     .addLayer(() -> RenderType::cutoutMipped)
-                    .transform(BlockStressDefaults.setImpact(4.0))
+                    .transform(BlockStressDefaults.setImpact(8.0))
                     .onRegister(AllMovementBehaviours.movementBehaviour(new CarminiteLogMovementBehaviour()))
                     .item((mechanicalHeartOfTransformation, properties) -> new CarminiteMagicLogBlockItem(mechanicalHeartOfTransformation, properties) {
                         @Override
@@ -97,7 +97,7 @@ public class CCBlocks {
                     .transform(axeOrPickaxe())
                     .blockstate(directionalBlockProviderIgnoresWaterlogged())
                     .addLayer(() -> RenderType::cutoutMipped)
-                    .transform(BlockStressDefaults.setImpact(4.0))
+                    .transform(BlockStressDefaults.setImpact(8.0))
                     .onRegister(AllMovementBehaviours.movementBehaviour(new CarminiteLogMovementBehaviour()))
                     .item((mechanicalMinewoodCoreBlock, properties) -> new CarminiteMagicLogBlockItem(mechanicalMinewoodCoreBlock, properties) {
                         @Override
@@ -117,7 +117,7 @@ public class CCBlocks {
                     .transform(axeOrPickaxe())
                     .blockstate(directionalBlockProviderIgnoresWaterlogged())
                     .addLayer(() -> RenderType::cutoutMipped)
-                    .transform(BlockStressDefaults.setImpact(4.0))
+                    .transform(BlockStressDefaults.setImpact(8.0))
                     .onRegister(AllMovementBehaviours.movementBehaviour(new CarminiteLogMovementBehaviour()))
                     .item((mechanicalSortingwoodEngine, properties) -> new CarminiteMagicLogBlockItem(mechanicalSortingwoodEngine, properties) {
                         @Override
