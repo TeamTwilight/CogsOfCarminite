@@ -1,7 +1,7 @@
 package com.cogsofcarminite.behaviour;
 
 import com.cogsofcarminite.blocks.MechanicalRootPullerBlock;
-import com.cogsofcarminite.client.renderers.MechanicalRootPullerRenderer;
+import com.cogsofcarminite.client.renderers.blocks.MechanicalRootPullerRenderer;
 import com.cogsofcarminite.data.CCTags;
 import com.jozufozu.flywheel.core.virtual.VirtualRenderWorld;
 import com.simibubi.create.content.contraptions.behaviour.MovementContext;

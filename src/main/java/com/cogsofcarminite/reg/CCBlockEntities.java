@@ -4,9 +4,9 @@ import com.cogsofcarminite.blocks.entities.*;
 import com.cogsofcarminite.client.instances.CarminiteMagicLogInstance;
 import com.cogsofcarminite.client.instances.HornblowerInstance;
 import com.cogsofcarminite.client.instances.MechanicalRootPullerInstance;
-import com.cogsofcarminite.client.renderers.CarminiteMagicLogRenderer;
-import com.cogsofcarminite.client.renderers.HornblowerRenderer;
-import com.cogsofcarminite.client.renderers.MechanicalRootPullerRenderer;
+import com.cogsofcarminite.client.renderers.blocks.CarminiteMagicLogRenderer;
+import com.cogsofcarminite.client.renderers.blocks.HornblowerRenderer;
+import com.cogsofcarminite.client.renderers.blocks.MechanicalRootPullerRenderer;
 import com.tterrag.registrate.util.entry.BlockEntityEntry;
 
 import static com.cogsofcarminite.CogsOfCarminite.TWILIGHT_REGISTRATE;

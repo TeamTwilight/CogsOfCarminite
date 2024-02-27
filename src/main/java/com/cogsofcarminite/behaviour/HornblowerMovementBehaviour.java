@@ -1,7 +1,7 @@
 package com.cogsofcarminite.behaviour;
 
 import com.cogsofcarminite.blocks.HornblowerBlock;
-import com.cogsofcarminite.client.renderers.HornblowerRenderer;
+import com.cogsofcarminite.client.renderers.blocks.HornblowerRenderer;
 import com.jozufozu.flywheel.core.virtual.VirtualRenderWorld;
 import com.simibubi.create.content.contraptions.behaviour.MovementBehaviour;
 import com.simibubi.create.content.contraptions.behaviour.MovementContext;

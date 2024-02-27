@@ -1,4 +1,4 @@
-package com.cogsofcarminite.client.renderers;
+package com.cogsofcarminite.client.renderers.blocks;
 
 import com.cogsofcarminite.blocks.CarminiteMagicLogBlock;
 import com.cogsofcarminite.blocks.entities.CarminiteMagicLogBlockEntity;

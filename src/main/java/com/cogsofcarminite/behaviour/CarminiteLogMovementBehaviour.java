@@ -2,7 +2,7 @@ package com.cogsofcarminite.behaviour;
 
 import com.cogsofcarminite.blocks.CarminiteMagicLogBlock;
 import com.cogsofcarminite.blocks.entities.CarminiteMagicLogBlockEntity;
-import com.cogsofcarminite.client.renderers.CarminiteMagicLogRenderer;
+import com.cogsofcarminite.client.renderers.blocks.CarminiteMagicLogRenderer;
 import com.jozufozu.flywheel.core.virtual.VirtualRenderWorld;
 import com.simibubi.create.content.contraptions.behaviour.MovementBehaviour;
 import com.simibubi.create.content.contraptions.behaviour.MovementContext;
