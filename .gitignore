@@ -27,3 +27,4 @@ forge*changelog.txt
 /run-data/logs/
 *.gz
 secrets.properties
+run-data/logs/debug.log
