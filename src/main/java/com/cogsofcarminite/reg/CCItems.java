@@ -1,6 +1,7 @@
 package com.cogsofcarminite.reg;
 
 import com.cogsofcarminite.client.renderers.items.CarminiteMagicLogItemRenderer;
+import com.cogsofcarminite.items.BlockFilterItem;
 import com.cogsofcarminite.items.CarminiteGearGadgetItem;
 import com.simibubi.create.content.processing.sequenced.SequencedAssemblyItem;
 import com.simibubi.create.foundation.data.AssetLookup;
@@ -41,6 +42,8 @@ public class CCItems {
     public static final ItemEntry<CarminiteGearGadgetItem> CARMINITE_GEAR_GADGET = TWILIGHT_REGISTRATE.item("carminite_gear_gadget", CarminiteGearGadgetItem::new)
             .model(AssetLookup.itemModelWithPartials())
             .register();
+
+    public static final ItemEntry<BlockFilterItem> BLOCK_ATTRIBUTE_FILTER = TWILIGHT_REGISTRATE.item("block_attribute_filter", BlockFilterItem::new).register();
 
     public static void register() { }
 

@@ -5,6 +5,7 @@ import com.cogsofcarminite.blocks.entities.CarminiteClockBlockEntity;
 import com.cogsofcarminite.blocks.entities.CarminiteMagicLogBlockEntity;
 import com.cogsofcarminite.reg.CCBlockEntities;
 import com.cogsofcarminite.reg.CCPartialBlockModels;
+import com.cogsofcarminite.util.BlockFilterItemStack;
 import com.jozufozu.flywheel.core.PartialModel;
 import com.simibubi.create.content.logistics.filter.FilterItemStack;
 import com.simibubi.create.foundation.block.IBE;
@@ -57,14 +58,14 @@ public class MechanicalTimewoodClock extends CarminiteMagicLogBlock implements I
     @SuppressWarnings("unchecked")
     // Vanilla also makes this dirty cast on block entity tickers, poor mojank design.
     public void performTreeEffect(ServerLevel level, BlockPos pos, RandomSource rand, CompoundTag filter) {
-        FilterItemStack filterStack = FilterItemStack.of(filter);
+        FilterItemStack filterStack = BlockFilterItemStack.od(filter);
         int numticks = 8 * 3 * 20;
 
         for (int i = 0; i < numticks; i++) {
             BlockPos dPos = WorldUtil.randomOffset(rand, pos, TFConfig.COMMON_CONFIG.MAGIC_TREES.timeRange.get());
             BlockState state = level.getBlockState(dPos);
 
-            if (!state.is(BlockTagGenerator.TIME_CORE_EXCLUDED) && filterStack.test(level, state.getBlock().asItem().getDefaultInstance())) {
+            if (!state.is(BlockTagGenerator.TIME_CORE_EXCLUDED) && this.test(filterStack, level, state, dPos)) {
                 boolean flag = false;
 
                 if (state.isRandomlyTicking()) {
@@ -84,6 +85,13 @@ public class MechanicalTimewoodClock extends CarminiteMagicLogBlock implements I
                 if (flag) spawnParticles(level, dPos);
             }
         }
+    }
+
+    private boolean test(FilterItemStack filter, ServerLevel level, BlockState state, BlockPos pos) {
+        if (filter instanceof BlockFilterItemStack blockFilterItemStack) {
+            return blockFilterItemStack.test(level, state, pos);
+        }
+        return filter.test(level, state.getBlock().asItem().getDefaultInstance());
     }
 
     @Override

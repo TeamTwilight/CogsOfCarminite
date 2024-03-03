@@ -1,12 +1,15 @@
 package com.cogsofcarminite.behaviour;
 
+import com.cogsofcarminite.CCUtil;
 import com.cogsofcarminite.blocks.MechanicalRootPullerBlock;
 import com.cogsofcarminite.client.renderers.blocks.MechanicalRootPullerRenderer;
 import com.cogsofcarminite.data.CCTags;
+import com.cogsofcarminite.util.BlockFilterItemStack;
 import com.jozufozu.flywheel.core.virtual.VirtualRenderWorld;
 import com.simibubi.create.content.contraptions.behaviour.MovementContext;
 import com.simibubi.create.content.contraptions.render.ContraptionMatrices;
 import com.simibubi.create.content.kinetics.base.BlockBreakingMovementBehaviour;
+import com.simibubi.create.content.logistics.filter.FilterItemStack;
 import com.simibubi.create.foundation.utility.BlockHelper;
 import com.simibubi.create.foundation.utility.VecHelper;
 import com.simibubi.create.infrastructure.config.AllConfigs;
@@ -101,7 +104,7 @@ public class MechanicalRootPullerMovementBehaviour extends BlockBreakingMovement
                     if (blockItem != null) {
                         Block block = blockItem.getBlock();
                         BlockState itemState = block.defaultBlockState();
-                        if (block.canSurvive(itemState, context.world, ps) && context.getFilterFromBE().test(context.world, stack)) {
+                        if (block.canSurvive(itemState, context.world, ps) && this.getFilterFromBE(context).test(context.world, stack)) {
                             inventory.extractItem(j, 1, false);
                             context.world.setBlock(ps, itemState, 3);
                             CompoundTag data = context.data;
@@ -116,6 +119,14 @@ public class MechanicalRootPullerMovementBehaviour extends BlockBreakingMovement
                 return;
             }
         }
+    }
+
+    public FilterItemStack getFilterFromBE(MovementContext context) {
+        FilterItemStack filter = CCUtil.reflectAndGet(CCUtil.FILTER_IN_BE, context);
+        if (filter != null) return filter;
+        filter = BlockFilterItemStack.od(context.blockEntityData.getCompound("Filter"));
+        CCUtil.reflectAndSet(CCUtil.FILTER_IN_BE, context, filter);
+        return filter;
     }
 
     @Override

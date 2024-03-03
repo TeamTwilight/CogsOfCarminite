@@ -1,5 +1,6 @@
 package com.cogsofcarminite.blocks;
 
+import com.cogsofcarminite.CCUtil;
 import com.cogsofcarminite.CogsOfCarminite;
 import com.cogsofcarminite.blocks.entities.CarminiteCoreBlockEntity;
 import com.cogsofcarminite.blocks.entities.CarminiteMagicLogBlockEntity;
@@ -22,6 +23,9 @@ import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockState;
+import net.minecraftforge.event.AddReloadListenerEvent;
+import net.minecraftforge.eventbus.api.SubscribeEvent;
+import net.minecraftforge.fml.common.Mod;
 import twilightforest.TFConfig;
 import twilightforest.data.tags.BlockTagGenerator;
 import twilightforest.init.TFSounds;
@@ -29,9 +33,7 @@ import twilightforest.item.OreMagnetItem;
 import twilightforest.util.VoxelBresenhamIterator;
 import twilightforest.util.WorldUtil;
 
-import javax.annotation.Nullable;
 import javax.annotation.ParametersAreNonnullByDefault;
-import java.lang.reflect.Field;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.util.HashMap;
@@ -40,11 +42,11 @@ import java.util.Set;
 
 @ParametersAreNonnullByDefault
 @MethodsReturnNonnullByDefault
+@Mod.EventBusSubscriber(modid = CogsOfCarminite.MODID)
 public class MechanicalMinewoodCoreBlock extends CarminiteMagicLogBlock implements IBE<CarminiteCoreBlockEntity> {
     private static final ResourceLocation TEXTURE_LOCATION = CogsOfCarminite.prefix("textures/block/mining_log_core_on.png");
     private static final RenderType RENDER_TYPE = RenderType.armorCutoutNoCull(TEXTURE_LOCATION);
 
-    public static Field REFLECTED_ORE_TO_BLOCK_REPLACEMENTS = null;
     private static boolean REFLECTED_CACHE_NEEDS_BUILD = true;
 
     public MechanicalMinewoodCoreBlock(Properties properties) {
@@ -73,6 +75,7 @@ public class MechanicalMinewoodCoreBlock extends CarminiteMagicLogBlock implemen
         if (REFLECTED_CACHE_NEEDS_BUILD) {
             try {
                 Method method = OreMagnetItem.class.getDeclaredMethod("initOre2BlockMap", null);
+                method.setAccessible(true);
                 method.invoke(null, null);
             } catch (NoSuchMethodException | InvocationTargetException | IllegalAccessException e) {
                 e.printStackTrace();
@@ -100,10 +103,7 @@ public class MechanicalMinewoodCoreBlock extends CarminiteMagicLogBlock implemen
                 // This ordering is so that the base pos is found first before we pull ores - pushing ores away is a baaaaad idea!
             } else if (foundPos == null && searchState.getBlock() != Blocks.AIR && this.isOre(level, filterStack, searchState.getBlock()) && level.getBlockEntity(coord) == null) {
                 attactedOreBlock = searchState;
-                HashMap<Block, Block> map = getReplacements();
-                if (map != null) {
-                    replacementBlock = map.getOrDefault(attactedOreBlock.getBlock(), Blocks.STONE).defaultBlockState();
-                }
+                replacementBlock = getReplacements().getOrDefault(attactedOreBlock.getBlock(), Blocks.STONE).defaultBlockState();
                 foundPos = coord;
             }
         }
@@ -147,30 +147,11 @@ public class MechanicalMinewoodCoreBlock extends CarminiteMagicLogBlock implemen
 
     private boolean isOre(Level level, FilterItemStack filter, Block ore) {
         if (! filter.test(level, ore.asItem().getDefaultInstance())) return false;
-        HashMap<Block, Block> map = getReplacements();
-        if (map != null) return map.containsKey(ore);
-        return false;
+        return getReplacements().containsKey(ore);
     }
 
-    @SuppressWarnings({"unchecked", "CallToPrintStackTrace"})
-    public static @Nullable HashMap<Block, Block> getReplacements() {
-        if (REFLECTED_ORE_TO_BLOCK_REPLACEMENTS == null) {
-            try {
-                REFLECTED_ORE_TO_BLOCK_REPLACEMENTS = OreMagnetItem.class.getDeclaredField("ORE_TO_BLOCK_REPLACEMENTS");
-                REFLECTED_ORE_TO_BLOCK_REPLACEMENTS.setAccessible(true);
-            } catch (NoSuchFieldException e) {
-                e.printStackTrace();
-                return null;
-            }
-        }
-
-        try {
-            return (HashMap<Block, Block>)REFLECTED_ORE_TO_BLOCK_REPLACEMENTS.get(null);
-        } catch (IllegalAccessException e) {
-            e.printStackTrace();
-        }
-
-        return null;
+    public static HashMap<Block, Block> getReplacements() {
+        return CCUtil.reflectAndGet(CCUtil.ORE_TO_BLOCK_REPLACEMENTS, null);
     }
 
     private static boolean isReplaceable(BlockState state) {
@@ -193,5 +174,15 @@ public class MechanicalMinewoodCoreBlock extends CarminiteMagicLogBlock implemen
     @Override
     public RenderType getRenderType() {
         return RENDER_TYPE;
+    }
+
+    @SubscribeEvent
+    @SuppressWarnings("DataFlowIssue")
+    public static void buildOreMagnetCache(AddReloadListenerEvent event) {
+        event.addListener((stage, resourceManager, preparationsProfiler, reloadProfiler, backgroundExecutor, gameExecutor) -> {
+            REFLECTED_CACHE_NEEDS_BUILD = true;
+            return stage.wait(null).thenRun(() -> {
+            }); // Nothing to do here
+        });
     }
 }

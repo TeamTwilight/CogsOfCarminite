@@ -58,6 +58,8 @@ public class CogsOfCarminite {
         CCBlocks.register();
         CCItems.register();
         CCBlockEntities.register();
+        CCMenus.register();
+        CCPackets.register();
 
         CCCreativeModeTabs.register(modEventBus);
 
