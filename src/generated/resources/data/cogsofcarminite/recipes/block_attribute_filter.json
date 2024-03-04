@@ -1,0 +1,19 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "key": {
+    "F": {
+      "item": "twilightforest:arctic_fur_block"
+    },
+    "N": {
+      "item": "cogsofcarminite:ironwood_nugget"
+    }
+  },
+  "pattern": [
+    "NFN"
+  ],
+  "result": {
+    "item": "cogsofcarminite:block_attribute_filter"
+  },
+  "show_notification": true
+}

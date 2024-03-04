@@ -13,21 +13,23 @@ import net.minecraft.world.item.Item;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.client.extensions.common.IClientItemExtensions;
+import net.minecraftforge.common.Tags;
 
 import javax.annotation.ParametersAreNonnullByDefault;
 import java.util.function.Consumer;
 
 import static com.cogsofcarminite.CogsOfCarminite.TWILIGHT_REGISTRATE;
-import static com.simibubi.create.AllTags.AllItemTags.PLATES;
+import static com.simibubi.create.AllTags.AllItemTags;
 
 @ParametersAreNonnullByDefault
 @MethodsReturnNonnullByDefault
 @SuppressWarnings("SameParameterValue")
 public class CCItems {
 
-    public static final ItemEntry<Item> IRONWOOD_SHEET = taggedIngredient("ironwood_sheet", PLATES.tag);
-    public static final ItemEntry<Item> KNIGHTMETAL_SHEET = taggedIngredient("knightmetal_sheet", PLATES.tag);
-    public static final ItemEntry<Item> FIERY_SHEET = taggedIngredient("fiery_sheet", PLATES.tag);
+    public static final ItemEntry<Item> IRONWOOD_SHEET = taggedIngredient("ironwood_sheet", AllItemTags.PLATES.tag);
+    public static final ItemEntry<Item> KNIGHTMETAL_SHEET = taggedIngredient("knightmetal_sheet", AllItemTags.PLATES.tag);
+    public static final ItemEntry<Item> FIERY_SHEET = taggedIngredient("fiery_sheet", AllItemTags.PLATES.tag);
+    public static final ItemEntry<Item> IRONWOOD_NUGGET = taggedIngredient("ironwood_nugget", Tags.Items.NUGGETS);
 
     public static final ItemEntry<? extends SequencedAssemblyItem> INCOMPLETE_GEAR_GADGET = TWILIGHT_REGISTRATE.item("incomplete_gear_gadget", a -> new SequencedAssemblyItem(a) {
                 @Override

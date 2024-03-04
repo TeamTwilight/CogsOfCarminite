@@ -1,4 +1,4 @@
-// 1.20.1	2024-03-04T23:36:52.9128759	Registrate Provider for cogsofcarminite [Recipes, Advancements, Loot Tables, Tags (blocks), Tags (items), Tags (fluids), Tags (entity_types), Blockstates, Item models, Lang (en_us/en_ud)]
+// 1.20.1	2024-03-05T00:06:38.8766892	Registrate Provider for cogsofcarminite [Recipes, Advancements, Loot Tables, Tags (blocks), Tags (items), Tags (fluids), Tags (entity_types), Blockstates, Item models, Lang (en_us/en_ud)]
 2895bd08b707c88bb8be7bc7d4dcda9a887689c9 assets/cogsofcarminite/blockstates/dark_tower_casing.json
 8f13084d6ff82de568a962bbdb18b8ee9e9f04b3 assets/cogsofcarminite/blockstates/hornblower.json
 360450da1de3d12d11d3abf84ba77ed33688eba5 assets/cogsofcarminite/blockstates/mechanical_heart_of_transformation.json
@@ -6,8 +6,8 @@
 0e69fa1be38239ee83fd90c446f0da805cd4fa30 assets/cogsofcarminite/blockstates/mechanical_root_puller.json
 bc707b53c5c0a56484a243a5faa052199b642478 assets/cogsofcarminite/blockstates/mechanical_sortingwood_engine.json
 baa8911355c5b0604cdacbaeb8137e4e84572402 assets/cogsofcarminite/blockstates/mechanical_timewood_clock.json
-d9dcc94e5260826c39c6f71f9f5010b4a1cdd83e assets/cogsofcarminite/lang/en_ud.json
-4139ff9d62a0ee527e2bb3bbb6efa51e2f75867c assets/cogsofcarminite/lang/en_us.json
+a718f3fd47bf091350474c65d74f8f82e6350cb8 assets/cogsofcarminite/lang/en_ud.json
+671f7ce0a80b5f9eff272fca1158f8804f242adb assets/cogsofcarminite/lang/en_us.json
 4af2ec487756155d8fad49e3d164afc6dc2ad1a7 assets/cogsofcarminite/models/block/dark_tower_casing.json
 8968b8916ae98fe7358d9d486290ccfc00ecba38 assets/cogsofcarminite/models/item/block_attribute_filter.json
 6a8b15db949c1b6fec15baed1afebdbdabfd06dc assets/cogsofcarminite/models/item/carminite_gear_gadget.json
@@ -15,6 +15,7 @@ d9dcc94e5260826c39c6f71f9f5010b4a1cdd83e assets/cogsofcarminite/lang/en_ud.json
 b02b5ad5fddecd625d2186b811efd4b5407e9449 assets/cogsofcarminite/models/item/fiery_sheet.json
 ff6c296378657077d98e043ddd5d3183a37dc2ad assets/cogsofcarminite/models/item/hornblower.json
 c0a6822d174293d6c6c82de5486fedf42446921b assets/cogsofcarminite/models/item/incomplete_gear_gadget.json
+82cc577526e2c9f952b05dcbbb5d8d65e4369772 assets/cogsofcarminite/models/item/ironwood_nugget.json
 3a5cbf7ff2394cbd31eeb5e1eea554f43deec056 assets/cogsofcarminite/models/item/ironwood_sheet.json
 01151385632b5e6e7798a81a4589fd6404a6b4ed assets/cogsofcarminite/models/item/knightmetal_sheet.json
 d9a2d2133d39a5b2ae041100209ce3408f6773f3 assets/cogsofcarminite/models/item/mechanical_heart_of_transformation.json
@@ -32,6 +33,7 @@ d70f33b8b038179ebda573f49b7644c05ca9827b data/cogsofcarminite/loot_tables/blocks
 56b6027b39a9dcb7de69e38206aeb8929f912f57 data/create/tags/blocks/casing.json
 56b6027b39a9dcb7de69e38206aeb8929f912f57 data/create/tags/items/casing.json
 cdbde63b3adceffd2f63576d81a4b3bcbc59046d data/create/tags/items/contraption_controlled.json
+2804238660ad19b2c0fdeda24d30da193e7e8375 data/forge/tags/items/nuggets.json
 d1d9a6f4be309dc8c040fe4b9108be905fbe80b5 data/forge/tags/items/plates.json
 5fa13638d1fcb2d91dd89b693ed3146384686bcd data/minecraft/tags/blocks/mineable/axe.json
 5fa13638d1fcb2d91dd89b693ed3146384686bcd data/minecraft/tags/blocks/mineable/pickaxe.json
