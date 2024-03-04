@@ -2,7 +2,6 @@ package com.cogsofcarminite;
 
 import com.mojang.datafixers.util.Pair;
 import com.simibubi.create.content.contraptions.behaviour.MovementContext;
-import com.simibubi.create.foundation.blockEntity.behaviour.filtering.FilteringBehaviour;
 import net.minecraft.MethodsReturnNonnullByDefault;
 import net.minecraft.core.Direction;
 import twilightforest.item.OreMagnetItem;
@@ -19,8 +18,6 @@ public class CCUtil {
     public static Map<Pair<Class<?>, String>, Field> REFLECTED_CACHE = new HashMap<>();
 
     public static Pair<Class<?>, String> ORE_TO_BLOCK_REPLACEMENTS = Pair.of(OreMagnetItem.class, "ORE_TO_BLOCK_REPLACEMENTS");
-    public static Pair<Class<?>, String> FILTER_FIELD = Pair.of(FilteringBehaviour.class, "filter");
-    public static Pair<Class<?>, String> CALLBACK = Pair.of(FilteringBehaviour.class, "callback");
     public static Pair<Class<?>, String> FILTER_IN_BE = Pair.of(MovementContext.class, "filter");
 
     @Nullable

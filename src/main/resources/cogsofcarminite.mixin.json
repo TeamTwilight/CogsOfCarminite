@@ -1,0 +1,17 @@
+{
+  "required": true,
+  "minVersion": "0.8",
+  "priority": 1200,
+  "package": "com.cogsofcarminite.mixin",
+  "compatibilityLevel": "JAVA_17",
+  "refmap": "cogsofcarminite.mixin-refmap.json",
+  "mixins": [
+    "FilteringBehaviourAccessor",
+    "SmartObserverBlockEntityMixin"
+  ],
+  "client": [
+  ],
+  "injectors": {
+    "defaultRequire": 1
+  }
+}
