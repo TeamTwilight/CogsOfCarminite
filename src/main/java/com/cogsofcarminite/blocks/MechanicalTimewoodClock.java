@@ -58,7 +58,7 @@ public class MechanicalTimewoodClock extends CarminiteMagicLogBlock implements I
     @SuppressWarnings("unchecked")
     // Vanilla also makes this dirty cast on block entity tickers, poor mojank design.
     public void performTreeEffect(ServerLevel level, BlockPos pos, RandomSource rand, CompoundTag filter) {
-        FilterItemStack filterStack = BlockFilterItemStack.od(filter);
+        FilterItemStack filterStack = BlockFilterItemStack.of(filter);
         int numticks = 8 * 3 * 20;
 
         for (int i = 0; i < numticks; i++) {

@@ -26,7 +26,7 @@ public class BlockOrItemFilteringBehaviour extends FilteringBehaviour {
 
     @Override
     public void read(CompoundTag nbt, boolean clientPacket) {
-        ((FilteringBehaviourAccessor)this).setFilterItemStack(BlockFilterItemStack.od(nbt.getCompound("Filter")));
+        ((FilteringBehaviourAccessor)this).setFilterItemStack(BlockFilterItemStack.of(nbt.getCompound("Filter")));
         this.count = nbt.getInt("FilterAmount");
         this.upTo = nbt.getBoolean("UpTo");
 
@@ -41,7 +41,7 @@ public class BlockOrItemFilteringBehaviour extends FilteringBehaviour {
     public boolean setFilter(ItemStack stack) {
         if (stack.getItem() instanceof BlockFilterItem) {
             ItemStack filter = stack.copy();
-            ((FilteringBehaviourAccessor)this).setFilterItemStack(BlockFilterItemStack.od(stack));
+            ((FilteringBehaviourAccessor)this).setFilterItemStack(BlockFilterItemStack.of(stack));
             if (!this.upTo) this.count = Math.min(this.count, stack.getMaxStackSize());
             ((FilteringBehaviourAccessor)this).getCallback().accept(filter);
             this.blockEntity.setChanged();

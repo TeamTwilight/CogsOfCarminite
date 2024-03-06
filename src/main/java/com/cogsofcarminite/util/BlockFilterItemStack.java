@@ -47,15 +47,6 @@ public class BlockFilterItemStack extends FilterItemStack {
             if (attribute != null) this.attributeTests.add(Pair.of(attribute, compound.getBoolean("Inverted")));
         }
     }
-    
-    public static FilterItemStack od(ItemStack filter) {
-        if (filter.is(CCItems.BLOCK_ATTRIBUTE_FILTER.asItem())) return new BlockFilterItemStack(filter);
-        return of(filter);
-    }
-    
-    public static FilterItemStack od(CompoundTag tag) {
-        return od(ItemStack.of(tag));
-    }
 
     @Override
     public boolean test(Level world, FluidStack stack, boolean matchNBT) {

@@ -72,7 +72,7 @@ public class MechanicalMinewoodCoreBlock extends CarminiteMagicLogBlock implemen
     @Override
     @SuppressWarnings({"CallToPrintStackTrace", "ConfusingArgumentToVarargsMethod"})
     public void performTreeEffect(ServerLevel level, BlockPos usePos, RandomSource rand, CompoundTag filter) {
-        FilterItemStack filterStack = BlockFilterItemStack.od(filter);
+        FilterItemStack filterStack = BlockFilterItemStack.of(filter);
         if (REFLECTED_CACHE_NEEDS_BUILD) {
             try {
                 Method method = OreMagnetItem.class.getDeclaredMethod("initOre2BlockMap", null);

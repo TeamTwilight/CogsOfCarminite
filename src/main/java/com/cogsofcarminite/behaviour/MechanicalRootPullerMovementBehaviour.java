@@ -124,7 +124,7 @@ public class MechanicalRootPullerMovementBehaviour extends BlockBreakingMovement
     public FilterItemStack getFilterFromBE(MovementContext context) {
         FilterItemStack filter = CCUtil.reflectAndGet(CCUtil.FILTER_IN_BE, context);
         if (filter != null) return filter;
-        filter = BlockFilterItemStack.od(context.blockEntityData.getCompound("Filter"));
+        filter = BlockFilterItemStack.of(context.blockEntityData.getCompound("Filter"));
         CCUtil.reflectAndSet(CCUtil.FILTER_IN_BE, context, filter);
         return filter;
     }
