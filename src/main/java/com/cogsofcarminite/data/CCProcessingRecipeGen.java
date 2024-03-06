@@ -10,7 +10,6 @@ import com.simibubi.create.Create;
 import com.simibubi.create.content.kinetics.deployer.DeployerApplicationRecipe;
 import com.simibubi.create.content.kinetics.press.PressingRecipe;
 import com.simibubi.create.content.kinetics.saw.CuttingRecipe;
-import com.simibubi.create.content.processing.recipe.HeatCondition;
 import com.simibubi.create.content.processing.recipe.ProcessingRecipe;
 import com.simibubi.create.content.processing.recipe.ProcessingRecipeBuilder;
 import com.simibubi.create.content.processing.sequenced.SequencedAssemblyRecipeBuilder;
@@ -185,7 +184,7 @@ public class CCProcessingRecipeGen extends CreateRecipeProvider {
     }
 
     public static class Mixing extends ProcessingRecipeGen {
-        GeneratedRecipe CARMINITE = create(CogsOfCarminite.prefix("carminite"), b -> b.require(TFItems.BORER_ESSENCE.get())
+        /*GeneratedRecipe CARMINITE = create(CogsOfCarminite.prefix("carminite"), b -> b.require(TFItems.BORER_ESSENCE.get())
                 .require(TFItems.BORER_ESSENCE.get())
                 .require(TFItems.BORER_ESSENCE.get())
                 .require(Items.REDSTONE)
@@ -193,7 +192,7 @@ public class CCProcessingRecipeGen extends CreateRecipeProvider {
                 .require(Items.REDSTONE)
                 .require(Items.GHAST_TEAR)
                 .requiresHeat(HeatCondition.HEATED)
-                .output(TFItems.CARMINITE.get(), 1));
+                .output(TFItems.CARMINITE.get(), 1));*/
 
         public Mixing(PackOutput generator) {
             super(generator);

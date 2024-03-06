@@ -1,4 +1,4 @@
-// 1.20.1	2024-02-19T15:07:43.6995745	Cogs Of Carminite's Processing Recipes
+// 1.20.1	2024-03-06T17:04:22.5271472	Cogs Of Carminite's Processing Recipes
 0e5a2e7a7f09f5f76348e4f19576f72918b9c725 data/cogsofcarminite/recipes/crushing/armor_shard.json
 83265d58a338280a3072612941f8fdb8abbe6898 data/cogsofcarminite/recipes/crushing/deadrock.json
 543e99e184a53d0af4c0b86181804b7dc9b3ba21 data/cogsofcarminite/recipes/item_application/carminite_clock.json
@@ -11,7 +11,6 @@ e52c49affe9604ff3cf19f27773dff746f2f3ed0 data/cogsofcarminite/recipes/milling/ar
 29ef6cc12c5b043ecd3c9d03ac110b35903fc0b5 data/cogsofcarminite/recipes/milling/huge_water_lilly.json
 ad105a37bcd2ce284d6e5f6a99012854406e6229 data/cogsofcarminite/recipes/milling/mayapple.json
 a5f6576a9d71e4e7d448f6488cecf5e66fc60532 data/cogsofcarminite/recipes/milling/thorn_rose.json
-945a4d77824243fdf6949bcd726bb4e8213c84e1 data/cogsofcarminite/recipes/mixing/carminite.json
 f21b47bc3de26ce5ed59494c03c42a74b3b729e2 data/cogsofcarminite/recipes/pressing/cicada_squish.json
 ed2a7ec74ec203ae28e21042c958340221dc9782 data/cogsofcarminite/recipes/pressing/fiery_ingot.json
 70aa56687b543609cfe411a99a7baa6de7637b3d data/cogsofcarminite/recipes/pressing/firefly_squish.json
