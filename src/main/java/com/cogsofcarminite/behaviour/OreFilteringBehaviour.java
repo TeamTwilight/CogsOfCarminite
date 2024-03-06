@@ -1,10 +1,8 @@
 package com.cogsofcarminite.behaviour;
 
 import com.cogsofcarminite.CogsOfCarminite;
-import com.simibubi.create.content.logistics.filter.FilterItem;
 import com.simibubi.create.foundation.blockEntity.SmartBlockEntity;
 import com.simibubi.create.foundation.blockEntity.behaviour.ValueBoxTransform;
-import com.simibubi.create.foundation.blockEntity.behaviour.filtering.FilteringBehaviour;
 import net.minecraft.MethodsReturnNonnullByDefault;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.MutableComponent;
@@ -18,7 +16,7 @@ import javax.annotation.ParametersAreNonnullByDefault;
 
 @ParametersAreNonnullByDefault
 @MethodsReturnNonnullByDefault
-public class OreFilteringBehaviour extends FilteringBehaviour {
+public class OreFilteringBehaviour extends BlockFilteringBehaviour {
     public OreFilteringBehaviour(SmartBlockEntity be, ValueBoxTransform slot) {
         super(be, slot);
     }
@@ -30,12 +28,11 @@ public class OreFilteringBehaviour extends FilteringBehaviour {
 
     @Override
     public boolean setFilter(ItemStack stack) {
-        if (stack.isEmpty() || stack.getItem() instanceof FilterItem) return super.setFilter(stack);
         if (stack.getItem() instanceof BlockItem blockItem) {
             BlockState state = blockItem.getBlock().defaultBlockState();
             if (state.is(Tags.Blocks.ORES) && !state.is(BlockTagGenerator.ORE_MAGNET_IGNORE))
                 return super.setFilter(stack);
         }
-        return false;
+        return super.setFilter(stack);
     }
 }

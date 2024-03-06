@@ -6,6 +6,7 @@ import com.cogsofcarminite.blocks.entities.CarminiteCoreBlockEntity;
 import com.cogsofcarminite.blocks.entities.CarminiteMagicLogBlockEntity;
 import com.cogsofcarminite.reg.CCBlockEntities;
 import com.cogsofcarminite.reg.CCPartialBlockModels;
+import com.cogsofcarminite.util.BlockFilterItemStack;
 import com.jozufozu.flywheel.core.PartialModel;
 import com.simibubi.create.content.logistics.filter.FilterItemStack;
 import com.simibubi.create.foundation.block.IBE;
@@ -71,7 +72,7 @@ public class MechanicalMinewoodCoreBlock extends CarminiteMagicLogBlock implemen
     @Override
     @SuppressWarnings({"CallToPrintStackTrace", "ConfusingArgumentToVarargsMethod"})
     public void performTreeEffect(ServerLevel level, BlockPos usePos, RandomSource rand, CompoundTag filter) {
-        FilterItemStack filterStack = FilterItemStack.of(filter);
+        FilterItemStack filterStack = BlockFilterItemStack.od(filter);
         if (REFLECTED_CACHE_NEEDS_BUILD) {
             try {
                 Method method = OreMagnetItem.class.getDeclaredMethod("initOre2BlockMap", null);
@@ -101,7 +102,7 @@ public class MechanicalMinewoodCoreBlock extends CarminiteMagicLogBlock implemen
                     basePos = coord;
                 }
                 // This ordering is so that the base pos is found first before we pull ores - pushing ores away is a baaaaad idea!
-            } else if (foundPos == null && searchState.getBlock() != Blocks.AIR && this.isOre(level, filterStack, searchState.getBlock()) && level.getBlockEntity(coord) == null) {
+            } else if (foundPos == null && searchState.getBlock() != Blocks.AIR && this.test(filterStack, level, searchState, coord) && level.getBlockEntity(coord) == null) {
                 attactedOreBlock = searchState;
                 replacementBlock = getReplacements().getOrDefault(attactedOreBlock.getBlock(), Blocks.STONE).defaultBlockState();
                 foundPos = coord;
@@ -145,9 +146,12 @@ public class MechanicalMinewoodCoreBlock extends CarminiteMagicLogBlock implemen
         }
     }
 
-    private boolean isOre(Level level, FilterItemStack filter, Block ore) {
-        if (! filter.test(level, ore.asItem().getDefaultInstance())) return false;
-        return getReplacements().containsKey(ore);
+    private boolean test(FilterItemStack filter, ServerLevel level, BlockState state, BlockPos pos) {
+        boolean flag;
+        if (filter instanceof BlockFilterItemStack blockFilterItemStack) flag = blockFilterItemStack.test(level, state, pos);
+        else flag = filter.test(level, state.getBlock().asItem().getDefaultInstance());
+        if (!flag) return false;
+        return getReplacements().containsKey(state.getBlock());
     }
 
     public static HashMap<Block, Block> getReplacements() {
