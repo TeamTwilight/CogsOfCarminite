@@ -29,10 +29,11 @@ public class CCCreativeModeTabs {
                             output.accept(CCBlocks.HORNBLOWER);
                             output.accept(CCBlocks.MECHANICAL_ROOT_PULLER);
                             output.accept(CCItems.CARMINITE_GEAR_GADGET);
+                            output.accept(CCItems.BLOCK_ATTRIBUTE_FILTER);
                             output.accept(CCItems.IRONWOOD_SHEET);
                             output.accept(CCItems.KNIGHTMETAL_SHEET);
                             output.accept(CCItems.FIERY_SHEET);
-                            output.accept(CCItems.BLOCK_ATTRIBUTE_FILTER);
+                            output.accept(CCItems.IRONWOOD_NUGGET);
                         })
                         .build());
 
