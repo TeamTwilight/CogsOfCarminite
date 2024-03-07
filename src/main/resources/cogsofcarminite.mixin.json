@@ -8,6 +8,8 @@
   "mixins": [
     "FilteringBehaviourAccessor",
     "FilterItemStackMixin",
+    "OreMagnetItemAccessor",
+    "OreMagnetItemMixin",
     "SmartObserverBlockEntityMixin"
   ],
   "client": [

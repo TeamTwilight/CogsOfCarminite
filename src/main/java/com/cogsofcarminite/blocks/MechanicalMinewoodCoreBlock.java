@@ -1,9 +1,9 @@
 package com.cogsofcarminite.blocks;
 
-import com.cogsofcarminite.CCUtil;
 import com.cogsofcarminite.CogsOfCarminite;
 import com.cogsofcarminite.blocks.entities.CarminiteCoreBlockEntity;
 import com.cogsofcarminite.blocks.entities.CarminiteMagicLogBlockEntity;
+import com.cogsofcarminite.mixin.OreMagnetItemAccessor;
 import com.cogsofcarminite.reg.CCBlockEntities;
 import com.cogsofcarminite.reg.CCPartialBlockModels;
 import com.cogsofcarminite.util.BlockFilterItemStack;
@@ -24,19 +24,15 @@ import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockState;
-import net.minecraftforge.event.AddReloadListenerEvent;
-import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
 import twilightforest.TFConfig;
 import twilightforest.data.tags.BlockTagGenerator;
+import twilightforest.init.TFItems;
 import twilightforest.init.TFSounds;
-import twilightforest.item.OreMagnetItem;
 import twilightforest.util.VoxelBresenhamIterator;
 import twilightforest.util.WorldUtil;
 
 import javax.annotation.ParametersAreNonnullByDefault;
-import java.lang.reflect.InvocationTargetException;
-import java.lang.reflect.Method;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Set;
@@ -47,8 +43,6 @@ import java.util.Set;
 public class MechanicalMinewoodCoreBlock extends CarminiteMagicLogBlock implements IBE<CarminiteCoreBlockEntity> {
     private static final ResourceLocation TEXTURE_LOCATION = CogsOfCarminite.prefix("textures/block/mining_log_core_on.png");
     private static final RenderType RENDER_TYPE = RenderType.armorCutoutNoCull(TEXTURE_LOCATION);
-
-    private static boolean REFLECTED_CACHE_NEEDS_BUILD = true;
 
     public MechanicalMinewoodCoreBlock(Properties properties) {
         super(properties);
@@ -70,19 +64,8 @@ public class MechanicalMinewoodCoreBlock extends CarminiteMagicLogBlock implemen
     }
 
     @Override
-    @SuppressWarnings({"CallToPrintStackTrace", "ConfusingArgumentToVarargsMethod"})
     public void performTreeEffect(ServerLevel level, BlockPos usePos, RandomSource rand, CompoundTag filter) {
         FilterItemStack filterStack = BlockFilterItemStack.of(filter);
-        if (REFLECTED_CACHE_NEEDS_BUILD) {
-            try {
-                Method method = OreMagnetItem.class.getDeclaredMethod("initOre2BlockMap", null);
-                method.setAccessible(true);
-                method.invoke(null, null);
-            } catch (NoSuchMethodException | InvocationTargetException | IllegalAccessException e) {
-                e.printStackTrace();
-            }
-            REFLECTED_CACHE_NEEDS_BUILD = false;
-        }
 
         int blocksMoved = 0;
 
@@ -155,7 +138,7 @@ public class MechanicalMinewoodCoreBlock extends CarminiteMagicLogBlock implemen
     }
 
     public static HashMap<Block, Block> getReplacements() {
-        return CCUtil.reflectAndGet(CCUtil.ORE_TO_BLOCK_REPLACEMENTS, null);
+        return ((OreMagnetItemAccessor) TFItems.ORE_MAGNET.get()).getOreToBlockReplacements();
     }
 
     private static boolean isReplaceable(BlockState state) {
@@ -178,15 +161,5 @@ public class MechanicalMinewoodCoreBlock extends CarminiteMagicLogBlock implemen
     @Override
     public RenderType getRenderType() {
         return RENDER_TYPE;
-    }
-
-    @SubscribeEvent
-    @SuppressWarnings("DataFlowIssue")
-    public static void buildOreMagnetCache(AddReloadListenerEvent event) {
-        event.addListener((stage, resourceManager, preparationsProfiler, reloadProfiler, backgroundExecutor, gameExecutor) -> {
-            REFLECTED_CACHE_NEEDS_BUILD = true;
-            return stage.wait(null).thenRun(() -> {
-            }); // Nothing to do here
-        });
     }
 }
