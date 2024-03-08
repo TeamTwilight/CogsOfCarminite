@@ -21,6 +21,7 @@ import net.minecraft.util.Mth;
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.biome.Biome;
+import net.minecraft.world.level.block.NoteBlock;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.chunk.LevelChunk;
 import net.minecraft.world.level.chunk.LevelChunkSection;
@@ -38,6 +39,12 @@ import java.util.List;
 public class MechanicalHeartOfTransformation extends CarminiteMagicLogBlock implements IBE<CarminiteHeartBlockEntity> {
     private static final ResourceLocation TEXTURE_LOCATION = CogsOfCarminite.prefix("textures/block/transformation_log_core_on.png");
     private static final RenderType RENDER_TYPE = RenderType.armorCutoutNoCull(TEXTURE_LOCATION);
+
+    public static final byte NOTE_OFFSET = 4;
+    public static final byte MIN_NOTE = 5;
+    public static final byte MAX_NOTE = 20;
+
+    public static byte lastNote = 12;
 
     public MechanicalHeartOfTransformation(Properties properties) {
         super(properties);
@@ -96,7 +103,13 @@ public class MechanicalHeartOfTransformation extends CarminiteMagicLogBlock impl
 
     @Override
     public void playSound(Level level, BlockPos pos, RandomSource rand) {
-        level.playSound(null, pos, TFSounds.TRANSFORMATION_CORE.get(), SoundSource.BLOCKS, 0.1F, rand.nextFloat() * 2.0F);
+        level.playSound(null, pos, TFSounds.TRANSFORMATION_CORE.get(), SoundSource.BLOCKS, 0.1F, NoteBlock.getPitchFromNote(nextNote(rand)) * 0.75F);
+    }
+
+    public static int nextNote(RandomSource rand) {
+        if (lastNote <= MIN_NOTE) return lastNote = (byte) (lastNote + rand.nextInt(NOTE_OFFSET));
+        else if (lastNote >= MAX_NOTE) return lastNote = (byte) (lastNote - rand.nextInt(NOTE_OFFSET));
+        else return lastNote = (byte) (lastNote + rand.nextInt(NOTE_OFFSET) - rand.nextInt(NOTE_OFFSET));
     }
 
     @Override
