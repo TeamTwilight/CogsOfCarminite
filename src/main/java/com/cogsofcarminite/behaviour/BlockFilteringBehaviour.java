@@ -29,12 +29,16 @@ public class BlockFilteringBehaviour extends BlockOrItemFilteringBehaviour {
 
     @Override
     public boolean setFilter(ItemStack stack) {
-        if (stack.isEmpty()) return super.setFilter(stack);
+        if (this.classTest(stack)) return super.setFilter(stack);
+        return false;
+    }
+
+    public boolean classTest(ItemStack stack) {
+        if (stack.isEmpty()) return true;
         else {
             Item item = stack.getItem();
-            if (item instanceof BlockItem || item instanceof FilterItem || item instanceof BlockFilterItem) super.setFilter(stack);
+            return item instanceof BlockItem || item instanceof FilterItem || item instanceof BlockFilterItem;
         }
-        return false;
     }
 
     public static boolean emptyOrBlock(ItemStack stack) {
