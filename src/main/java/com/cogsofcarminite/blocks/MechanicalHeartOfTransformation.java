@@ -102,7 +102,7 @@ public class MechanicalHeartOfTransformation extends CarminiteMagicLogBlock impl
 
         int range = TFConfig.COMMON_CONFIG.MAGIC_TREES.transformationRange.get();
         for (int i = 0; i < 16; i++) {
-            BlockPos dPos = WorldUtil.randomOffset(rand, pos, range, 0, range);
+            BlockPos dPos = WorldUtil.randomOffset(rand, pos, range, range, range);
             if (dPos.distSqr(pos) > 256.0) continue;
             if (level.getBiome(dPos).is(biomeID)) continue;
 
@@ -112,6 +112,8 @@ public class MechanicalHeartOfTransformation extends CarminiteMagicLogBlock impl
 
             LevelChunk chunkAt = level.getChunk(dPos.getX() >> 4, dPos.getZ() >> 4);
             LevelChunkSection section = chunkAt.getSection(chunkAt.getSectionIndex(dPos.getY()));
+
+            if (section.getBiomes().get(x & 3, y & 3, z & 3).equals(biomeHolder)) continue;
 
             if (section.getBiomes() instanceof PalettedContainer<Holder<Biome>> container) {
                 container.set(x & 3, y & 3, z & 3, biomeHolder);
@@ -146,6 +148,8 @@ public class MechanicalHeartOfTransformation extends CarminiteMagicLogBlock impl
 
             LevelChunk chunkAt = level.getChunk(dPos.getX() >> 4, dPos.getZ() >> 4);
             LevelChunkSection section = chunkAt.getSection(chunkAt.getSectionIndex(dPos.getY()));
+
+            if (section.getBiomes().get(x & 3, y & 3, z & 3).equals(uncachedBiome)) continue;
 
             if (section.getBiomes() instanceof PalettedContainer<Holder<Biome>> container) {
                 container.set(x & 3, y & 3, z & 3, uncachedBiome);
