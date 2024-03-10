@@ -8,7 +8,6 @@ import com.google.common.collect.ImmutableList;
 import com.jozufozu.flywheel.util.transform.TransformStack;
 import com.mojang.blaze3d.platform.Lighting;
 import com.mojang.blaze3d.vertex.PoseStack;
-import com.simibubi.create.AllItems;
 import com.simibubi.create.content.logistics.filter.AttributeFilterMenu;
 import com.simibubi.create.foundation.gui.AllIcons;
 import com.simibubi.create.foundation.gui.element.GuiGameElement;
@@ -200,8 +199,7 @@ public class BlockAttributeFilterScreen extends AbstractSimiContainerScreen<Bloc
         int y = this.topPos;
 
         this.background.render(graphics, x, y);
-        graphics.drawString(this.font, this.title, x + (this.background.width - 8) / 2 - this.font.width(this.title) / 2, y + 4,
-                AllItems.FILTER.isIn(this.menu.contentHolder) ? 0x303030 : 0x592424, false);//FIXME
+        graphics.drawString(this.font, this.title, x + (this.background.width - 8) / 2 - this.font.width(this.title) / 2, y + 4, 0xE0CECE, false);//FIXME
 
         GuiGameElement.of(this.menu.contentHolder).<GuiGameElement
                         .GuiRenderBuilder>at(x + this.background.width + 8, y + this.background.height - 52, -200)
