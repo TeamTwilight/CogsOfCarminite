@@ -187,7 +187,12 @@ public class MechanicalSortingwoodEngine extends CarminiteMagicLogBlock implemen
 
     @Override
     public PartialModel getFlywheelModel() {
-        return CCPartialBlockModels.ENGINE_FLYWHEEL;
+        return CCPartialBlockModels.SORTING_OFF;
+    }
+
+    @Override
+    public PartialModel getFlywheelOverlay() {
+        return CCPartialBlockModels.SORTING_OVERLAY;
     }
 
     @Override

@@ -13,14 +13,18 @@ public class CCPartialBlockModels {
 
     public static final PartialModel CARMINITE_FLYWHEEL = block("flywheel/carminite_flywheel");
     public static final PartialModel INCOMPLETE_FLYWHEEL = block("flywheel/incomplete_flywheel");
-    public static final PartialModel CLOCK_FLYWHEEL = block("flywheel/clock_flywheel");
-    public static final PartialModel CLOCK_FLYWHEEL_OFF = block("flywheel/clock_flywheel_off");
-    public static final PartialModel ENGINE_FLYWHEEL = block("flywheel/engine_flywheel");
-    public static final PartialModel ENGINE_FLYWHEEL_OFF = block("flywheel/engine_flywheel_off");
-    public static final PartialModel CORE_FLYWHEEL = block("flywheel/core_flywheel");
-    public static final PartialModel CORE_FLYWHEEL_OFF = block("flywheel/core_flywheel_off");
-    public static final PartialModel HEART_FLYWHEEL = block("flywheel/heart_flywheel");
-    public static final PartialModel HEART_FLYWHEEL_OFF = block("flywheel/heart_flywheel_off");
+
+    public static final PartialModel TIME_OFF = block("flywheel/timewood/off");
+    public static final PartialModel TIME_OVERLAY = block("flywheel/timewood/overlay");
+
+    public static final PartialModel SORTING_OFF = block("flywheel/sortingwood/off");
+    public static final PartialModel SORTING_OVERLAY = block("flywheel/sortingwood/overlay");
+
+    public static final PartialModel MINE_OFF = block("flywheel/minewood/off");
+    public static final PartialModel MINE_OVERLAY = block("flywheel/minewood/overlay");
+
+    public static final PartialModel TRANS_OFF = block("flywheel/transformation/off");
+    public static final PartialModel TRANS_OVERLAY = block("flywheel/transformation/overlay");
 
     public static final PartialModel HORNBLOWER = block("hornblower/head");
     public static final PartialModel ROOT_PULLER_GEARS = block("mechanical_root_puller/gears");

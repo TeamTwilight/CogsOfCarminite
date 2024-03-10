@@ -3,6 +3,7 @@ package com.cogsofcarminite.data;
 import com.cogsofcarminite.CogsOfCarminite;
 import com.cogsofcarminite.reg.CCItems;
 import com.mojang.datafixers.util.Pair;
+import com.simibubi.create.Create;
 import com.simibubi.create.foundation.utility.Lang;
 import com.simibubi.create.foundation.utility.LangBuilder;
 import net.minecraft.MethodsReturnNonnullByDefault;
@@ -14,14 +15,24 @@ import javax.annotation.ParametersAreNonnullByDefault;
 @MethodsReturnNonnullByDefault
 public class CCLangGenerator {
     public static void generateLang() {
+        // Creative Menus
         addLang("item_group", "main", "Cogs Of Carminite");
+
+        // Hover Tooltips
         addLang("tooltip", "hornblower.header", "Hornblower Information");
         addLang("tooltip", "hornblower.contains", "Item: %1$s");
         addLang("tooltip", "hornblower.instrument", "%1$s");
         addLang("tooltip", "hornblower.empty", "Use a Horn Item to Insert");
+
+        // Logistics
         addLang("logistics", "block_filter", "Block Filter");
         addLang("logistics", "ore_filter", "Ore Filter");
+        addLang("logistics", "mechanical_heart_mode", "Heart Operation Mode");
+        addSillyLang("logistics", "mechanical_heart_mode.transform", "Transform nearby biome");
+        addSillyLang("logistics", "mechanical_heart_mode.adapt", "Adapt to current biome");
+        addSillyLang("logistics", "mechanical_heart_mode.revert", "Revert nearby biome");
 
+        // Block Attributes
         addLang("block_attributes", "replaceable", "is replaceable");
         addLang("block_attributes", "replaceable.inverted", "is not replaceable");
         addLang("block_attributes", "block_entity", "has a Block Entity");
@@ -73,6 +84,10 @@ public class CCLangGenerator {
 
     public static void addLang(String type, String key, String translation) {
         CogsOfCarminite.TWILIGHT_REGISTRATE.addLang(CogsOfCarminite.MODID, new ResourceLocation(type, key), translation);
+    }
+
+    public static void addSillyLang(String type, String key, String translation) {
+        CogsOfCarminite.TWILIGHT_REGISTRATE.addLang(Create.ID + "." + CogsOfCarminite.MODID, new ResourceLocation(type, key), translation);
     }
 
     public static LangBuilder translate(String langKey, Object... args) {

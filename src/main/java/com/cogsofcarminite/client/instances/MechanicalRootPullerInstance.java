@@ -39,7 +39,7 @@ public class MechanicalRootPullerInstance extends SingleRotatingInstance<Mechani
                         .multiply(Axis.ZP.rotationDegrees(90))
                         .rotateToFace(facing)
                         .unCentre();
-            } else {
+            } else if (!facing.equals(Direction.EAST)) {
                 TransformStack.cast(stack)
                         .centre()
                         .rotateToFace(facing)

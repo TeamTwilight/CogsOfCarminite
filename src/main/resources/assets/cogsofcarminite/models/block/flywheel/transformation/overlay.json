@@ -4,9 +4,9 @@
 	"flip_v": true,
 	"model": "create:models/block/flywheel/flywheel_shaftless.obj",
 	"textures": {
-		"0": "cogsofcarminite:block/flywheel/heart_flywheel_off",
+		"0": "cogsofcarminite:block/flywheel/transformation/overlay",
 		"1": "create:block/axis",
 		"2": "create:block/axis_top",
-		"particle": "cogsofcarminite:block/flywheel/heart_flywheel_off"
+		"particle": "cogsofcarminite:block/flywheel/transformation/overlay"
 	}
 }

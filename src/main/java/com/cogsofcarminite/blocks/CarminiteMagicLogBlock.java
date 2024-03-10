@@ -132,5 +132,7 @@ public abstract class CarminiteMagicLogBlock extends KineticBlock implements IRo
 
     public abstract PartialModel getFlywheelModel();
 
+    public abstract PartialModel getFlywheelOverlay();
+
     public abstract RenderType getRenderType();
 }

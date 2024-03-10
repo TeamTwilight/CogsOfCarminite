@@ -61,7 +61,7 @@ public class CCBlocks {
                     .item((mechanicalTimewoodClock, properties) -> new CarminiteMagicLogBlockItem(mechanicalTimewoodClock, properties) {
                         @Override
                         public PartialModel getPartialModel() {
-                            return CCPartialBlockModels.CLOCK_FLYWHEEL_OFF;
+                            return CCPartialBlockModels.TIME_OFF;
                         }
                     })
                     .tag(AllTags.AllItemTags.CONTRAPTION_CONTROLLED.tag)
@@ -81,7 +81,7 @@ public class CCBlocks {
                     .item((mechanicalHeartOfTransformation, properties) -> new CarminiteMagicLogBlockItem(mechanicalHeartOfTransformation, properties) {
                         @Override
                         public PartialModel getPartialModel() {
-                            return CCPartialBlockModels.HEART_FLYWHEEL_OFF;
+                            return CCPartialBlockModels.TRANS_OFF;
                         }
                     })
                     .tag(AllTags.AllItemTags.CONTRAPTION_CONTROLLED.tag)
@@ -102,7 +102,7 @@ public class CCBlocks {
                     .item((mechanicalMinewoodCoreBlock, properties) -> new CarminiteMagicLogBlockItem(mechanicalMinewoodCoreBlock, properties) {
                         @Override
                         public PartialModel getPartialModel() {
-                            return CCPartialBlockModels.CORE_FLYWHEEL_OFF;
+                            return CCPartialBlockModels.MINE_OFF;
                         }
                     })
                     .tag(AllTags.AllItemTags.CONTRAPTION_CONTROLLED.tag)
@@ -122,7 +122,7 @@ public class CCBlocks {
                     .item((mechanicalSortingwoodEngine, properties) -> new CarminiteMagicLogBlockItem(mechanicalSortingwoodEngine, properties) {
                         @Override
                         public PartialModel getPartialModel() {
-                            return CCPartialBlockModels.ENGINE_FLYWHEEL_OFF;
+                            return CCPartialBlockModels.SORTING_OFF;
                         }
                     })
                     .tag(AllTags.AllItemTags.CONTRAPTION_CONTROLLED.tag)

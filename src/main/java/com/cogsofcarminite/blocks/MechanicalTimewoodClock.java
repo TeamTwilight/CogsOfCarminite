@@ -109,7 +109,12 @@ public class MechanicalTimewoodClock extends CarminiteMagicLogBlock implements I
 
     @Override
     public PartialModel getFlywheelModel() {
-        return CCPartialBlockModels.CLOCK_FLYWHEEL;
+        return CCPartialBlockModels.TIME_OFF;
+    }
+
+    @Override
+    public PartialModel getFlywheelOverlay() {
+        return CCPartialBlockModels.TIME_OVERLAY;
     }
 
     @Override

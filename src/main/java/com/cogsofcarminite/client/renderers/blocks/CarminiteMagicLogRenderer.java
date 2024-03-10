@@ -28,6 +28,7 @@ import net.minecraft.client.renderer.blockentity.BlockEntityRendererProvider;
 import net.minecraft.client.renderer.texture.OverlayTexture;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
+import net.minecraft.util.Mth;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.state.BlockState;
 import org.joml.Matrix3f;
@@ -75,26 +76,34 @@ public class CarminiteMagicLogRenderer extends KineticBlockEntityRenderer<Carmin
             ms.pushPose();
 
 
-            float speed = magicLog.flywheelSpeed.getValue(partialTicks) * 3 / 10f;
+            float ogSpeed = magicLog.flywheelSpeed.getValue(partialTicks);
+            float speed = ogSpeed * 3.0F / 10.0F;
             float angl = magicLog.flywheelAngle + speed * partialTicks;
 
-            SuperByteBuffer wheel = CachedBufferer.partial(logBlock.getFlywheelModel(), blockState);
             boolean f = blockState.getValue(CarminiteMagicLogBlock.AXIS_POSITIVE);
             switch (axis) {
-                case X -> wheel.centre()
+                case X -> TransformStack.cast(ms).centre()
                         .rotate(Direction.get(Direction.AxisDirection.POSITIVE, Direction.Axis.Z), AngleHelper.rad(f ? 270.0F : 90.0F))
                         .rotate(Direction.get(Direction.AxisDirection.POSITIVE, Direction.Axis.Y), -AngleHelper.rad(f ? -angl : angl))
                         .unCentre();
-                case Y -> wheel.centre()
+                case Y -> TransformStack.cast(ms).centre()
                         .rotate(Direction.get(Direction.AxisDirection.POSITIVE, Direction.Axis.X), AngleHelper.rad(f ? 00.0F : 180.0F))
                         .rotate(Direction.get(Direction.AxisDirection.POSITIVE, Direction.Axis.Y), AngleHelper.rad(f ? angl : -angl))
                         .unCentre();
-                case Z -> wheel.centre()
+                case Z -> TransformStack.cast(ms).centre()
                         .rotate(Direction.get(Direction.AxisDirection.POSITIVE, Direction.Axis.X), AngleHelper.rad(f ? 90.0F : 270.0F))
                         .rotate(Direction.get(Direction.AxisDirection.POSITIVE, Direction.Axis.Y), AngleHelper.rad(f ? angl : -angl))
                         .unCentre();
             }
-            wheel.light(light).renderInto(ms, buffer.getBuffer(RenderType.cutoutMipped()));
+
+            CachedBufferer.partial(logBlock.getFlywheelModel(), blockState).light(light).renderInto(ms, buffer.getBuffer(RenderType.cutoutMipped()));
+
+            int alpha = Mth.clamp(Math.abs((int) ogSpeed) * 2, 1, 255);
+            if (Minecraft.getInstance().player.isSecondaryUseActive()) alpha = 255;
+
+            CachedBufferer.partial(logBlock.getFlywheelOverlay(), blockState)
+                    .light(light).color(255, 255, 255, alpha).renderInto(ms, buffer.getBuffer(RenderType.translucentMovingBlock()));
+
 
             ms.popPose();
 
@@ -152,31 +161,41 @@ public class CarminiteMagicLogRenderer extends KineticBlockEntityRenderer<Carmin
             flywheelSpeed.readNBT(context.blockEntityData.getCompound("flywheel_speed"), level.isClientSide);
             flywheelSpeed.chase(0, 1.0F / 64.0F, LerpedFloat.Chaser.EXP);
 
-            float speed = flywheelSpeed.getValue(mc.getPartialTick()) * 3 / 10f;
+            float ogSpeed = flywheelSpeed.getValue(mc.getPartialTick());
+            float speed = ogSpeed * 3.0F / 10.0F;
             float angl = context.blockEntityData.getFloat("flywheel_angle") + speed * mc.getPartialTick();
 
             ms.popPose();
             ms.popPose();
 
-            SuperByteBuffer wheel = CachedBufferer.partial(logBlock.getFlywheelModel(), blockState).transform(matrices.getModel());
+            PoseStack msPaint = matrices.getViewProjection();
+
             boolean f = blockState.getValue(CarminiteMagicLogBlock.AXIS_POSITIVE);
             switch (axis) {
-                case X -> wheel.centre()
+                case X -> TransformStack.cast(msPaint).centre()
                         .rotate(Direction.get(Direction.AxisDirection.POSITIVE, Direction.Axis.Z), AngleHelper.rad(f ? 270.0F : 90.0F))
                         .rotate(Direction.get(Direction.AxisDirection.POSITIVE, Direction.Axis.Y), -AngleHelper.rad(f ? -angl : angl))
                         .unCentre();
-                case Y -> wheel.centre()
+                case Y -> TransformStack.cast(msPaint).centre()
                         .rotate(Direction.get(Direction.AxisDirection.POSITIVE, Direction.Axis.X), AngleHelper.rad(f ? 00.0F : 180.0F))
                         .rotate(Direction.get(Direction.AxisDirection.POSITIVE, Direction.Axis.Y), AngleHelper.rad(f ? angl : -angl))
                         .unCentre();
-                case Z -> wheel.centre()
+                case Z -> TransformStack.cast(msPaint).centre()
                         .rotate(Direction.get(Direction.AxisDirection.POSITIVE, Direction.Axis.X), AngleHelper.rad(f ? 90.0F : 270.0F))
                         .rotate(Direction.get(Direction.AxisDirection.POSITIVE, Direction.Axis.Y), AngleHelper.rad(f ? angl : -angl))
                         .unCentre();
             }
-            wheel
+
+            CachedBufferer.partial(logBlock.getFlywheelModel(), blockState).transform(matrices.getModel())
                     .light(matrices.getWorld(), ContraptionRenderDispatcher.getContraptionWorldLight(context, renderWorld))
-                    .renderInto(matrices.getViewProjection(), buffer.getBuffer(RenderType.cutoutMipped()));
+                    .renderInto(msPaint, buffer.getBuffer(RenderType.cutoutMipped()));
+
+            int alpha = Mth.clamp(Math.abs((int) ogSpeed) * 2, 1, 255);
+            if (Minecraft.getInstance().player.isSecondaryUseActive()) alpha = 255;
+
+            CachedBufferer.partial(logBlock.getFlywheelOverlay(), blockState).transform(matrices.getModel())
+                    .light(matrices.getWorld(), ContraptionRenderDispatcher.getContraptionWorldLight(context, renderWorld))
+                    .color(255, 255, 255, alpha).renderInto(msPaint, buffer.getBuffer(RenderType.translucentMovingBlock()));
         }
     }
 

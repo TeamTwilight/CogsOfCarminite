@@ -155,7 +155,12 @@ public class MechanicalMinewoodCoreBlock extends CarminiteMagicLogBlock implemen
 
     @Override
     public PartialModel getFlywheelModel() {
-        return CCPartialBlockModels.CORE_FLYWHEEL;
+        return CCPartialBlockModels.MINE_OFF;
+    }
+
+    @Override
+    public PartialModel getFlywheelOverlay() {
+        return CCPartialBlockModels.MINE_OVERLAY;
     }
 
     @Override

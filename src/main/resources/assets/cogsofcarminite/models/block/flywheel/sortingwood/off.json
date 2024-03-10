@@ -4,9 +4,9 @@
 	"flip_v": true,
 	"model": "create:models/block/flywheel/flywheel_shaftless.obj",
 	"textures": {
-		"0": "cogsofcarminite:block/flywheel/core_flywheel",
+		"0": "cogsofcarminite:block/flywheel/sortingwood/off",
 		"1": "create:block/axis",
 		"2": "create:block/axis_top",
-		"particle": "cogsofcarminite:block/flywheel/core_flywheel"
+		"particle": "cogsofcarminite:block/flywheel/sortingwood/off"
 	}
 }
