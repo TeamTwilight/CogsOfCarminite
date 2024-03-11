@@ -199,7 +199,7 @@ public class BlockAttributeFilterScreen extends AbstractSimiContainerScreen<Bloc
         int y = this.topPos;
 
         this.background.render(graphics, x, y);
-        graphics.drawString(this.font, this.title, x + (this.background.width - 8) / 2 - this.font.width(this.title) / 2, y + 4, 0xE0CECE, false);//FIXME
+        graphics.drawString(this.font, this.title, x + (this.background.width - 8) / 2 - this.font.width(this.title) / 2, y + 4, 0xF0E8DB, false);
 
         GuiGameElement.of(this.menu.contentHolder).<GuiGameElement
                         .GuiRenderBuilder>at(x + this.background.width + 8, y + this.background.height - 52, -200)
