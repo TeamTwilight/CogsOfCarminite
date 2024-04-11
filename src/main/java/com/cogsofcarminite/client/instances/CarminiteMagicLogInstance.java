@@ -20,7 +20,7 @@ public class CarminiteMagicLogInstance extends KineticBlockEntityInstance<Carmin
     public CarminiteMagicLogInstance(MaterialManager materialManager, CarminiteMagicLogBlockEntity blockEntity) {
         super(materialManager, blockEntity);
         Direction facing = this.blockState.getBlock() instanceof CarminiteMagicLogBlock logBlock ? logBlock.getDirection(this.blockState).getOpposite() : Direction.UP;
-        this.shaft = setup(getRotatingMaterial().getModel(AllPartialModels.SHAFT_HALF, CarminiteMagicLogBlock.pointedTo(this.blockState, facing), facing).createInstance());
+        this.shaft = setup(getRotatingMaterial().getModel(AllPartialModels.SHAFT_HALF, blockEntity.getBlockState(), facing).createInstance());
     }
 
     @Override

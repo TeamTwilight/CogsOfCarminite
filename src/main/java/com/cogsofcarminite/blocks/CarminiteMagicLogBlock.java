@@ -1,11 +1,9 @@
 package com.cogsofcarminite.blocks;
 
-import com.cogsofcarminite.CCUtil;
 import com.cogsofcarminite.blocks.entities.CarminiteCoreBlockEntity;
 import com.cogsofcarminite.blocks.entities.CarminiteMagicLogBlockEntity;
 import com.jozufozu.flywheel.core.PartialModel;
 import com.simibubi.create.content.kinetics.base.IRotate;
-import com.simibubi.create.content.kinetics.base.KineticBlock;
 import net.minecraft.MethodsReturnNonnullByDefault;
 import net.minecraft.client.renderer.RenderType;
 import net.minecraft.core.BlockPos;
@@ -18,15 +16,11 @@ import net.minecraft.util.RandomSource;
 import net.minecraft.world.item.context.BlockPlaceContext;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.LevelReader;
-import net.minecraft.world.level.block.Block;
-import net.minecraft.world.level.block.Rotation;
 import net.minecraft.world.level.block.state.BlockState;
-import net.minecraft.world.level.block.state.StateDefinition;
-import net.minecraft.world.level.block.state.properties.BlockStateProperties;
-import net.minecraft.world.level.block.state.properties.BooleanProperty;
-import net.minecraft.world.level.block.state.properties.EnumProperty;
+import net.minecraft.world.level.block.state.properties.AttachFace;
 import net.minecraft.world.phys.Vec3;
 import net.minecraftforge.network.PacketDistributor;
+import org.jetbrains.annotations.Nullable;
 import twilightforest.network.ParticlePacket;
 import twilightforest.network.TFPacketHandler;
 
@@ -34,64 +28,45 @@ import javax.annotation.ParametersAreNonnullByDefault;
 
 @ParametersAreNonnullByDefault
 @MethodsReturnNonnullByDefault
-public abstract class CarminiteMagicLogBlock extends KineticBlock implements IRotate {
-    public static final EnumProperty<Direction.Axis> AXIS = BlockStateProperties.AXIS;
-    public static final BooleanProperty AXIS_POSITIVE = BooleanProperty.create("axis_positive");
+public abstract class CarminiteMagicLogBlock extends DirectedDirectionalKineticBlock implements IRotate {
 
     public CarminiteMagicLogBlock(Properties properties) {
         super(properties.lightLevel((state) -> 15));
-        this.registerDefaultState(this.defaultBlockState().setValue(AXIS, Direction.Axis.Y).setValue(AXIS_POSITIVE, true));
     }
 
+    @Nullable
     @Override
     public BlockState getStateForPlacement(BlockPlaceContext context) {
-        Direction facing = context.getNearestLookingDirection().getOpposite();
-        if (context.getPlayer() != null && context.getPlayer().isShiftKeyDown()) facing = facing.getOpposite();
-        return pointedTo(this.defaultBlockState(), facing);
-    }
+        BlockState state = defaultBlockState();
+        Direction preferredFacing = context.getPlayer() != null && context.getPlayer()
+                .isShiftKeyDown() ? context.getNearestLookingDirection() : context.getNearestLookingDirection().getOpposite();
 
-    @Override
-    protected void createBlockStateDefinition(StateDefinition.Builder<Block, BlockState> builder) {
-        builder.add(AXIS, AXIS_POSITIVE);
+        if (preferredFacing.getAxis() == Direction.Axis.Y) {
+            state = state.setValue(TARGET, preferredFacing == Direction.UP ? AttachFace.CEILING : AttachFace.FLOOR);
+            preferredFacing = preferredFacing == Direction.UP ? context.getHorizontalDirection() : context.getHorizontalDirection().getOpposite();
+        }
+
+        return state.setValue(HORIZONTAL_FACING, preferredFacing);
     }
 
     @Override
     public Direction.Axis getRotationAxis(BlockState state) {
-        return state.getValue(AXIS);
+        return DirectedDirectionalKineticBlock.getTargetAxis(state);
     }
 
-    public Direction.AxisDirection getAxisDirection(BlockState state) {
-        return state.getValue(AXIS_POSITIVE) ? Direction.AxisDirection.POSITIVE : Direction.AxisDirection.NEGATIVE;
+    public Direction getDirection(BlockState state) {
+        return DirectedDirectionalKineticBlock.getTargetDirection(state);
     }
 
     @Override
     public void onPlace(BlockState state, Level level, BlockPos pos, BlockState oldState, boolean isMoving) {
-        if (level.getBlockEntity(pos) instanceof CarminiteCoreBlockEntity entity) {
-            entity.removeSource();
-        }
+        if (level.getBlockEntity(pos) instanceof CarminiteCoreBlockEntity entity) entity.removeSource();
         super.onPlace(state, level, pos, oldState, isMoving);
-    }
-
-    public Direction getDirection(BlockState state) {
-        return Direction.fromAxisAndDirection(this.getRotationAxis(state), this.getAxisDirection(state));
-    }
-
-    public static BlockState pointedTo(BlockState state, Direction direction) {
-        if (state.getBlock() instanceof CarminiteMagicLogBlock) {
-            return state.setValue(AXIS, direction.getAxis()).setValue(AXIS_POSITIVE, CCUtil.isPositive(direction));
-        }
-        return state;
-    }
-
-    @Override
-    @SuppressWarnings("deprecation")
-    public BlockState rotate(BlockState state, Rotation rot) {
-        return pointedTo(state, rot.rotate(this.getDirection(state)));
     }
 
     @Override
     public boolean hasShaftTowards(LevelReader world, BlockPos pos, BlockState state, Direction face) {
-        return state.getValue(AXIS).equals(face.getAxis()) && state.getValue(AXIS_POSITIVE) != CCUtil.isPositive(face);
+        return face == this.getDirection(state).getOpposite();
     }
 
     public static void spawnParticles(ServerLevel level, BlockPos pos) {

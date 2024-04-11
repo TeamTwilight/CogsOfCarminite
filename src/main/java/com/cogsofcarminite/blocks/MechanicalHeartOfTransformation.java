@@ -19,14 +19,18 @@ import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.util.RandomSource;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.biome.Biome;
 import net.minecraft.world.level.block.NoteBlock;
 import net.minecraft.world.level.block.entity.BlockEntityType;
+import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.chunk.LevelChunk;
 import net.minecraft.world.level.chunk.LevelChunkSection;
 import net.minecraft.world.level.chunk.PalettedContainer;
 import twilightforest.TFConfig;
+import twilightforest.TwilightForestMod;
 import twilightforest.init.TFBiomes;
 import twilightforest.init.TFSounds;
 import twilightforest.util.WorldUtil;
@@ -123,6 +127,23 @@ public class MechanicalHeartOfTransformation extends CarminiteMagicLogBlock impl
             if (!chunkAt.isUnsaved()) chunkAt.setUnsaved(true);
             level.getChunkSource().chunkMap.resendBiomesForChunks(List.of(chunkAt));
         }
+    }
+
+    @Override
+    @SuppressWarnings("deprecation")
+    public ItemStack getCloneItemStack(BlockGetter getter, BlockPos pos, BlockState state) {
+        ItemStack stack = super.getCloneItemStack(getter, pos, state);
+        getter.getBlockEntity(pos, CCBlockEntities.CARMINITE_HEART.get()).ifPresent((be) -> {
+            CompoundTag tag = stack.getOrCreateTag();
+            Level level = be.getLevel();
+            if (level != null && be.storedBiome != null) {
+                ResourceLocation location = level.registryAccess().registryOrThrow(Registries.BIOME).getKey(be.storedBiome.value());
+                tag.putString("BiomeID", location != null ? location.toString() : TFBiomes.ENCHANTED_FOREST.location().toString());
+            } else tag.putString("BiomeID", TFBiomes.ENCHANTED_FOREST.location().toString());
+            TwilightForestMod.LOGGER.error("{}!", tag);
+            TwilightForestMod.LOGGER.error("{}!", be.storedBiome);
+        });
+        return stack;
     }
 
     protected void adapt(ServerLevel level, BlockPos pos, CompoundTag filter) {

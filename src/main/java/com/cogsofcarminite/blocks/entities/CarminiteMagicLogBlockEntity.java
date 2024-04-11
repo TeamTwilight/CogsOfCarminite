@@ -1,13 +1,11 @@
 package com.cogsofcarminite.blocks.entities;
 
 import com.cogsofcarminite.blocks.CarminiteMagicLogBlock;
+import com.cogsofcarminite.blocks.DirectedDirectionalKineticBlock;
 import com.jozufozu.flywheel.util.transform.TransformStack;
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.simibubi.create.content.kinetics.base.KineticBlockEntity;
-import com.simibubi.create.content.logistics.filter.FilterItem;
-import com.simibubi.create.foundation.blockEntity.SmartBlockEntity;
 import com.simibubi.create.foundation.blockEntity.behaviour.ValueBoxTransform;
-import com.simibubi.create.foundation.blockEntity.behaviour.filtering.FilteringBehaviour;
 import com.simibubi.create.foundation.utility.AngleHelper;
 import com.simibubi.create.foundation.utility.VecHelper;
 import com.simibubi.create.foundation.utility.animation.LerpedFloat;
@@ -16,8 +14,6 @@ import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.server.level.ServerLevel;
-import net.minecraft.world.item.BlockItem;
-import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.AABB;
@@ -92,11 +88,9 @@ public abstract class CarminiteMagicLogBlockEntity extends KineticBlockEntity {
                 xyz = VecHelper.rotateCentered(xyz, AngleHelper.verticalAngle(Direction.UP), Direction.Axis.X);
                 xyz = VecHelper.rotateCentered(xyz, AngleHelper.horizontalAngle(direction.getOpposite()), Direction.Axis.Y);
             } else {
-                if (direction == Direction.UP) {
-                    xyz = VecHelper.rotateCentered(xyz, AngleHelper.horizontalAngle(Direction.NORTH), Direction.Axis.Y);
-                } else {
-                    xyz = VecHelper.rotateCentered(xyz, 180.0F, Direction.Axis.Z);
-                }
+                if (direction != Direction.UP) xyz = VecHelper.rotateCentered(xyz, 180.0F, Direction.Axis.Z);
+                direction = direction == Direction.DOWN ? state.getValue(DirectedDirectionalKineticBlock.HORIZONTAL_FACING).getOpposite() : state.getValue(DirectedDirectionalKineticBlock.HORIZONTAL_FACING);
+                xyz = VecHelper.rotateCentered(xyz, AngleHelper.horizontalAngle(direction.getOpposite()), Direction.Axis.Y);
             }
             return xyz;
         }
@@ -104,9 +98,14 @@ public abstract class CarminiteMagicLogBlockEntity extends KineticBlockEntity {
         @Override
         public void rotate(BlockState state, PoseStack ms) {
             Direction direction = getSide(state);
-            float yRot = direction == Direction.DOWN ? 180.0F : direction != Direction.UP ? direction.toYRot() + (direction.getAxis() == Direction.Axis.Z ? 180.0F : 0.0F) : 0.0F;
-            float xRot = direction.getAxis() != Direction.Axis.Y ? 90.0F : 0.0F;
-            TransformStack.cast(ms).rotateY(yRot).rotateX(xRot);
+            if (direction.getAxis() == Direction.Axis.Y) {
+                direction = direction == Direction.DOWN ? state.getValue(DirectedDirectionalKineticBlock.HORIZONTAL_FACING).getOpposite() : state.getValue(DirectedDirectionalKineticBlock.HORIZONTAL_FACING);
+                float yRot = direction.toYRot() + (direction.getAxis() != Direction.Axis.Z ? 180.0F : 0.0F);
+                TransformStack.cast(ms).rotateY(yRot);
+            } else {
+                float yRot = direction.toYRot() + (direction.getAxis() == Direction.Axis.Z ? 180.0F : 0.0F);
+                TransformStack.cast(ms).rotateY(yRot).rotateX(90.0F);
+            }
         }
 
         public Direction getSide(BlockState state) {

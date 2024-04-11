@@ -1,6 +1,7 @@
 package com.cogsofcarminite.client.renderers.blocks;
 
 import com.cogsofcarminite.blocks.CarminiteMagicLogBlock;
+import com.cogsofcarminite.blocks.DirectedDirectionalKineticBlock;
 import com.cogsofcarminite.blocks.entities.CarminiteMagicLogBlockEntity;
 import com.jozufozu.flywheel.backend.Backend;
 import com.jozufozu.flywheel.core.virtual.VirtualRenderWorld;
@@ -50,7 +51,7 @@ public class CarminiteMagicLogRenderer extends KineticBlockEntityRenderer<Carmin
         if (blockState.getBlock() instanceof CarminiteMagicLogBlock logBlock && magicLog.getLevel() != null) {
             BlockPos pos = magicLog.getBlockPos();
             Direction.Axis axis = getRotationAxisOf(magicLog);
-            Direction dir = Direction.fromAxisAndDirection(axis, logBlock.getAxisDirection(blockState));
+            Direction dir = logBlock.getDirection(blockState);
 
             ms.pushPose();
             ms.translate(0.5D, 0.5D, 0.5D);
@@ -80,19 +81,30 @@ public class CarminiteMagicLogRenderer extends KineticBlockEntityRenderer<Carmin
             float speed = ogSpeed * 3.0F / 10.0F;
             float angl = magicLog.flywheelAngle + speed * partialTicks;
 
-            boolean f = blockState.getValue(CarminiteMagicLogBlock.AXIS_POSITIVE);
-            switch (axis) {
-                case X -> TransformStack.cast(ms).centre()
-                        .rotate(Direction.get(Direction.AxisDirection.POSITIVE, Direction.Axis.Z), AngleHelper.rad(f ? 270.0F : 90.0F))
-                        .rotate(Direction.get(Direction.AxisDirection.POSITIVE, Direction.Axis.Y), -AngleHelper.rad(f ? -angl : angl))
+            switch (DirectedDirectionalKineticBlock.getTargetDirection(blockState)) {
+                case DOWN -> TransformStack.cast(ms).centre()
+                        .rotate(Direction.get(Direction.AxisDirection.POSITIVE, Direction.Axis.X), AngleHelper.rad(180.0F))
+                        .rotate(Direction.get(Direction.AxisDirection.POSITIVE, Direction.Axis.Y), AngleHelper.rad(-angl))
                         .unCentre();
-                case Y -> TransformStack.cast(ms).centre()
-                        .rotate(Direction.get(Direction.AxisDirection.POSITIVE, Direction.Axis.X), AngleHelper.rad(f ? 00.0F : 180.0F))
-                        .rotate(Direction.get(Direction.AxisDirection.POSITIVE, Direction.Axis.Y), AngleHelper.rad(f ? angl : -angl))
+                case UP -> TransformStack.cast(ms).centre()
+                        .rotate(Direction.get(Direction.AxisDirection.POSITIVE, Direction.Axis.X), AngleHelper.rad(00.0F))
+                        .rotate(Direction.get(Direction.AxisDirection.POSITIVE, Direction.Axis.Y), AngleHelper.rad(angl))
                         .unCentre();
-                case Z -> TransformStack.cast(ms).centre()
-                        .rotate(Direction.get(Direction.AxisDirection.POSITIVE, Direction.Axis.X), AngleHelper.rad(f ? 90.0F : 270.0F))
-                        .rotate(Direction.get(Direction.AxisDirection.POSITIVE, Direction.Axis.Y), AngleHelper.rad(f ? angl : -angl))
+                case NORTH -> TransformStack.cast(ms).centre()
+                        .rotate(Direction.get(Direction.AxisDirection.POSITIVE, Direction.Axis.X), AngleHelper.rad(270.0F))
+                        .rotate(Direction.get(Direction.AxisDirection.POSITIVE, Direction.Axis.Y), AngleHelper.rad(-angl))
+                        .unCentre();
+                case SOUTH -> TransformStack.cast(ms).centre()
+                        .rotate(Direction.get(Direction.AxisDirection.POSITIVE, Direction.Axis.X), AngleHelper.rad(90.0F))
+                        .rotate(Direction.get(Direction.AxisDirection.POSITIVE, Direction.Axis.Y), AngleHelper.rad(angl))
+                        .unCentre();
+                case WEST -> TransformStack.cast(ms).centre()
+                        .rotate(Direction.get(Direction.AxisDirection.POSITIVE, Direction.Axis.Z), AngleHelper.rad(90.0F))
+                        .rotate(Direction.get(Direction.AxisDirection.POSITIVE, Direction.Axis.Y), -AngleHelper.rad(angl))
+                        .unCentre();
+                case EAST -> TransformStack.cast(ms).centre()
+                        .rotate(Direction.get(Direction.AxisDirection.POSITIVE, Direction.Axis.Z), AngleHelper.rad(270.0F))
+                        .rotate(Direction.get(Direction.AxisDirection.POSITIVE, Direction.Axis.Y), -AngleHelper.rad(-angl))
                         .unCentre();
             }
 
@@ -128,7 +140,7 @@ public class CarminiteMagicLogRenderer extends KineticBlockEntityRenderer<Carmin
         BlockState blockState = context.state;
         if (blockState.getBlock() instanceof CarminiteMagicLogBlock logBlock) {
             Direction.Axis axis = logBlock.getRotationAxis(blockState);
-            Direction dir = Direction.fromAxisAndDirection(axis, logBlock.getAxisDirection(blockState));
+            Direction dir = logBlock.getDirection(blockState);
 
             PoseStack ms = matrices.getModelViewProjection();
             ms.pushPose();
@@ -170,19 +182,30 @@ public class CarminiteMagicLogRenderer extends KineticBlockEntityRenderer<Carmin
 
             PoseStack msPaint = matrices.getViewProjection();
 
-            boolean f = blockState.getValue(CarminiteMagicLogBlock.AXIS_POSITIVE);
-            switch (axis) {
-                case X -> TransformStack.cast(msPaint).centre()
-                        .rotate(Direction.get(Direction.AxisDirection.POSITIVE, Direction.Axis.Z), AngleHelper.rad(f ? 270.0F : 90.0F))
-                        .rotate(Direction.get(Direction.AxisDirection.POSITIVE, Direction.Axis.Y), -AngleHelper.rad(f ? -angl : angl))
+            switch (DirectedDirectionalKineticBlock.getTargetDirection(blockState)) {
+                case DOWN -> TransformStack.cast(ms).centre()
+                        .rotate(Direction.get(Direction.AxisDirection.POSITIVE, Direction.Axis.X), AngleHelper.rad(180.0F))
+                        .rotate(Direction.get(Direction.AxisDirection.POSITIVE, Direction.Axis.Y), AngleHelper.rad(-angl))
                         .unCentre();
-                case Y -> TransformStack.cast(msPaint).centre()
-                        .rotate(Direction.get(Direction.AxisDirection.POSITIVE, Direction.Axis.X), AngleHelper.rad(f ? 00.0F : 180.0F))
-                        .rotate(Direction.get(Direction.AxisDirection.POSITIVE, Direction.Axis.Y), AngleHelper.rad(f ? angl : -angl))
+                case UP -> TransformStack.cast(ms).centre()
+                        .rotate(Direction.get(Direction.AxisDirection.POSITIVE, Direction.Axis.X), AngleHelper.rad(00.0F))
+                        .rotate(Direction.get(Direction.AxisDirection.POSITIVE, Direction.Axis.Y), AngleHelper.rad(angl))
                         .unCentre();
-                case Z -> TransformStack.cast(msPaint).centre()
-                        .rotate(Direction.get(Direction.AxisDirection.POSITIVE, Direction.Axis.X), AngleHelper.rad(f ? 90.0F : 270.0F))
-                        .rotate(Direction.get(Direction.AxisDirection.POSITIVE, Direction.Axis.Y), AngleHelper.rad(f ? angl : -angl))
+                case NORTH -> TransformStack.cast(ms).centre()
+                        .rotate(Direction.get(Direction.AxisDirection.POSITIVE, Direction.Axis.X), AngleHelper.rad(270.0F))
+                        .rotate(Direction.get(Direction.AxisDirection.POSITIVE, Direction.Axis.Y), AngleHelper.rad(-angl))
+                        .unCentre();
+                case SOUTH -> TransformStack.cast(ms).centre()
+                        .rotate(Direction.get(Direction.AxisDirection.POSITIVE, Direction.Axis.X), AngleHelper.rad(90.0F))
+                        .rotate(Direction.get(Direction.AxisDirection.POSITIVE, Direction.Axis.Y), AngleHelper.rad(angl))
+                        .unCentre();
+                case WEST -> TransformStack.cast(ms).centre()
+                        .rotate(Direction.get(Direction.AxisDirection.POSITIVE, Direction.Axis.Z), AngleHelper.rad(90.0F))
+                        .rotate(Direction.get(Direction.AxisDirection.POSITIVE, Direction.Axis.Y), -AngleHelper.rad(angl))
+                        .unCentre();
+                case EAST -> TransformStack.cast(ms).centre()
+                        .rotate(Direction.get(Direction.AxisDirection.POSITIVE, Direction.Axis.Z), AngleHelper.rad(270.0F))
+                        .rotate(Direction.get(Direction.AxisDirection.POSITIVE, Direction.Axis.Y), -AngleHelper.rad(-angl))
                         .unCentre();
             }
 
@@ -200,6 +223,7 @@ public class CarminiteMagicLogRenderer extends KineticBlockEntityRenderer<Carmin
     }
 
     private static void vertex(VertexConsumer consumer, Matrix4f matrix4f, Matrix3f matrix3f, float x, int y, int u, int v) {
+        if (true) return;
         consumer.vertex(matrix4f, x - 0.5F, (float)y - 0.5F, 0.0F).color(255, 255, 255, 255).uv((float)u, (float)v).overlayCoords(OverlayTexture.NO_OVERLAY).uv2(0xF000F0).normal(matrix3f, 0.0F, 0.0F, 1.0F).endVertex();
     }
 

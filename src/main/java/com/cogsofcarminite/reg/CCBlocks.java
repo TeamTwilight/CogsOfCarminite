@@ -4,6 +4,7 @@ import com.cogsofcarminite.behaviour.CarminiteLogMovementBehaviour;
 import com.cogsofcarminite.behaviour.HornblowerMovementBehaviour;
 import com.cogsofcarminite.behaviour.MechanicalRootPullerMovementBehaviour;
 import com.cogsofcarminite.blocks.*;
+import com.cogsofcarminite.blocks.generators.CarminiteMagicLogBlockGenerator;
 import com.cogsofcarminite.client.CCSpriteShifts;
 import com.cogsofcarminite.items.CarminiteMagicLogBlockItem;
 import com.jozufozu.flywheel.core.PartialModel;
@@ -11,26 +12,15 @@ import com.simibubi.create.AllMovementBehaviours;
 import com.simibubi.create.AllTags;
 import com.simibubi.create.content.decoration.encasing.CasingBlock;
 import com.simibubi.create.content.kinetics.BlockStressDefaults;
-import com.simibubi.create.foundation.data.AssetLookup;
 import com.simibubi.create.foundation.data.BlockStateGen;
 import com.simibubi.create.foundation.data.BuilderTransformers;
 import com.simibubi.create.foundation.data.SharedProperties;
-import com.tterrag.registrate.providers.DataGenContext;
-import com.tterrag.registrate.providers.RegistrateBlockstateProvider;
 import com.tterrag.registrate.util.entry.BlockEntry;
-import com.tterrag.registrate.util.nullness.NonNullBiConsumer;
 import net.minecraft.MethodsReturnNonnullByDefault;
 import net.minecraft.client.renderer.RenderType;
-import net.minecraft.core.Direction;
-import net.minecraft.world.level.block.Block;
-import net.minecraft.world.level.block.state.BlockState;
-import net.minecraft.world.level.block.state.properties.BlockStateProperties;
 import net.minecraft.world.level.material.MapColor;
-import net.minecraftforge.client.model.generators.ConfiguredModel;
-import net.minecraftforge.client.model.generators.ModelFile;
 
 import javax.annotation.ParametersAreNonnullByDefault;
-import java.util.function.Function;
 
 import static com.cogsofcarminite.CogsOfCarminite.TWILIGHT_REGISTRATE;
 import static com.simibubi.create.foundation.data.ModelGen.customItemModel;
@@ -54,7 +44,7 @@ public class CCBlocks {
                     .properties(p -> p.mapColor(MapColor.STONE)
                             .noOcclusion())
                     .transform(axeOrPickaxe())
-                    .blockstate(directionalBlockProviderIgnoresWaterlogged())
+                    .blockstate(new CarminiteMagicLogBlockGenerator()::generate)
                     .addLayer(() -> RenderType::cutoutMipped)
                     .transform(BlockStressDefaults.setImpact(8.0))
                     .onRegister(AllMovementBehaviours.movementBehaviour(new CarminiteLogMovementBehaviour()))
@@ -74,7 +64,7 @@ public class CCBlocks {
                     .properties(p -> p.mapColor(MapColor.STONE)
                             .noOcclusion())
                     .transform(axeOrPickaxe())
-                    .blockstate(directionalBlockProviderIgnoresWaterlogged())
+                    .blockstate(new CarminiteMagicLogBlockGenerator()::generate)
                     .addLayer(() -> RenderType::cutoutMipped)
                     .transform(BlockStressDefaults.setImpact(8.0))
                     .onRegister(AllMovementBehaviours.movementBehaviour(new CarminiteLogMovementBehaviour()))
@@ -95,7 +85,7 @@ public class CCBlocks {
                     .properties(p -> p.mapColor(MapColor.STONE)
                             .noOcclusion())
                     .transform(axeOrPickaxe())
-                    .blockstate(directionalBlockProviderIgnoresWaterlogged())
+                    .blockstate(new CarminiteMagicLogBlockGenerator()::generate)
                     .addLayer(() -> RenderType::cutoutMipped)
                     .transform(BlockStressDefaults.setImpact(8.0))
                     .onRegister(AllMovementBehaviours.movementBehaviour(new CarminiteLogMovementBehaviour()))
@@ -115,7 +105,7 @@ public class CCBlocks {
                     .properties(p -> p.mapColor(MapColor.STONE)
                             .noOcclusion())
                     .transform(axeOrPickaxe())
-                    .blockstate(directionalBlockProviderIgnoresWaterlogged())
+                    .blockstate(new CarminiteMagicLogBlockGenerator()::generate)
                     .addLayer(() -> RenderType::cutoutMipped)
                     .transform(BlockStressDefaults.setImpact(8.0))
                     .onRegister(AllMovementBehaviours.movementBehaviour(new CarminiteLogMovementBehaviour()))
@@ -157,25 +147,4 @@ public class CCBlocks {
                     .register();
 
     public static void register() {}
-
-    public static <T extends Block> NonNullBiConsumer<DataGenContext<Block, T>, RegistrateBlockstateProvider> directionalBlockProviderIgnoresWaterlogged() {
-        return (c, p) -> directionalBlockIgnoresWaterlogged(c, p, $ -> AssetLookup.partialBaseModel(c, p));
-    }
-
-    public static <T extends Block> void directionalBlockIgnoresWaterlogged(DataGenContext<Block, T> ctx, RegistrateBlockstateProvider prov, Function<BlockState, ModelFile> modelFunc) {
-        prov.getVariantBuilder(ctx.getEntry())
-                .forAllStatesExcept(state -> {
-                    Direction.Axis axis = state.getValue(MechanicalSortingwoodEngine.AXIS);
-                    Direction.AxisDirection axisDirection = state.getValue(MechanicalSortingwoodEngine.AXIS_POSITIVE) ? Direction.AxisDirection.POSITIVE : Direction.AxisDirection.NEGATIVE;
-                    Direction dir = Direction.fromAxisAndDirection(axis, axisDirection);
-                    return ConfiguredModel.builder()
-                            .modelFile(modelFunc.apply(state))
-                            .rotationX(dir == Direction.DOWN ? 180
-                                    : dir.getAxis()
-                                    .isHorizontal() ? 90 : 0)
-                            .rotationY(dir.getAxis()
-                                    .isVertical() ? 0 : (((int) dir.toYRot()) + 180) % 360)
-                            .build();
-                }, BlockStateProperties.WATERLOGGED);
-    }
 }
