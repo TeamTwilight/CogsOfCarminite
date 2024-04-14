@@ -7,6 +7,7 @@ import com.cogsofcarminite.blocks.*;
 import com.cogsofcarminite.blocks.generators.CarminiteMagicLogBlockGenerator;
 import com.cogsofcarminite.client.CCSpriteShifts;
 import com.cogsofcarminite.items.CarminiteMagicLogBlockItem;
+import com.cogsofcarminite.items.HeartOfTransformationBlockItem;
 import com.jozufozu.flywheel.core.PartialModel;
 import com.simibubi.create.AllMovementBehaviours;
 import com.simibubi.create.AllTags;
@@ -68,12 +69,7 @@ public class CCBlocks {
                     .addLayer(() -> RenderType::cutoutMipped)
                     .transform(BlockStressDefaults.setImpact(8.0))
                     .onRegister(AllMovementBehaviours.movementBehaviour(new CarminiteLogMovementBehaviour()))
-                    .item((mechanicalHeartOfTransformation, properties) -> new CarminiteMagicLogBlockItem(mechanicalHeartOfTransformation, properties) {
-                        @Override
-                        public PartialModel getPartialModel() {
-                            return CCPartialBlockModels.TRANS_OFF;
-                        }
-                    })
+                    .item(HeartOfTransformationBlockItem::new)
                     .tag(AllTags.AllItemTags.CONTRAPTION_CONTROLLED.tag)
                     .transform(customItemModel())
                     .register();

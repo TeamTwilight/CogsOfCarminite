@@ -5,9 +5,11 @@ import com.cogsofcarminite.blocks.entities.CarminiteHeartBlockEntity;
 import com.cogsofcarminite.blocks.entities.CarminiteMagicLogBlockEntity;
 import com.cogsofcarminite.reg.CCBlockEntities;
 import com.cogsofcarminite.reg.CCPartialBlockModels;
+import com.google.common.collect.ImmutableList;
 import com.jozufozu.flywheel.core.PartialModel;
 import com.simibubi.create.foundation.block.IBE;
 import net.minecraft.MethodsReturnNonnullByDefault;
+import net.minecraft.Util;
 import net.minecraft.client.renderer.RenderType;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Holder;
@@ -19,6 +21,7 @@ import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.util.RandomSource;
+import net.minecraft.world.item.BlockItem;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.Level;
@@ -29,14 +32,16 @@ import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.chunk.LevelChunk;
 import net.minecraft.world.level.chunk.LevelChunkSection;
 import net.minecraft.world.level.chunk.PalettedContainer;
+import net.minecraft.world.level.storage.loot.LootParams;
+import net.minecraft.world.level.storage.loot.parameters.LootContextParams;
 import twilightforest.TFConfig;
-import twilightforest.TwilightForestMod;
 import twilightforest.init.TFBiomes;
 import twilightforest.init.TFSounds;
 import twilightforest.util.WorldUtil;
 
 import javax.annotation.ParametersAreNonnullByDefault;
 import java.util.List;
+import java.util.Objects;
 
 @ParametersAreNonnullByDefault
 @MethodsReturnNonnullByDefault
@@ -129,23 +134,6 @@ public class MechanicalHeartOfTransformation extends CarminiteMagicLogBlock impl
         }
     }
 
-    @Override
-    @SuppressWarnings("deprecation")
-    public ItemStack getCloneItemStack(BlockGetter getter, BlockPos pos, BlockState state) {
-        ItemStack stack = super.getCloneItemStack(getter, pos, state);
-        getter.getBlockEntity(pos, CCBlockEntities.CARMINITE_HEART.get()).ifPresent((be) -> {
-            CompoundTag tag = stack.getOrCreateTag();
-            Level level = be.getLevel();
-            if (level != null && be.storedBiome != null) {
-                ResourceLocation location = level.registryAccess().registryOrThrow(Registries.BIOME).getKey(be.storedBiome.value());
-                tag.putString("BiomeID", location != null ? location.toString() : TFBiomes.ENCHANTED_FOREST.location().toString());
-            } else tag.putString("BiomeID", TFBiomes.ENCHANTED_FOREST.location().toString());
-            TwilightForestMod.LOGGER.error("{}!", tag);
-            TwilightForestMod.LOGGER.error("{}!", be.storedBiome);
-        });
-        return stack;
-    }
-
     protected void adapt(ServerLevel level, BlockPos pos, CompoundTag filter) {
         if (filter.contains("SaveToBlock") && level.getBlockEntity(pos) instanceof CarminiteHeartBlockEntity entity) {
             entity.storedBiome = level.getBiome(pos);
@@ -183,19 +171,36 @@ public class MechanicalHeartOfTransformation extends CarminiteMagicLogBlock impl
     }
 
     @Override
+    @SuppressWarnings("deprecation")
+    public ItemStack getCloneItemStack(BlockGetter getter, BlockPos pos, BlockState state) {
+        ItemStack item = new ItemStack(this);
+        CompoundTag tag = new CompoundTag();
+        this.getBlockEntityOptional(getter, pos).ifPresent(be -> justTheBiomeID(be, tag));
+        BlockItem.setBlockEntityData(item, CCBlockEntities.CARMINITE_HEART.get(), tag);
+        return item;
+    }
+
+    @Override
+    @SuppressWarnings("deprecation")
+    public List<ItemStack> getDrops(BlockState pState, LootParams.Builder pBuilder) {
+        if (!(pBuilder.getOptionalParameter(LootContextParams.BLOCK_ENTITY) instanceof CarminiteHeartBlockEntity cbe)) return super.getDrops(pState, pBuilder);
+        CompoundTag tag = new CompoundTag();
+        justTheBiomeID(cbe, tag);
+        return ImmutableList.of(Util.make(new ItemStack(this), stack -> BlockItem.setBlockEntityData(stack, CCBlockEntities.CARMINITE_HEART.get(), tag)));
+    }
+
+    public static void justTheBiomeID(CarminiteHeartBlockEntity be, CompoundTag tag) {
+        tag.putString("BiomeID", Objects.requireNonNullElseGet(be.biomeID, TFBiomes.ENCHANTED_FOREST::location).toString());
+    }
+
+    @Override
     public CompoundTag getFilter(CarminiteMagicLogBlockEntity blockEntity) {
         if (blockEntity instanceof CarminiteHeartBlockEntity entity) {
             CompoundTag tag = super.getFilter(entity);
             entity.heartMode.write(tag, false);
             tag.putBoolean("SaveToBlock", true);
 
-            if (entity.storedBiome != null) {
-                Level level = entity.getLevel();
-                if (level != null) {
-                    ResourceLocation location = level.registryAccess().registryOrThrow(Registries.BIOME).getKey(entity.storedBiome.value());
-                    tag.putString("BiomeID", location != null ? location.toString() : TFBiomes.ENCHANTED_FOREST.location().toString());
-                }
-            } else tag.putString("BiomeID", TFBiomes.ENCHANTED_FOREST.location().toString());
+            tag.putString("BiomeID", Objects.requireNonNullElseGet(entity.biomeID, TFBiomes.ENCHANTED_FOREST::location).toString());
 
             return tag;
         }

@@ -28,6 +28,7 @@ import java.util.List;
 public class CarminiteHeartBlockEntity extends CarminiteMagicLogBlockEntity {
     public ScrollOptionBehaviour<HeartMode> heartMode;
     public Holder<Biome> storedBiome;
+    public ResourceLocation biomeID;
 
     public CarminiteHeartBlockEntity(BlockEntityType<?> typeIn, BlockPos pos, BlockState state) {
         super(typeIn, pos, state);
@@ -36,29 +37,22 @@ public class CarminiteHeartBlockEntity extends CarminiteMagicLogBlockEntity {
     @Override
     public void write(CompoundTag compound, boolean clientPacket) {
         super.write(compound, clientPacket);
-        if (!clientPacket) {
-            if (this.level != null && this.storedBiome != null) {
-                ResourceLocation location = this.level.registryAccess().registryOrThrow(Registries.BIOME).getKey(this.storedBiome.value());
-                compound.putString("BiomeID", location != null ? location.toString() : TFBiomes.ENCHANTED_FOREST.location().toString());
-            } else compound.putString("BiomeID", TFBiomes.ENCHANTED_FOREST.location().toString());
-        }
+        if (this.biomeID != null) compound.putString("BiomeID", this.biomeID.toString());
     }
 
     @Override
     protected void read(CompoundTag compound, boolean clientPacket) {
         super.read(compound, clientPacket);
 
-        if (!clientPacket && this.level != null) {
-            ResourceLocation biomeID = compound.contains("BiomeID") ? ResourceLocation.tryParse(compound.getString("BiomeID")) : null;
+        this.biomeID = compound.contains("BiomeID") ? ResourceLocation.tryParse(compound.getString("BiomeID")) : null;
+        if (this.biomeID == null) this.biomeID = TFBiomes.ENCHANTED_FOREST.location();
+
+        if (this.level != null) {
             Registry<Biome> reg = this.level.registryAccess().registryOrThrow(Registries.BIOME);
 
-            if (biomeID == null) {
-                this.storedBiome = reg.getHolderOrThrow(TFBiomes.ENCHANTED_FOREST);
-            } else {
-                Biome biome = reg.get(biomeID);
-                if (biome == null) this.storedBiome = reg.getHolderOrThrow(TFBiomes.ENCHANTED_FOREST);
-                else this.storedBiome = reg.wrapAsHolder(biome);
-            }
+            Biome biome = reg.get(this.biomeID);
+            if (biome == null) this.storedBiome = reg.getHolderOrThrow(TFBiomes.ENCHANTED_FOREST);
+            else this.storedBiome = reg.wrapAsHolder(biome);
         }
     }
 
