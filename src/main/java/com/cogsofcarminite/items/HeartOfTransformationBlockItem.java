@@ -5,7 +5,6 @@ import com.cogsofcarminite.reg.CCPartialBlockModels;
 import com.jozufozu.flywheel.core.PartialModel;
 import net.minecraft.ChatFormatting;
 import net.minecraft.MethodsReturnNonnullByDefault;
-import net.minecraft.core.BlockPos;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
@@ -20,7 +19,6 @@ import net.minecraft.world.item.TooltipFlag;
 import net.minecraft.world.item.UseAnim;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Block;
-import net.minecraft.world.level.block.state.BlockState;
 import org.jetbrains.annotations.Nullable;
 import twilightforest.init.TFBiomes;
 
@@ -37,14 +35,10 @@ public class HeartOfTransformationBlockItem extends CarminiteMagicLogBlockItem {
     @Override
     public void appendHoverText(ItemStack stack, @Nullable Level level, List<Component> list, TooltipFlag flag) {
         super.appendHoverText(stack, level, list, flag);
+        list.add(Component.translatable("cogsofcarminite.tooltip.mechanical_heart.set_to").withStyle(ChatFormatting.GOLD));
         CompoundTag tag = BlockItem.getBlockEntityData(stack);
         String[] id = tag != null && tag.contains("BiomeID") ? tag.getString("BiomeID").split(":") : TFBiomes.ENCHANTED_FOREST.location().toString().split(":");
-        list.add(Component.translatable("biome." + id[0] + "." + id[1]).withStyle(ChatFormatting.DARK_PURPLE));
-    }
-
-    @Override
-    protected boolean updateCustomBlockEntityTag(BlockPos p_40597_, Level p_40598_, @Nullable Player p_40599_, ItemStack p_40600_, BlockState p_40601_) {
-        return super.updateCustomBlockEntityTag(p_40597_, p_40598_, p_40599_, p_40600_, p_40601_);
+        list.add(Component.translatable("biome." + id[0] + "." + id[1]).withStyle(ChatFormatting.GRAY));
     }
 
     @Override

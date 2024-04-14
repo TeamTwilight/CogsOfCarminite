@@ -19,6 +19,8 @@ public class CCLangGenerator {
         addLang("item_group", "main", "Cogs Of Carminite");
 
         // Hover Tooltips
+        addLang("tooltip", "mechanical_heart.header", "Mechanical Heart Information");
+        addLang("tooltip", "mechanical_heart.set_to", "Configured to:");
         addLang("tooltip", "hornblower.header", "Hornblower Information");
         addLang("tooltip", "hornblower.contains", "Item: %1$s");
         addLang("tooltip", "hornblower.instrument", "%1$s");

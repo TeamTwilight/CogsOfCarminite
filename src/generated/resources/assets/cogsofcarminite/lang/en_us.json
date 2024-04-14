@@ -61,6 +61,8 @@
   "cogsofcarminite.tooltip.hornblower.empty": "Use a Horn Item to Insert",
   "cogsofcarminite.tooltip.hornblower.header": "Hornblower Information",
   "cogsofcarminite.tooltip.hornblower.instrument": "%1$s",
+  "cogsofcarminite.tooltip.mechanical_heart.header": "Mechanical Heart Information",
+  "cogsofcarminite.tooltip.mechanical_heart.set_to": "Configured to:",
   "create.cogsofcarminite.logistics.mechanical_heart_mode.adapt": "Adapt to current biome",
   "create.cogsofcarminite.logistics.mechanical_heart_mode.revert": "Revert nearby biome",
   "create.cogsofcarminite.logistics.mechanical_heart_mode.transform": "Transform nearby biome",

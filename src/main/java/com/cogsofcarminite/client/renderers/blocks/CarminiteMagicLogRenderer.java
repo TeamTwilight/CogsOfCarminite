@@ -111,11 +111,9 @@ public class CarminiteMagicLogRenderer extends KineticBlockEntityRenderer<Carmin
             CachedBufferer.partial(logBlock.getFlywheelModel(), blockState).light(light).renderInto(ms, buffer.getBuffer(RenderType.cutoutMipped()));
 
             int alpha = Mth.clamp(Math.abs((int) ogSpeed) * 2, 1, 255);
-            if (Minecraft.getInstance().player.isSecondaryUseActive()) alpha = 255;
 
             CachedBufferer.partial(logBlock.getFlywheelOverlay(), blockState)
                     .light(light).color(255, 255, 255, alpha).renderInto(ms, buffer.getBuffer(RenderType.translucentMovingBlock()));
-
 
             ms.popPose();
 
