@@ -30,9 +30,10 @@ public class CCLangGenerator {
         addLang("logistics", "block_filter", "Block Filter");
         addLang("logistics", "ore_filter", "Ore Filter");
         addLang("logistics", "mechanical_heart_mode", "Heart Operation Mode");
-        addSillyLang("logistics", "mechanical_heart_mode.transform", "Transform nearby biome");
-        addSillyLang("logistics", "mechanical_heart_mode.adapt", "Adapt to current biome");
-        addSillyLang("logistics", "mechanical_heart_mode.revert", "Revert nearby biome");
+        addSillyLang("logistics", "mechanical_heart_mode.transform_cube", "Transform inside of Y range");
+        addSillyLang("logistics", "mechanical_heart_mode.transform_pillar", "Transform ignoring Y range");
+        addSillyLang("logistics", "mechanical_heart_mode.revert_cube", "Revert inside of Y range");
+        addSillyLang("logistics", "mechanical_heart_mode.revert_pillar", "Revert ignoring Y range");
 
         // Block Attributes
         addLang("block_attributes", "replaceable", "is replaceable");

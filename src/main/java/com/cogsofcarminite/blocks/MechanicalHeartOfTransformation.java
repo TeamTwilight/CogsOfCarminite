@@ -78,16 +78,19 @@ public class MechanicalHeartOfTransformation extends CarminiteMagicLogBlock impl
     public void performTreeEffect(ServerLevel level, BlockPos pos, RandomSource rand, CompoundTag filter) {
         switch (filter.getInt("ScrollValue")) {
             case 0:
-                transform(level, pos, rand, filter);
+                transformCube(level, pos, rand, filter);
                 break;
             case 1:
-                adapt(level, pos, filter);
+                transformPillar(level, pos, rand, filter);
                 break;
-            default: revert(level, pos.south(), rand);
+            case 2:
+                revertCube(level, pos.south(), rand);
+                break;
+            default: revertPillar(level, pos.south(), rand);
         }
     }
 
-    protected void transform(ServerLevel level, BlockPos pos, RandomSource rand, CompoundTag filter) {
+    protected void transformCube(ServerLevel level, BlockPos pos, RandomSource rand, CompoundTag filter) {
         ResourceLocation biomeID = filter.contains("BiomeID") ? ResourceLocation.tryParse(filter.getString("BiomeID")) : null;
         Registry<Biome> reg = level.registryAccess().registryOrThrow(Registries.BIOME);
         Holder<Biome> biomeHolder;
@@ -134,20 +137,87 @@ public class MechanicalHeartOfTransformation extends CarminiteMagicLogBlock impl
         }
     }
 
-    protected void adapt(ServerLevel level, BlockPos pos, CompoundTag filter) {
-        if (filter.contains("SaveToBlock") && level.getBlockEntity(pos) instanceof CarminiteHeartBlockEntity entity) {
-            entity.storedBiome = level.getBiome(pos);
-        } else {
-            ResourceLocation location = level.registryAccess().registryOrThrow(Registries.BIOME).getKey(level.getBiome(pos).get());
-            filter.putString("BiomeID", location != null ? location.toString() : TFBiomes.ENCHANTED_FOREST.location().toString());
-        }
-    }
+    protected void transformPillar(ServerLevel level, BlockPos pos, RandomSource rand, CompoundTag filter) {
+        ResourceLocation biomeID = filter.contains("BiomeID") ? ResourceLocation.tryParse(filter.getString("BiomeID")) : null;
+        Registry<Biome> reg = level.registryAccess().registryOrThrow(Registries.BIOME);
+        Holder<Biome> biomeHolder;
 
-    protected void revert(ServerLevel level, BlockPos pos, RandomSource rand) {
+        if (filter.contains("SaveToBlock") && level.getBlockEntity(pos) instanceof CarminiteHeartBlockEntity entity && entity.storedBiome != null) {
+            biomeHolder = entity.storedBiome;
+            if (biomeID == null) {
+                biomeID = TFBiomes.ENCHANTED_FOREST.location();
+                biomeHolder = reg.getHolderOrThrow(TFBiomes.ENCHANTED_FOREST);
+            }
+        } else {
+            if (biomeID == null) {
+                biomeID = TFBiomes.ENCHANTED_FOREST.location();
+                biomeHolder = reg.getHolderOrThrow(TFBiomes.ENCHANTED_FOREST);
+            } else {
+                Biome biome = reg.get(biomeID);
+                if (biome == null) biomeHolder = reg.getHolderOrThrow(TFBiomes.ENCHANTED_FOREST);
+                else biomeHolder = reg.wrapAsHolder(biome);
+            }
+        }
+
         int range = TFConfig.COMMON_CONFIG.MAGIC_TREES.transformationRange.get();
         for (int i = 0; i < 16; i++) {
             BlockPos dPos = WorldUtil.randomOffset(rand, pos, range, range, range);
             if (dPos.distSqr(pos) > 256.0) continue;
+            dPos = dPos.atY(rand.nextInt(level.getMaxBuildHeight() - level.getMinBuildHeight()) + level.getMinBuildHeight());
+            if (level.getBiome(dPos).is(biomeID)) continue;
+
+            int x = QuartPos.fromBlock(dPos.getX());
+            int y = QuartPos.fromBlock(dPos.getY());
+            int z = QuartPos.fromBlock(dPos.getZ());
+
+            LevelChunk chunkAt = level.getChunk(dPos.getX() >> 4, dPos.getZ() >> 4);
+            LevelChunkSection section = chunkAt.getSection(chunkAt.getSectionIndex(dPos.getY()));
+
+            if (section.getBiomes().get(x & 3, y & 3, z & 3).equals(biomeHolder)) continue;
+
+            if (section.getBiomes() instanceof PalettedContainer<Holder<Biome>> container) {
+                container.set(x & 3, y & 3, z & 3, biomeHolder);
+                spawnParticles(level, dPos);
+            }
+
+            if (!chunkAt.isUnsaved()) chunkAt.setUnsaved(true);
+            level.getChunkSource().chunkMap.resendBiomesForChunks(List.of(chunkAt));
+        }
+    }
+
+    protected void revertCube(ServerLevel level, BlockPos pos, RandomSource rand) {
+        int range = TFConfig.COMMON_CONFIG.MAGIC_TREES.transformationRange.get();
+        for (int i = 0; i < 16; i++) {
+            BlockPos dPos = WorldUtil.randomOffset(rand, pos, range, range, range);
+            if (dPos.distSqr(pos) > 256.0) continue;
+            int x = QuartPos.fromBlock(dPos.getX());
+            int y = QuartPos.fromBlock(dPos.getY());
+            int z = QuartPos.fromBlock(dPos.getZ());
+            Holder<Biome> uncachedBiome = level.getUncachedNoiseBiome(x, y, z);
+
+            if (level.getBiome(dPos).equals(uncachedBiome)) continue;
+
+            LevelChunk chunkAt = level.getChunk(dPos.getX() >> 4, dPos.getZ() >> 4);
+            LevelChunkSection section = chunkAt.getSection(chunkAt.getSectionIndex(dPos.getY()));
+
+            if (section.getBiomes().get(x & 3, y & 3, z & 3).equals(uncachedBiome)) continue;
+
+            if (section.getBiomes() instanceof PalettedContainer<Holder<Biome>> container) {
+                container.set(x & 3, y & 3, z & 3, uncachedBiome);
+                spawnParticles(level, dPos);
+            }
+
+            if (!chunkAt.isUnsaved()) chunkAt.setUnsaved(true);
+            level.getChunkSource().chunkMap.resendBiomesForChunks(List.of(chunkAt));
+        }
+    }
+
+    protected void revertPillar(ServerLevel level, BlockPos pos, RandomSource rand) {
+        int range = TFConfig.COMMON_CONFIG.MAGIC_TREES.transformationRange.get();
+        for (int i = 0; i < 16; i++) {
+            BlockPos dPos = WorldUtil.randomOffset(rand, pos, range, range, range);
+            if (dPos.distSqr(pos) > 256.0) continue;
+            dPos = dPos.atY(rand.nextInt(level.getMaxBuildHeight() - level.getMinBuildHeight()) + level.getMinBuildHeight());
             int x = QuartPos.fromBlock(dPos.getX());
             int y = QuartPos.fromBlock(dPos.getY());
             int z = QuartPos.fromBlock(dPos.getZ());

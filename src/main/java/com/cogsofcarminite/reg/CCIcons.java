@@ -25,9 +25,10 @@ import javax.annotation.ParametersAreNonnullByDefault;
 public class CCIcons extends AllIcons {
     public static final ResourceLocation CC_ATLAS = CogsOfCarminite.prefix("textures/gui/icons.png");
 
-    public static final CCIcons HEART_TRANSFORM = new CCIcons(0, 0);
-    public static final CCIcons HEART_ADAPT = new CCIcons(1, 0);
-    public static final CCIcons HEART_REVERT = new CCIcons(2, 0);
+    public static final CCIcons HEART_TRANSFORM_CUBE = new CCIcons(0, 0);
+    public static final CCIcons HEART_TRANSFORM_PILLAR = new CCIcons(1, 0);
+    public static final CCIcons HEART_REVERT_CUBE = new CCIcons(2, 0);
+    public static final CCIcons HEART_REVERT_PILLAR = new CCIcons(3, 0);
 
     public CCIcons(int x, int y) {
         super(x, y);

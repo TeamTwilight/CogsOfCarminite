@@ -93,9 +93,10 @@ public class CarminiteHeartBlockEntity extends CarminiteMagicLogBlockEntity {
     }
 
     public enum HeartMode implements INamedIconOptions {
-        TRANSFORM(CCIcons.HEART_TRANSFORM),
-        ADAPT(CCIcons.HEART_ADAPT),
-        REVERT(CCIcons.HEART_REVERT);
+        TRANSFORM_CUBE(CCIcons.HEART_TRANSFORM_CUBE),
+        TRANSFORM_PILLAR(CCIcons.HEART_TRANSFORM_PILLAR),
+        REVERT_CUBE(CCIcons.HEART_REVERT_CUBE),
+        REVERT_PILLAR(CCIcons.HEART_REVERT_PILLAR);
 
         private final String translationKey;
         private final CCIcons icon;

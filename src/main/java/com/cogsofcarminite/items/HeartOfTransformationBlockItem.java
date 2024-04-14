@@ -56,6 +56,7 @@ public class HeartOfTransformationBlockItem extends CarminiteMagicLogBlockItem {
             tag.putString("BiomeID", location.toString());
             BlockItem.setBlockEntityData(stack, CCBlockEntities.CARMINITE_HEART.get(), tag);
         }
+        if (living instanceof Player player) player.getCooldowns().addCooldown(stack.getItem(), 10);
         return stack;
     }
 
