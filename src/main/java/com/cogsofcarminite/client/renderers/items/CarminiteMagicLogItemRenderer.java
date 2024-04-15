@@ -40,6 +40,7 @@ public class CarminiteMagicLogItemRenderer extends CustomRenderedItemModelRender
 
         ms.pushPose();
         ms.translate(0, offset, 0);
+        ms.mulPose(Axis.XN.rotationDegrees(90.0F));
         ms.mulPose(Axis.YP.rotationDegrees(angle));
         ms.translate(0, -offset, 0);
         renderer.render(this.model.get(), light);

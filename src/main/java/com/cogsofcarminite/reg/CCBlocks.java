@@ -56,7 +56,7 @@ public class CCBlocks {
                         }
                     })
                     .tag(AllTags.AllItemTags.CONTRAPTION_CONTROLLED.tag)
-                    .transform(customItemModel())
+                    .transform(customItemModel("_", "block"))
                     .register();
 
     public static final BlockEntry<MechanicalHeartOfTransformation> MECHANICAL_HEART_OF_TRANSFORMATION =
@@ -71,7 +71,7 @@ public class CCBlocks {
                     .onRegister(AllMovementBehaviours.movementBehaviour(new CarminiteLogMovementBehaviour()))
                     .item(HeartOfTransformationBlockItem::new)
                     .tag(AllTags.AllItemTags.CONTRAPTION_CONTROLLED.tag)
-                    .transform(customItemModel())
+                    .transform(customItemModel("_", "block"))
                     .register();
 
 
@@ -92,7 +92,7 @@ public class CCBlocks {
                         }
                     })
                     .tag(AllTags.AllItemTags.CONTRAPTION_CONTROLLED.tag)
-                    .transform(customItemModel())
+                    .transform(customItemModel("_", "block"))
                     .register();
     
     public static final BlockEntry<MechanicalSortingwoodEngine> MECHANICAL_SORTINGWOOD_ENGINE =
@@ -112,7 +112,7 @@ public class CCBlocks {
                         }
                     })
                     .tag(AllTags.AllItemTags.CONTRAPTION_CONTROLLED.tag)
-                    .transform(customItemModel())
+                    .transform(customItemModel("_", "block"))
                     .register();
 
     public static final BlockEntry<HornblowerBlock> HORNBLOWER =
