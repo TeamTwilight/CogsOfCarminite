@@ -10,6 +10,7 @@ import com.simibubi.create.foundation.item.render.PartialItemModelRenderer;
 import com.simibubi.create.foundation.utility.AnimationTickHolder;
 import net.minecraft.MethodsReturnNonnullByDefault;
 import net.minecraft.client.renderer.MultiBufferSource;
+import net.minecraft.world.item.BlockItem;
 import net.minecraft.world.item.ItemDisplayContext;
 import net.minecraft.world.item.ItemStack;
 
@@ -40,7 +41,7 @@ public class CarminiteMagicLogItemRenderer extends CustomRenderedItemModelRender
 
         ms.pushPose();
         ms.translate(0, offset, 0);
-        ms.mulPose(Axis.XN.rotationDegrees(90.0F));
+        if (stack.getItem() instanceof BlockItem) ms.mulPose(Axis.XN.rotationDegrees(90.0F));
         ms.mulPose(Axis.YP.rotationDegrees(angle));
         ms.translate(0, -offset, 0);
         renderer.render(this.model.get(), light);
