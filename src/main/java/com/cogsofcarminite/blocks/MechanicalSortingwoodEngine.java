@@ -1,6 +1,5 @@
 package com.cogsofcarminite.blocks;
 
-import com.cogsofcarminite.CogsOfCarminite;
 import com.cogsofcarminite.blocks.entities.CarminiteEngineBlockEntity;
 import com.cogsofcarminite.blocks.entities.CarminiteMagicLogBlockEntity;
 import com.cogsofcarminite.reg.CCBlockEntities;
@@ -9,11 +8,9 @@ import com.jozufozu.flywheel.core.PartialModel;
 import com.simibubi.create.content.logistics.filter.FilterItemStack;
 import com.simibubi.create.foundation.block.IBE;
 import net.minecraft.MethodsReturnNonnullByDefault;
-import net.minecraft.client.renderer.RenderType;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.nbt.CompoundTag;
-import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.util.RandomSource;
@@ -39,8 +36,6 @@ import java.util.*;
 @MethodsReturnNonnullByDefault
 @ParametersAreNonnullByDefault
 public class MechanicalSortingwoodEngine extends CarminiteMagicLogBlock implements IBE<CarminiteEngineBlockEntity> {
-    private static final ResourceLocation TEXTURE_LOCATION = CogsOfCarminite.prefix("textures/block/sorting_log_core_on.png");
-    private static final RenderType RENDER_TYPE = RenderType.armorCutoutNoCull(TEXTURE_LOCATION);
 
     public MechanicalSortingwoodEngine(Properties properties) {
         super(properties);
@@ -193,10 +188,5 @@ public class MechanicalSortingwoodEngine extends CarminiteMagicLogBlock implemen
     @Override
     public PartialModel getFlywheelOverlay() {
         return CCPartialBlockModels.SORTING_OVERLAY;
-    }
-
-    @Override
-    public RenderType getRenderType() {
-        return RENDER_TYPE;
     }
 }

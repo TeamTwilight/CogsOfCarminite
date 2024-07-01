@@ -1,6 +1,5 @@
 package com.cogsofcarminite.blocks;
 
-import com.cogsofcarminite.CogsOfCarminite;
 import com.cogsofcarminite.blocks.entities.CarminiteHeartBlockEntity;
 import com.cogsofcarminite.blocks.entities.CarminiteMagicLogBlockEntity;
 import com.cogsofcarminite.reg.CCBlockEntities;
@@ -10,7 +9,6 @@ import com.jozufozu.flywheel.core.PartialModel;
 import com.simibubi.create.foundation.block.IBE;
 import net.minecraft.MethodsReturnNonnullByDefault;
 import net.minecraft.Util;
-import net.minecraft.client.renderer.RenderType;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Holder;
 import net.minecraft.core.QuartPos;
@@ -46,9 +44,6 @@ import java.util.Objects;
 @ParametersAreNonnullByDefault
 @MethodsReturnNonnullByDefault
 public class MechanicalHeartOfTransformation extends CarminiteMagicLogBlock implements IBE<CarminiteHeartBlockEntity> {
-    private static final ResourceLocation TEXTURE_LOCATION = CogsOfCarminite.prefix("textures/block/transformation_log_core_on.png");
-    private static final RenderType RENDER_TYPE = RenderType.armorCutoutNoCull(TEXTURE_LOCATION);
-
     public static final byte NOTE_OFFSET = 4;
     public static final byte MIN_NOTE = 5;
     public static final byte MAX_NOTE = 20;
@@ -296,10 +291,5 @@ public class MechanicalHeartOfTransformation extends CarminiteMagicLogBlock impl
     @Override
     public PartialModel getFlywheelOverlay() {
         return CCPartialBlockModels.TRANS_OVERLAY;
-    }
-
-    @Override
-    public RenderType getRenderType() {
-        return RENDER_TYPE;
     }
 }

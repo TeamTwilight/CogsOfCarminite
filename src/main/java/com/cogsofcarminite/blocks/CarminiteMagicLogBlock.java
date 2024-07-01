@@ -5,7 +5,6 @@ import com.cogsofcarminite.blocks.entities.CarminiteMagicLogBlockEntity;
 import com.jozufozu.flywheel.core.PartialModel;
 import com.simibubi.create.content.kinetics.base.IRotate;
 import net.minecraft.MethodsReturnNonnullByDefault;
-import net.minecraft.client.renderer.RenderType;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.core.particles.DustParticleOptions;
@@ -108,6 +107,4 @@ public abstract class CarminiteMagicLogBlock extends DirectedDirectionalKineticB
     public abstract PartialModel getFlywheelModel();
 
     public abstract PartialModel getFlywheelOverlay();
-
-    public abstract RenderType getRenderType();
 }

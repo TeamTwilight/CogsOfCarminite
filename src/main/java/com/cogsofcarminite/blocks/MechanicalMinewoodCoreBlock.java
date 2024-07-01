@@ -11,11 +11,9 @@ import com.jozufozu.flywheel.core.PartialModel;
 import com.simibubi.create.content.logistics.filter.FilterItemStack;
 import com.simibubi.create.foundation.block.IBE;
 import net.minecraft.MethodsReturnNonnullByDefault;
-import net.minecraft.client.renderer.RenderType;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.nbt.CompoundTag;
-import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.util.RandomSource;
@@ -41,8 +39,6 @@ import java.util.Set;
 @MethodsReturnNonnullByDefault
 @Mod.EventBusSubscriber(modid = CogsOfCarminite.MODID)
 public class MechanicalMinewoodCoreBlock extends CarminiteMagicLogBlock implements IBE<CarminiteCoreBlockEntity> {
-    private static final ResourceLocation TEXTURE_LOCATION = CogsOfCarminite.prefix("textures/block/mining_log_core_on.png");
-    private static final RenderType RENDER_TYPE = RenderType.armorCutoutNoCull(TEXTURE_LOCATION);
 
     public MechanicalMinewoodCoreBlock(Properties properties) {
         super(properties);
@@ -161,10 +157,5 @@ public class MechanicalMinewoodCoreBlock extends CarminiteMagicLogBlock implemen
     @Override
     public PartialModel getFlywheelOverlay() {
         return CCPartialBlockModels.MINE_OVERLAY;
-    }
-
-    @Override
-    public RenderType getRenderType() {
-        return RENDER_TYPE;
     }
 }

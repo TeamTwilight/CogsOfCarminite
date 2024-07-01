@@ -1,6 +1,5 @@
 package com.cogsofcarminite.blocks;
 
-import com.cogsofcarminite.CogsOfCarminite;
 import com.cogsofcarminite.blocks.entities.CarminiteClockBlockEntity;
 import com.cogsofcarminite.blocks.entities.CarminiteMagicLogBlockEntity;
 import com.cogsofcarminite.reg.CCBlockEntities;
@@ -10,10 +9,8 @@ import com.jozufozu.flywheel.core.PartialModel;
 import com.simibubi.create.content.logistics.filter.FilterItemStack;
 import com.simibubi.create.foundation.block.IBE;
 import net.minecraft.MethodsReturnNonnullByDefault;
-import net.minecraft.client.renderer.RenderType;
 import net.minecraft.core.BlockPos;
 import net.minecraft.nbt.CompoundTag;
-import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.util.RandomSource;
@@ -32,8 +29,6 @@ import javax.annotation.ParametersAreNonnullByDefault;
 @ParametersAreNonnullByDefault
 @MethodsReturnNonnullByDefault
 public class MechanicalTimewoodClock extends CarminiteMagicLogBlock implements IBE<CarminiteClockBlockEntity> {
-    private static final ResourceLocation TEXTURE_LOCATION = CogsOfCarminite.prefix("textures/block/time_log_core_on.png");
-    private static final RenderType RENDER_TYPE = RenderType.armorCutoutNoCull(TEXTURE_LOCATION);
 
     public MechanicalTimewoodClock(Properties properties) {
         super(properties);
@@ -115,10 +110,5 @@ public class MechanicalTimewoodClock extends CarminiteMagicLogBlock implements I
     @Override
     public PartialModel getFlywheelOverlay() {
         return CCPartialBlockModels.TIME_OVERLAY;
-    }
-
-    @Override
-    public RenderType getRenderType() {
-        return RENDER_TYPE;
     }
 }

@@ -1,5 +1,6 @@
 package com.cogsofcarminite.client.renderers.blocks;
 
+import com.cogsofcarminite.CogsOfCarminite;
 import com.cogsofcarminite.blocks.CarminiteMagicLogBlock;
 import com.cogsofcarminite.blocks.DirectedDirectionalKineticBlock;
 import com.cogsofcarminite.blocks.entities.CarminiteMagicLogBlockEntity;
@@ -15,6 +16,7 @@ import com.simibubi.create.content.contraptions.render.ContraptionMatrices;
 import com.simibubi.create.content.contraptions.render.ContraptionRenderDispatcher;
 import com.simibubi.create.content.kinetics.base.KineticBlockEntityRenderer;
 import com.simibubi.create.content.kinetics.simpleRelays.encased.EncasedCogwheelBlock;
+import com.simibubi.create.foundation.block.IBE;
 import com.simibubi.create.foundation.blockEntity.behaviour.filtering.FilteringRenderer;
 import com.simibubi.create.foundation.render.CachedBufferer;
 import com.simibubi.create.foundation.render.SuperByteBuffer;
@@ -40,9 +42,27 @@ import javax.annotation.ParametersAreNonnullByDefault;
 @ParametersAreNonnullByDefault
 @MethodsReturnNonnullByDefault
 public class CarminiteMagicLogRenderer extends KineticBlockEntityRenderer<CarminiteMagicLogBlockEntity> {
+    private final RenderType renderType;
 
-    public CarminiteMagicLogRenderer(BlockEntityRendererProvider.Context context) {
+    public CarminiteMagicLogRenderer(BlockEntityRendererProvider.Context context, RenderType renderType) {
         super(context);
+        this.renderType = renderType;
+    }
+
+    public static CarminiteMagicLogRenderer core(BlockEntityRendererProvider.Context context) {
+        return new CarminiteMagicLogRenderer(context,RenderType.armorCutoutNoCull(CogsOfCarminite.prefix("textures/block/mining_log_core_on.png")));
+    }
+
+    public static CarminiteMagicLogRenderer heart(BlockEntityRendererProvider.Context context) {
+        return new CarminiteMagicLogRenderer(context,RenderType.armorCutoutNoCull(CogsOfCarminite.prefix("textures/block/transformation_log_core_on.png")));
+    }
+
+    public static CarminiteMagicLogRenderer engine(BlockEntityRendererProvider.Context context) {
+        return new CarminiteMagicLogRenderer(context,RenderType.armorCutoutNoCull(CogsOfCarminite.prefix("textures/block/sorting_log_core_on.png")));
+    }
+
+    public static CarminiteMagicLogRenderer clock(BlockEntityRendererProvider.Context context) {
+        return new CarminiteMagicLogRenderer(context,RenderType.armorCutoutNoCull(CogsOfCarminite.prefix("textures/block/time_log_core_on.png")));
     }
 
     @Override
@@ -67,7 +87,7 @@ public class CarminiteMagicLogRenderer extends KineticBlockEntityRenderer<Carmin
             PoseStack.Pose posestack$pose = ms.last();
             Matrix4f matrix4f = posestack$pose.pose();
             Matrix3f matrix3f = posestack$pose.normal();
-            VertexConsumer vertexconsumer = buffer.getBuffer(logBlock.getRenderType());
+            VertexConsumer vertexconsumer = buffer.getBuffer(this.renderType);
 
             vertex(vertexconsumer, matrix4f, matrix3f, 0.0F, 0, 0, 1);
             vertex(vertexconsumer, matrix4f, matrix3f, 1.0F, 0, 1, 1);
@@ -135,10 +155,9 @@ public class CarminiteMagicLogRenderer extends KineticBlockEntityRenderer<Carmin
     }
 
     public static void renderInContraption(MovementContext context, VirtualRenderWorld renderWorld, ContraptionMatrices matrices, MultiBufferSource buffer) {
-        BlockState blockState = context.state;
-        if (blockState.getBlock() instanceof CarminiteMagicLogBlock logBlock) {
-            Direction.Axis axis = logBlock.getRotationAxis(blockState);
-            Direction dir = logBlock.getDirection(blockState);
+        if (context.state.getBlock() instanceof CarminiteMagicLogBlock logBlock && logBlock instanceof IBE<?> ibe && Minecraft.getInstance().getBlockEntityRenderDispatcher().renderers.get(ibe.getBlockEntityType()) instanceof CarminiteMagicLogRenderer renderer) {
+            Direction.Axis axis = logBlock.getRotationAxis(context.state);
+            Direction dir = logBlock.getDirection(context.state);
 
             PoseStack ms = matrices.getModelViewProjection();
             ms.pushPose();
@@ -157,7 +176,7 @@ public class CarminiteMagicLogRenderer extends KineticBlockEntityRenderer<Carmin
             PoseStack.Pose posestack$pose = ms.last();
             Matrix4f matrix4f = posestack$pose.pose();
             Matrix3f matrix3f = posestack$pose.normal();
-            VertexConsumer vertexconsumer = buffer.getBuffer(logBlock.getRenderType());
+            VertexConsumer vertexconsumer = buffer.getBuffer(renderer.renderType);
 
             vertex(vertexconsumer, matrix4f, matrix3f, 0.0F, 0, 0, 1);
             vertex(vertexconsumer, matrix4f, matrix3f, 1.0F, 0, 1, 1);
@@ -180,7 +199,7 @@ public class CarminiteMagicLogRenderer extends KineticBlockEntityRenderer<Carmin
 
             PoseStack msPaint = matrices.getViewProjection();
 
-            switch (DirectedDirectionalKineticBlock.getTargetDirection(blockState)) {
+            switch (DirectedDirectionalKineticBlock.getTargetDirection(context.state)) {
                 case DOWN -> TransformStack.cast(ms).centre()
                         .rotate(Direction.get(Direction.AxisDirection.POSITIVE, Direction.Axis.X), AngleHelper.rad(180.0F))
                         .rotate(Direction.get(Direction.AxisDirection.POSITIVE, Direction.Axis.Y), AngleHelper.rad(-angl))
@@ -207,13 +226,13 @@ public class CarminiteMagicLogRenderer extends KineticBlockEntityRenderer<Carmin
                         .unCentre();
             }
 
-            CachedBufferer.partial(logBlock.getFlywheelModel(), blockState).transform(matrices.getModel())
+            CachedBufferer.partial(logBlock.getFlywheelModel(), context.state).transform(matrices.getModel())
                     .light(matrices.getWorld(), ContraptionRenderDispatcher.getContraptionWorldLight(context, renderWorld))
                     .renderInto(msPaint, buffer.getBuffer(RenderType.cutoutMipped()));
 
             int alpha = Mth.clamp(Math.abs((int) ogSpeed) * 2, 1, 255);
 
-            CachedBufferer.partial(logBlock.getFlywheelOverlay(), blockState).transform(matrices.getModel())
+            CachedBufferer.partial(logBlock.getFlywheelOverlay(), context.state).transform(matrices.getModel())
                     .light(matrices.getWorld(), ContraptionRenderDispatcher.getContraptionWorldLight(context, renderWorld))
                     .color(255, 255, 255, alpha).renderInto(msPaint, buffer.getBuffer(RenderType.translucentMovingBlock()));
         }
