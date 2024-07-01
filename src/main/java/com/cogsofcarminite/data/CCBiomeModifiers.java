@@ -23,8 +23,6 @@ import javax.annotation.ParametersAreNonnullByDefault;
 @ParametersAreNonnullByDefault
 public class CCBiomeModifiers {
     public static final ResourceKey<BiomeModifier> ZINC_ORE = key("zinc_ore");
-    public static final ResourceKey<BiomeModifier> STRIATED_ORES_TWILIGHT_FOREST = key("striated_ores_twilight_forest");
-    public static final ResourceKey<BiomeModifier> STRIATED_ANDESITE_TWILIGHT_FOREST = key("striated_andesite_twilight_forest");
     public static final ResourceKey<BiomeModifier> LAKE_KELP = key("lake_kelp");
 
     private static ResourceKey<BiomeModifier> key(String name) {
@@ -38,13 +36,9 @@ public class CCBiomeModifiers {
 
         HolderGetter<PlacedFeature> featureLookup = ctx.lookup(Registries.PLACED_FEATURE);
         Holder<PlacedFeature> zincOre = featureLookup.getOrThrow(CCPlacedFeatures.ZINC_ORE);
-        Holder<PlacedFeature> striatedOresTwilightForest = featureLookup.getOrThrow(CCPlacedFeatures.STRIATED_ORES_TWILIGHT_FOREST);
-        Holder<PlacedFeature> striatedAndesiteTwilightForest = featureLookup.getOrThrow(CCPlacedFeatures.STRIATED_ANDESITE_TWILIGHT_FOREST);
         Holder<PlacedFeature> kelp = featureLookup.getOrThrow(AquaticPlacements.KELP_COLD);
 
         ctx.register(ZINC_ORE, addOre(isTwilightForest, zincOre));
-        ctx.register(STRIATED_ORES_TWILIGHT_FOREST, addOre(isTwilightForest, striatedOresTwilightForest));
-        ctx.register(STRIATED_ANDESITE_TWILIGHT_FOREST, addOre(isTwilightForest, striatedAndesiteTwilightForest));
         ctx.register(LAKE_KELP, new ForgeBiomeModifiers.AddFeaturesBiomeModifier(isTwilightForestLake, HolderSet.direct(kelp), GenerationStep.Decoration.VEGETAL_DECORATION));
     }
 
