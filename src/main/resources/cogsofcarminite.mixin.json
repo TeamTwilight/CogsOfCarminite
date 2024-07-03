@@ -7,11 +7,16 @@
   "refmap": "cogsofcarminite.mixin-refmap.json",
   "mixins": [
     "AllIconsAccessor",
+    "BlockSpikeFeatureMixin",
     "FilteringBehaviourAccessor",
     "FilterItemStackMixin",
+    "HollowHillComponentAccessor",
+    "HollowHillComponentMixin",
+    "HydraLairComponentMixin",
     "OreMagnetItemAccessor",
     "OreMagnetItemMixin",
-    "SmartObserverBlockEntityMixin"
+    "SmartObserverBlockEntityMixin",
+    "YetiCaveComponentMixin"
   ],
   "client": [
   ],
